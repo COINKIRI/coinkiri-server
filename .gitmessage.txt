@@ -14,7 +14,7 @@
 # 🐛: bugfix      버그 수정
 # 🐞: bug        버그 발생
 # 🚀: deploy      배포
-# 🔧: chore      구성 파일 추가/삭제
+# ⚙️: setting      환경 설정
 # 🚑: hotfix      긴급 수정
 # ✨: feat      새 기능
 # 📝: docs      문서 추가/수정
