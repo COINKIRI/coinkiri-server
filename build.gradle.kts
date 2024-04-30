@@ -10,7 +10,6 @@ plugins {
 
 allprojects {
 	group = "coinkiri"
-	version = "0.0.1-SNAPSHOT"
 
 	repositories {
 		mavenCentral()
@@ -46,16 +45,14 @@ subprojects {
 		implementation("org.springframework.boot:spring-boot-starter-web")
 
 		// Lombok
-		/**
-		 * @Issue Common 모듈에 추가해야할 수도 있음
-		 */
 		compileOnly("org.projectlombok:lombok")
 		annotationProcessor("org.projectlombok:lombok")
 
-		// 공통 사용
 		implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-		implementation("org.jetbrains.kotlin:kotlin-reflect")
+		implementation("org.jetbrains.kotlin:kotlin-reflect") // Kotlin Reflection
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+		// Test
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 	}

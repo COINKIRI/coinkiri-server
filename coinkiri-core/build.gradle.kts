@@ -11,9 +11,9 @@ dependencies {
     // mysql connector
     runtimeOnly("com.mysql:mysql-connector-j")
 
-    // spring boot data jpa
     /**
-     * @Issue implemetation 대신 api로 변경해야 할 수 있음
+     * spring boot data jpa
+     * implementation 대신 api를 사용하면 다른 모듈(api)에서 이 모듈(core)에 의존할 때, 이 모듈이 사용하는 의존성(jpa)을 사용할 수 있다.
      */
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    api("org.springframework.boot:spring-boot-starter-data-jpa")
 }
