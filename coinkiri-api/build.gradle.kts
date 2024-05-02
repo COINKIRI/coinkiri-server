@@ -5,4 +5,5 @@ bootJar.enabled = true
 
 dependencies {
     implementation(project(":coinkiri-core"))
+    implementation(project(":coinkiri-common"))
 }
