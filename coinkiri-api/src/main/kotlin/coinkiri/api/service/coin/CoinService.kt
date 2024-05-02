@@ -15,6 +15,6 @@ class CoinService (
 ){
     @Transactional(readOnly = true)
     fun findCoinList(): List<Coin> {
-        return coinRepository.findAll()
+        return coinRepository.findAllCoin();
     }
 }

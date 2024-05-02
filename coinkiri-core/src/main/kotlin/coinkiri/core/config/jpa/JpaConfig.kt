@@ -1,4 +1,4 @@
-package coinkiri.core.config
+package coinkiri.core.config.jpa
 
 import coinkiri.core.CoinkiriCoreRoot
 import org.springframework.boot.autoconfigure.domain.EntityScan

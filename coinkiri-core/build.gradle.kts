@@ -18,6 +18,8 @@ sourceSets {
     }
 }
 
+val queryDslVersion = "5.0.0" // QueryDSL Version
+
 dependencies {
 
     // mysql connector
@@ -29,5 +31,23 @@ dependencies {
      */
     api("org.springframework.boot:spring-boot-starter-data-jpa")
 
+    // QueryDSL
+    api("com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta")
+    // java annotation processing. 만약 kotlin을 사용한다면 kapt를 사용해야함
+    annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
+    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 
+}
+
+// QClass 생성 위치 설정
+val generatedDir = "src/main/generated/"
+
+tasks.named("clean") { // clean task 실행 시 생성된 QClass 파일 삭제
+    doLast {
+        file(generatedDir).deleteRecursively()
+    }
+}
+tasks.withType<JavaCompile> { // JavaCompile task 실행 시 QClass 파일 생성 위치 설정
+    options.generatedSourceOutputDirectory.set(file(generatedDir))
 }
