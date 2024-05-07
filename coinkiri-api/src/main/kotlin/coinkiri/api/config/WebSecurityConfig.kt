@@ -1,6 +1,7 @@
 package coinkiri.api.config
 
 import coinkiri.api.service.auth.JwtAuthenticationFilter
+import coinkiri.api.service.auth.OAuth2UserServiceImplement
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Configurable
@@ -21,7 +22,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfig(
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter,
+    private val oAuth2UserServiceImplement: OAuth2UserServiceImplement
 ) {
     @Bean
     protected fun configure(httpSecurity: HttpSecurity): SecurityFilterChain {
@@ -40,8 +42,15 @@ class WebSecurityConfig(
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 비활성화
             }
             .authorizeHttpRequests() {
-                it.requestMatchers("/", "/api/v1/auth/**").permitAll() // 허용할 경로
+                it.requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll() // 허용할 경로
                     .anyRequest().authenticated() // 나머지는 인증 필요
+            }.oauth2Login() {oauth2 -> oauth2 // oauth2 로그인 설정
+                    .redirectionEndpoint {
+                        it.baseUri("/oauth2/callback/*") // oauth2 로그인 시 리다이렉션 경로
+                     }
+                    .userInfoEndpoint {
+                        it.userService(oAuth2UserServiceImplement) // oauth2 로그인 시 사용할 서비스
+                    }
             }.exceptionHandling() {
                 it.authenticationEntryPoint(FailedAuthenticationEntryPoint()) // 인증 실패 시 처리
             }.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java) // 필터 등록

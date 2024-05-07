@@ -1,4 +1,4 @@
-package coinkiri.core.domain.user;
+package coinkiri.core.domain.member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class Member {
 
 	// User 테이블의 기본키
 	@Id

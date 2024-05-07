@@ -1,14 +1,11 @@
 package coinkiri.api.service.auth
 
-import coinkiri.core.domain.user.repository.UserRepository
+import coinkiri.core.domain.member.repository.MemberRepository
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
@@ -21,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 @Component
 class JwtAuthenticationFilter(
     private val jwtProvider: JwtProvider,
-    private val userRepository: UserRepository
+    private val memberRepository: MemberRepository
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
@@ -39,7 +36,7 @@ class JwtAuthenticationFilter(
                 return
             }
 
-            val user = userRepository.findBySocialId(userId) // 유효한 token 값으로 user 정보를 가져옴
+            val user = memberRepository.findBySocialId(userId) // 유효한 token 값으로 user 정보를 가져옴
 
             // SecurityContext 생성 (SecurityContextHolder는 Bean으로 등록되어 있음)
             val securityContext = SecurityContextHolder.createEmptyContext()
