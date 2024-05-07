@@ -18,8 +18,8 @@ class JwtProvider {
     @Value("\${jwt.secret}")
     private lateinit var jwtSecret: String
 
-    // jwt 생성
-    fun create(userId: String): String {
+    // jwt 생성 (socialId를 받아서 jwt 생성)
+    fun createJwt(socialId: String): String {
         val expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS)) // 1시간
         val key = Keys.hmacShaKeyFor(jwtSecret.toByteArray(StandardCharsets.UTF_8))
 
@@ -27,7 +27,7 @@ class JwtProvider {
             // jwt header에 저장되는 정보
             .signWith(key, SignatureAlgorithm.HS256)
             // jwt payload에 저장되는 정보
-            .setSubject(userId) // sub: jwt 제목
+            .setSubject(socialId) // sub: jwt 제목
             .setIssuedAt(Date()) // iat: jwt 발급 시간
             .setExpiration(expiredDate) // exp: jwt 만료 시간
             .compact()
@@ -36,7 +36,7 @@ class JwtProvider {
     }
 
     // jwt 검증
-    fun validate(jwt: String): String? {
+    fun validateJwt(jwt: String): String? {
 
         lateinit var subject: String
         val key: Key = Keys.hmacShaKeyFor(jwtSecret.toByteArray(StandardCharsets.UTF_8))

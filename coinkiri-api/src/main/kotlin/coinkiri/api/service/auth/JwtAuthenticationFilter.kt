@@ -30,7 +30,7 @@ class JwtAuthenticationFilter(
                 return
             }
 
-            val userId = jwtProvider.validate(token) // token 값이 유효한지 검증
+            val userId = jwtProvider.validateJwt(token) // token 값이 유효한지 검증
             if (userId == null) { // 유효하지 않으면
                 filterChain.doFilter(request, response)
                 return

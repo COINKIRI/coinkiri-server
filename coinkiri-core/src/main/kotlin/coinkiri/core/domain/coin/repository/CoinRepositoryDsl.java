@@ -4,6 +4,6 @@ import java.util.List;
 
 import coinkiri.core.domain.coin.Coin;
 
-public interface CoinRepositoryQDsl {
+public interface CoinRepositoryDsl {
 	List<Coin> findAllCoin();
 }

@@ -1,7 +1,8 @@
 package coinkiri.api.config
 
 import coinkiri.api.service.auth.JwtAuthenticationFilter
-import coinkiri.api.service.auth.OAuth2UserServiceImplement
+import coinkiri.api.service.auth.OAuth2SuccessHandler
+import coinkiri.api.service.auth.OAuth2UserServiceImpl
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Configurable
@@ -23,7 +24,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 class WebSecurityConfig(
     private val jwtAuthenticationFilter: JwtAuthenticationFilter,
-    private val oAuth2UserServiceImplement: OAuth2UserServiceImplement
+    private val oAuth2UserServiceImpl: OAuth2UserServiceImpl,
+    private val oAuth2SuccessHandler: OAuth2SuccessHandler
 ) {
     @Bean
     protected fun configure(httpSecurity: HttpSecurity): SecurityFilterChain {
@@ -44,13 +46,19 @@ class WebSecurityConfig(
             .authorizeHttpRequests() {
                 it.requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll() // 허용할 경로
                     .anyRequest().authenticated() // 나머지는 인증 필요
-            }.oauth2Login() {oauth2 -> oauth2 // oauth2 로그인 설정
+            }
+            .oauth2Login() { oauth2 ->
+                oauth2 // oauth2 로그인 설정
+                    .authorizationEndpoint {
+                        it.baseUri("/api/v1/auth/oauth2") // oauth2 로그인 시 api 경로
+                    }
                     .redirectionEndpoint {
                         it.baseUri("/oauth2/callback/*") // oauth2 로그인 시 리다이렉션 경로
-                     }
-                    .userInfoEndpoint {
-                        it.userService(oAuth2UserServiceImplement) // oauth2 로그인 시 사용할 서비스
                     }
+                    .userInfoEndpoint {
+                        it.userService(oAuth2UserServiceImpl) // oauth2 로그인 시 사용할 서비스
+                    }
+                    .successHandler(oAuth2SuccessHandler) // oauth2 로그인 성공 시 핸들러
             }.exceptionHandling() {
                 it.authenticationEntryPoint(FailedAuthenticationEntryPoint()) // 인증 실패 시 처리
             }.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java) // 필터 등록
@@ -76,7 +84,11 @@ class WebSecurityConfig(
 
 // 인증 실패 시 처리
 class FailedAuthenticationEntryPoint : AuthenticationEntryPoint {
-    override fun commence(request: HttpServletRequest, response: HttpServletResponse, authException: AuthenticationException) {
+    override fun commence(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        authException: AuthenticationException
+    ) {
         response.contentType = "application/json"
         response.status = HttpServletResponse.SC_UNAUTHORIZED
         response.writer.write("{\"code\": \"NP\", \"message\": \"No Permission.\"}")
