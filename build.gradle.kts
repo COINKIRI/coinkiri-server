@@ -41,8 +41,6 @@ subprojects {
 	apply(plugin = "kotlin-kapt")
 
 	dependencies {
-		// Spring Boot Web
-		implementation("org.springframework.boot:spring-boot-starter-web")
 
 		// Lombok
 		compileOnly("org.projectlombok:lombok")

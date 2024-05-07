@@ -4,3 +4,4 @@ plugins {
 rootProject.name = "coinkiri-server"
 include("coinkiri-api")
 include("coinkiri-core")
+include("coinkiri-common")
