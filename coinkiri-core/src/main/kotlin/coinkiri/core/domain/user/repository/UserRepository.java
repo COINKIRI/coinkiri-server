@@ -9,4 +9,6 @@ import coinkiri.core.domain.user.User;
  *
  */
 public interface UserRepository extends JpaRepository<User, Long> {
+
+	User findBySocialId(String socialId); // 소셜 id로 사용자 조회
 }

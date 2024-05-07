@@ -4,6 +4,12 @@ import coinkiri.core.domain.user.repository.UserRepository
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.security.authentication.AbstractAuthenticationToken
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContext
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.authentication.WebAuthenticationDetails
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
@@ -19,7 +25,6 @@ class JwtAuthenticationFilter(
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-
         try {
 
             val token = parseBearerToken(request)
@@ -34,6 +39,17 @@ class JwtAuthenticationFilter(
                 return
             }
 
+            val user = userRepository.findBySocialId(userId) // 유효한 token 값으로 user 정보를 가져옴
+
+            // SecurityContext 생성 (SecurityContextHolder는 Bean으로 등록되어 있음)
+            val securityContext = SecurityContextHolder.createEmptyContext()
+
+            val authenticationToken = UsernamePasswordAuthenticationToken(userId, null) // AuthenticationToken 생성
+            authenticationToken.details = WebAuthenticationDetailsSource().buildDetails(request) // AuthenticationToken에 request 정보를 추가
+            securityContext.authentication = authenticationToken // SecurityContext에 AuthenticationToken을 추가
+
+            SecurityContextHolder.setContext(securityContext)
+            // SecurityContext를 SecurityContextHolder에 추가
 
 
         } catch (exception: Exception) {
@@ -43,7 +59,7 @@ class JwtAuthenticationFilter(
         filterChain.doFilter(request, response)
     }
 
-    // Request Header에서 Bearer token 값 추출 메소드
+    // Request Header에서 Bearer token 값을 추출함
     fun parseBearerToken(request: HttpServletRequest): String? {
         val authorization: String = request.getHeader("Authorization") // Request Header에서 꺼낸 Bearer token 값
 
