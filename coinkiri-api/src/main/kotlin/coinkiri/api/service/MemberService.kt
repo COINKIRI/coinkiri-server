@@ -21,10 +21,12 @@ class MemberService (
 
     // 닉네임 수정 API
     @Transactional
-    fun updateNickname(socialId: String) {
+    fun updateNickname(socialId: String, newNickname: String) {
         val member = memberRepository.findBySocialId(socialId) ?: throw IllegalArgumentException("존재하지 않는 소셜 아이디입니다.")
+        member.updateNickname(newNickname)
         memberRepository.save(member)
     }
+
 
 
 }

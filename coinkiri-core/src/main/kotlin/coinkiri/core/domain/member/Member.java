@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "members")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Member extends BaseEntity {
 
 	// User 테이블의 기본키
@@ -66,7 +68,12 @@ public class Member extends BaseEntity {
 
 	// 랜덤 닉네임 생성
 	private String generateNickname(String socialId) {
-		return "user_" + (int) (Math.random() * 100000);
+		return "user_" + (int) (Math.random() * 10000000);
+	}
+
+	// 닉네임 업데이트
+	public void updateNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 

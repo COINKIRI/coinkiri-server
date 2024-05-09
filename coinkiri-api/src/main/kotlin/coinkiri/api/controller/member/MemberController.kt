@@ -1,10 +1,13 @@
 package coinkiri.api.controller.member
 
 import coinkiri.api.controller.member.dto.request.RegisterDto
+import coinkiri.api.controller.member.dto.request.UpdateNickNameDto
 import coinkiri.api.service.MemberService
 import coinkiri.common.response.ApiResponse
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -22,5 +25,14 @@ class MemberController (
         return ResponseEntity.ok(ApiResponse.success())
     }
 
-    // 닉네임 수정 API
+    // 닉네임 수정 API PathVariable
+    @PutMapping("/{socialId}/nickname")
+    fun updateNickname(
+        @PathVariable socialId: String,
+        @RequestBody request: UpdateNickNameDto
+    ): ResponseEntity<ApiResponse<Any>> {
+        memberService.updateNickname(socialId, request.newNickName)
+        return ResponseEntity.ok(ApiResponse.success())
+    }
+
 }
