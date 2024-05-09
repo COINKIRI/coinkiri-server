@@ -17,13 +17,10 @@ import org.yaml.snakeyaml.constructor.DuplicateKeyException
 class GlobalExceptionHandler {
 
     @ExceptionHandler(CoinkiriException::class)
-    fun handleCoinkiriException(exception: CoinkiriException): ResponseEntity<ApiResponse<ExceptionCode>> {
+    fun handleCoinkiriException(exception: CoinkiriException): ResponseEntity<ApiResponse<Any>> {
         return ResponseEntity
             .status(exception.exceptionCode.statusCode) // BaseException의 status에 따라 상태코드 설정
-            .body(ApiResponse(
-                    exception.exceptionCode
-                )
-            ) // CoinKiriException 발생 시 응답
+            .body(ApiResponse.error(exception.exceptionCode)) // BaseException 발생 시 응답
     }
 
     @ExceptionHandler(DuplicateKeyException::class)

@@ -37,6 +37,10 @@ public class Member extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private SocialType socialType;
 
+	// 닉네임
+	@Column(name = "nickname", nullable = false)
+	private String nickname;
+
 	// 프로필 사진
 	@Column(name = "pic", columnDefinition = "blob")
 	private byte[] pic;
@@ -57,6 +61,12 @@ public class Member extends BaseEntity {
 	public Member(String socialId, String socailType) {
 		this.socialId = socialId;
 		this.socialType = SocialType.valueOf(socailType);
+		this.nickname = generateNickname(socialId);
+	}
+
+	// 랜덤 닉네임 생성
+	private String generateNickname(String socialId) {
+		return "user_" + (int) (Math.random() * 100000);
 	}
 
 
