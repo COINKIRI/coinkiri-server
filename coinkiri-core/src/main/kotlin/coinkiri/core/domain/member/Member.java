@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 /**
@@ -52,6 +53,7 @@ public class Member extends BaseEntity {
 	@Column(name = "mileage", nullable = false, columnDefinition = "int default 0")
 	private int mileage;
 
+	@Builder
 	public Member(String socialId, String socailType) {
 		this.socialId = socialId;
 		this.socialType = SocialType.valueOf(socailType);

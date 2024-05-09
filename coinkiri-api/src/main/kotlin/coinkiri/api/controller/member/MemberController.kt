@@ -21,4 +21,6 @@ class MemberController (
         memberService.saveMember(request)
         return ResponseEntity.ok(ApiResponse.success())
     }
+
+    // 닉네임 수정 API
 }

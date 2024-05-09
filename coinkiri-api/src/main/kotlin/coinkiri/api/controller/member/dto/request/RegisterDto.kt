@@ -1,9 +1,12 @@
 package coinkiri.api.controller.member.dto.request
 
-import coinkiri.core.domain.member.SocialType
-
+import coinkiri.core.domain.member.Member
 
 data class RegisterDto(
     val socialId: String,
-    val socialType: SocialType,
-)
+    val socialType: String
+) {
+    fun toEntity(): Member {
+        return Member(socialId, socialType)
+    }
+}
