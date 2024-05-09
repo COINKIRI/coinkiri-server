@@ -63,11 +63,11 @@ public class Member extends BaseEntity {
 	public Member(String socialId, String socailType) {
 		this.socialId = socialId;
 		this.socialType = SocialType.valueOf(socailType);
-		this.nickname = generateNickname(socialId);
+		this.nickname = generateNickname();
 	}
 
 	// 랜덤 닉네임 생성
-	private String generateNickname(String socialId) {
+	private String generateNickname() {
 		return "user_" + (int) (Math.random() * 10000000);
 	}
 

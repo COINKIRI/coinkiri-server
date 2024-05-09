@@ -1,7 +1,7 @@
 package coinkiri.api.controller.member
 
 import coinkiri.api.controller.member.dto.request.RegisterDto
-import coinkiri.api.controller.member.dto.request.UpdateNickNameDto
+import coinkiri.api.controller.member.dto.request.UpdateNicknameDto
 import coinkiri.api.service.MemberService
 import coinkiri.common.response.ApiResponse
 import org.springframework.http.ResponseEntity
@@ -29,9 +29,9 @@ class MemberController (
     @PutMapping("/{socialId}/nickname")
     fun updateNickname(
         @PathVariable socialId: String,
-        @RequestBody request: UpdateNickNameDto
+        @RequestBody request: UpdateNicknameDto
     ): ResponseEntity<ApiResponse<Any>> {
-        memberService.updateNickname(socialId, request.newNickName)
+        memberService.updateNickname(socialId, request.newNickname)
         return ResponseEntity.ok(ApiResponse.success())
     }
 
