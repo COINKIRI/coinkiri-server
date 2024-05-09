@@ -1,6 +1,7 @@
 package coinkiri.api.controller.coin
 
 import coinkiri.api.service.coin.CoinService
+import coinkiri.common.response.ApiResponse
 import coinkiri.core.domain.coin.Coin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,12 +12,22 @@ import org.springframework.web.bind.annotation.RestController
  *
  */
 @RestController
-@RequestMapping("/coin")
+@RequestMapping("/api/v1/coin")
 class CoinController (
     private val coinService: CoinService
 ) {
+
     @GetMapping("/all")
     fun findCoinList() : List<Coin> {
         return coinService.findCoinList()
     }
+
+    @GetMapping("/all/code")
+    fun findCoinListJson(): ApiResponse<List<Coin>> {
+        return ApiResponse(
+            coinService.findCoinList()
+        )
+    }
+
+
 }

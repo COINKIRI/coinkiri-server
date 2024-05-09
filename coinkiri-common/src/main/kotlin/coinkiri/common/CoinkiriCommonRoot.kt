@@ -1,0 +1,3 @@
+package coinkiri.common
+
+interface CoinkiriCommonRoot

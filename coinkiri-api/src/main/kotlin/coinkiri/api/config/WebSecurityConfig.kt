@@ -44,7 +44,9 @@ class WebSecurityConfig(
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 비활성화
             }
             .authorizeHttpRequests() {
-                it.requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll() // 허용할 경로
+                it.requestMatchers("/", "/api/v1/auth/**", "/oauth2/**",
+                    "/api/v1/coin/**")
+                    .permitAll() // 허용할 경로
                     .anyRequest().authenticated() // 나머지는 인증 필요
             }
             .oauth2Login() { oauth2 ->

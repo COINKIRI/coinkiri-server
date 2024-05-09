@@ -35,21 +35,21 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private SocialType socialType;
 
-	// // 프로필 사진
-	// @Column(name = "pic", columnDefinition = "blob")
-	// private byte[] pic;
-	//
-	// // 레벨
-	// @Column(name = "level", nullable = false, columnDefinition = "int default 1")
-	// private int level;
-	//
-	// // 경험치
-	// @Column(name = "exp", nullable = false, columnDefinition = "int default 0")
-	// private int exp;
-	//
-	// // 마일리지
-	// @Column(name = "mileage", nullable = false, columnDefinition = "int default 0")
-	// private int mileage;
+	// 프로필 사진
+	@Column(name = "pic", columnDefinition = "blob")
+	private byte[] pic;
+
+	// 레벨
+	@Column(name = "level", nullable = false, columnDefinition = "int default 1")
+	private int level;
+
+	// 경험치
+	@Column(name = "exp", nullable = false, columnDefinition = "int default 0")
+	private int exp;
+
+	// 마일리지
+	@Column(name = "mileage", nullable = false, columnDefinition = "int default 0")
+	private int mileage;
 
 	public Member(String socialId, String socailType) {
 		this.socialId = socialId;

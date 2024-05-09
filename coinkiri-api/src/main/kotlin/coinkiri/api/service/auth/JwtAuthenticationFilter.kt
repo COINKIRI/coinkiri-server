@@ -58,7 +58,9 @@ class JwtAuthenticationFilter(
 
     // Request Header에서 Bearer token 값을 추출함
     fun parseBearerToken(request: HttpServletRequest): String? {
-        val authorization: String = request.getHeader("Authorization") // Request Header에서 꺼낸 Bearer token 값
+        val authorization: String =
+            request.getHeader("Authorization") ?: return null // Request Header에서 꺼낸 Bearer token 값
+        // 값이 없으면 null 반환
 
         val hasAuthorization: Boolean = StringUtils.hasText(authorization) // 값이 있는지 확인
         if (!hasAuthorization) return null // 값이 없으면 null 반환
