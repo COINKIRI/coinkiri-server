@@ -1,64 +1,48 @@
 package coinkiri.common.response
 
 import coinkiri.common.exception.ExceptionCode
+import org.springframework.http.HttpStatusCode
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import org.springframework.http.HttpStatusCode
 
 /**
- * @ClassName    : BaseResponse 클래스에 대한 설명을 작성합니다.
+ * @ClassName: ApiResponse
+ * @Description: API 응답에 대한 클래스입니다.
+ *               HTTP 상태 코드, 메시지 및 결과를 포함합니다.
  */
 @JsonPropertyOrder("code", "message", "result")
-class ApiResponse<T> {
-    @JsonProperty("code")
-    private val code: HttpStatusCode // 상태 코드 메세지
+class ApiResponse<T>(
+    @JsonProperty("code") val code: HttpStatusCode, // 상태 코드
+    @JsonProperty("message") val message: String,   // 응답 설명 메시지
+    @JsonProperty("result") var result: T? = null   // 결과
+) {
+    companion object {
+        /**
+         * 성공 응답 생성 - 결과 포함
+         */
+        fun <T> success(result: T): ApiResponse<T> {
+            return ApiResponse(SuccessCode.SUCCESS.statusCode, SuccessCode.SUCCESS.message, result)
+        }
 
-    @JsonProperty("message")
-    private val message: String // 응답 설명 메세지
+        /**
+         * 성공 응답 생성 - 결과 미포함
+         */
+        fun success(): ApiResponse<Any> {
+            return ApiResponse(SuccessCode.SUCCESS.statusCode, SuccessCode.SUCCESS.message, null)
+        }
 
-    @JsonProperty("result")
-    private var result: T? = null // 결과
+        /**
+         * 실패 응답 생성 - 커스텀 예외 타입
+         */
+        fun error(status: ExceptionCode): ApiResponse<Any> {
+            return ApiResponse(status.statusCode, status.message)
+        }
 
-    /**
-     * 요청 성공 시
-     * @param result 응답할 값을 담은 객체
-     */
-    constructor(result: T) {
-        this.code = SuccessCode.SUCCESS.statusCode
-        this.message = SuccessCode.SUCCESS.message
-        this.result = result
+        /**
+         * 실패 응답 생성 - HTTP 상태 코드, 메시지
+         */
+        fun error(statusCode: HttpStatusCode, message: String): ApiResponse<Any> {
+            return ApiResponse(statusCode, message)
+        }
     }
-
-    /**
-     * 요청 성공 시
-     * 응답 data가 없는 경우
-     */
-    constructor() {
-        this.code = SuccessCode.SUCCESS.statusCode
-        this.message = SuccessCode.SUCCESS.message
-        this.result = null
-    }
-
-    /**
-     * 요청 실패 시 - 커스텀 예외에 대한 응답
-     * @param status 실패 상태
-     * - 커스텀 정의한 ExceptionCode 타입 중 하나 입력
-     */
-    constructor(status: ExceptionCode) {
-        this.code = status.statusCode
-        this.message = status.message
-    }
-
-    /**
-     * 요청 실패 시 - 이미 정의된 예외에 대한 응답
-     * - 각각 실패 상태를 직접 지정할 때 사용
-     * @param statusCode 상태 코드
-     * @param message 메시지
-     */
-    constructor(statusCode: HttpStatusCode, message: String) {
-        this.code = statusCode
-        this.message = message
-    }
-
-
 }

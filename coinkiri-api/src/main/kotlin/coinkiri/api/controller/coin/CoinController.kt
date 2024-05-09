@@ -22,12 +22,6 @@ class CoinController (
         return coinService.findCoinList()
     }
 
-    @GetMapping("/all/code")
-    fun findCoinListJson(): ApiResponse<List<Coin>> {
-        return ApiResponse(
-            coinService.findCoinList()
-        )
-    }
 
 
 }
