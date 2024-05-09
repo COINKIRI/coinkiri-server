@@ -16,7 +16,14 @@ class MemberService (
         if (memberRepository.existsBySocialId(request.socialId)) { // 소셜 아이디 중복 체크
             throw IllegalArgumentException("이미 존재하는 소셜 아이디입니다.")
         }
-        memberRepository.save(request.toEntity())
+        memberRepository.save(request.toEntity()) // 회원 정보 저장
+    }
+
+    // 닉네임 수정 API
+    @Transactional
+    fun updateNickname(socialId: String) {
+        val member = memberRepository.findBySocialId(socialId) ?: throw IllegalArgumentException("존재하지 않는 소셜 아이디입니다.")
+        memberRepository.save(member)
     }
 
 
