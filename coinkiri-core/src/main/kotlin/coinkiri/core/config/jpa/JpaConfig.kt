@@ -3,6 +3,7 @@ package coinkiri.core.config.jpa
 import coinkiri.core.CoinkiriCoreRoot
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 /**
@@ -13,4 +14,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @Configuration
 @EntityScan(basePackageClasses = [CoinkiriCoreRoot::class])
 @EnableJpaRepositories(basePackageClasses = [CoinkiriCoreRoot::class])
+@EnableJpaAuditing
 internal class JpaConfig
