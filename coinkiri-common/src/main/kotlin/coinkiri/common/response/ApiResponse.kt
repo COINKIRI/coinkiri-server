@@ -25,7 +25,7 @@ class ApiResponse<T>(
         }
 
         /**
-         * 성공 응답 생성 - 결과 미포함ㄴ
+         * 성공 응답 생성 - 결과 미포함
          */
         fun success(): ApiResponse<Any> {
             return ApiResponse(SuccessCode.SUCCESS.statusCode, SuccessCode.SUCCESS.message, null)
