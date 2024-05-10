@@ -45,7 +45,9 @@ class WebSecurityConfig(
             }
             .authorizeHttpRequests() {
                 it.requestMatchers("/", "/api/v1/auth/**", "/oauth2/**",
-                    "/api/v1/coin/**", "/api/v1/member/**")
+                    "/api/v1/coin/**", "/api/v1/member/**",
+                    "/swagger-ui/**", "/v3/**" // swagger 경로 허용
+                )
                     .permitAll() // 허용할 경로
                     .anyRequest().authenticated() // 나머지는 인증 필요
             }
