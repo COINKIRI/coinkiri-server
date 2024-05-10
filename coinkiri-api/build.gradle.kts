@@ -18,4 +18,5 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     // swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+
 }

@@ -1,6 +1,8 @@
 package coinkiri.api.controller.coin
 
 import coinkiri.api.service.coin.CoinService
+import coinkiri.common.KotlinLogging
+import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
 import coinkiri.core.domain.coin.Coin
 import io.swagger.v3.oas.annotations.Operation
@@ -20,12 +22,17 @@ class CoinController (
     private val coinService: CoinService
 ) {
 
+
     @Operation(summary = "코인 리스트 조회")
     @GetMapping("/all")
     fun findCoinList() : List<Coin> {
-        return coinService.findCoinList()
-    }
+        val startTime = System.currentTimeMillis()
+        val coinList = coinService.findCoinList()
+        val takenTime = System.currentTimeMillis() - startTime
 
+        log.info { "코인 리스트 조회 완료. 실행시간: $takenTime ms" }
+        return coinList
+    }
 
 
 }

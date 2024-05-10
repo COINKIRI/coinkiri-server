@@ -53,6 +53,9 @@ subprojects {
 		// Test
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+		// kotlin-logging
+		implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
+
 	}
 
 }
