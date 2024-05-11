@@ -8,6 +8,7 @@ import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -40,6 +41,14 @@ class MemberController (
     ): ResponseEntity<ApiResponse<Any>> {
         memberService.updateNickname(socialId, request.newNickname)
         return ResponseEntity.ok(ApiResponse.success())
+    }
+
+    // 마이페이지 (회원 정보 조회) API
+    @Operation(summary = "마이페이지 조회")
+    @GetMapping("/{socialId}")
+    fun findMemberInfo(@PathVariable socialId: String): ResponseEntity<ApiResponse<Any>> {
+        val memberInfo = memberService.findMemberInfo(socialId)
+        return ResponseEntity.ok(ApiResponse.success(memberInfo))
     }
 
 }
