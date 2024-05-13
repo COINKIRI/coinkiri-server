@@ -20,6 +20,11 @@ class MemberService (
         memberRepository.save(request.toEntity()) // 회원 정보 저장
     }
 
+    // 회원 확인 API
+    fun checkMember(socialId: String): Boolean {
+        return memberRepository.existsBySocialId(socialId) // 소셜 아이디로 회원 확인
+    }
+
     // 닉네임 수정 API
     @Transactional
     fun updateNickname(socialId: String, newNickname: String) {

@@ -23,7 +23,6 @@ class CoinController (
     private val coinService: CoinService
 ) {
 
-
     @Operation(summary = "코인 리스트 조회")
     @GetMapping("/all")
     fun findCoinList() : ResponseEntity<ApiResponse<List<Coin>>> {
@@ -34,6 +33,5 @@ class CoinController (
         log.info { "코인 리스트 조회 완료. 실행시간: $takenTime ms" }
         return ResponseEntity.ok(ApiResponse.success(coinList))
     }
-
 
 }

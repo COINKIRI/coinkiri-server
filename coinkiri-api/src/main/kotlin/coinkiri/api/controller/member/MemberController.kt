@@ -32,6 +32,15 @@ class MemberController (
         return ResponseEntity.ok(ApiResponse.success())
     }
 
+    // 회원 확인 API
+    @Operation(summary = "회원 확인")
+    @GetMapping("/check/{socialId}")
+    fun checkMember(@PathVariable socialId: String): ResponseEntity<ApiResponse<Any>> {
+        val isMember = memberService.checkMember(socialId)
+        return ResponseEntity.ok(ApiResponse.success(isMember))
+    }
+
+
     // 닉네임 수정 API PathVariable
     @Operation(summary = "닉네임 수정")
     @PutMapping("/{socialId}/nickname")

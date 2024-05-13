@@ -66,7 +66,7 @@ public class Member extends BaseEntity {
 		this.nickname = generateNickname();
 	}
 
-	// 랜덤 닉네임 생성
+	// 랜덤 닉네임 생성 (social id 통해 만들도록 수정 예정)
 	private String generateNickname() {
 		return "user_" + (int) (Math.random() * 10000000);
 	}
