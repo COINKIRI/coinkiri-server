@@ -14,7 +14,7 @@ class CommunityService (
 ){
     @Transactional
     fun saveCommunityPost(request: CommunityRequestDto) {
-        val member = memberRepository.findBySocialId(request.postRequestDto.socialId) ?: throw IllegalArgumentException("존재하지 않는 소셜 아이디입니다.")
+        val member = memberRepository.findById(request.postRequestDto.memberId).get()
 
         communityRepository.save(
             Community.builder()
