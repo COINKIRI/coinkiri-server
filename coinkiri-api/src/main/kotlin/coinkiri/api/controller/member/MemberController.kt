@@ -2,7 +2,7 @@ package coinkiri.api.controller.member
 
 import coinkiri.api.controller.member.dto.request.RegisterDto
 import coinkiri.api.controller.member.dto.request.UpdateNicknameDto
-import coinkiri.api.service.MemberService
+import coinkiri.api.service.member.MemberService
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation

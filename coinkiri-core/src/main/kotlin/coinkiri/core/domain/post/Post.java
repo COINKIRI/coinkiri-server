@@ -15,12 +15,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "posts")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "DTYPE")
+@Inheritance(strategy = InheritanceType.JOINED) // JOINED 전략 사용
+@DiscriminatorColumn(name = "DTYPE") // DTYPE 컬럼으로 구분
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Post extends BaseEntity {
 
@@ -42,4 +43,10 @@ public abstract class Post extends BaseEntity {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
+
+	public Post(String title, String content, Member member) {
+		this.title = title;
+		this.content = content;
+		this.member = member;
+	}
 }

@@ -1,4 +1,4 @@
-package coinkiri.api.service
+package coinkiri.api.service.member
 
 import coinkiri.api.controller.member.dto.request.RegisterDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
@@ -21,6 +21,7 @@ class MemberService (
     }
 
     // 회원 확인 API
+    @Transactional(readOnly = true)
     fun checkMember(socialId: String): Boolean {
         return memberRepository.existsBySocialId(socialId) // 소셜 아이디로 회원 확인
     }
@@ -34,6 +35,7 @@ class MemberService (
     }
 
     // 마이페이지 (회원 정보 조회) API
+    @Transactional(readOnly = true)
     fun findMemberInfo(socialId: String): MemberInfoDto {
         val member = memberRepository.findBySocialId(socialId) ?: throw IllegalArgumentException("존재하지 않는 소셜 아이디입니다.")
         return MemberInfoDto( // toDto를 쓸 수 없는 이유: core모듈은 api모듈을 모르기 때문(의존성이 없기 때문)

@@ -9,7 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-@DiscriminatorValue("A")
 public class Analysis extends Post {
 
 	// 대상 코인

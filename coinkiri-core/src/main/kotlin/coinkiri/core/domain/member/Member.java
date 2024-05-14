@@ -58,8 +58,7 @@ public class Member extends BaseEntity {
 	// 마일리지
 	@Column(name = "mileage", nullable = false, columnDefinition = "int default 0")
 	private int mileage;
-
-	@Builder
+	
 	public Member(String socialId, String socailType) {
 		this.socialId = socialId;
 		this.socialType = SocialType.valueOf(socailType);
