@@ -4,7 +4,7 @@ package coinkiri.api.controller.post.dto.request
 data class PostRequestDto ( // 슈퍼타입 dto
     val title: String,
     val content: String,
-    val socialId: String, // id만 받고 member 객체로 변환하는 로직 추가 필요
+    val memberId: Long, // id만 받고 member 객체로 변환하는 로직 추가
 )
 
 data class CommunityRequestDto ( // 서브타입 dto
@@ -12,13 +12,13 @@ data class CommunityRequestDto ( // 서브타입 dto
     val category: String
 )
 
-data class MissionRequestDto ( // 서브타입 dto
+data class MissionRequestDto (
     val postRequestDto: PostRequestDto,
     val coinId: Long,
     val endTime: String
 )
 
-data class AnalysisRequestDto ( // 서브타입 dto
+data class AnalysisRequestDto (
     val postRequestDto: PostRequestDto,
     val coinId: Long,
     val opinion: String,

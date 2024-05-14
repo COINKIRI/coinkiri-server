@@ -16,6 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -23,6 +24,7 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.JOINED) // JOINED 전략 사용
 @DiscriminatorColumn(name = "DTYPE") // DTYPE 컬럼으로 구분
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public abstract class Post extends BaseEntity {
 
 	@Id
@@ -43,10 +45,14 @@ public abstract class Post extends BaseEntity {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-
 	public Post(String title, String content, Member member) {
 		this.title = title;
 		this.content = content;
 		this.member = member;
+	}
+
+	// 조회수 증가
+	public void increaseViewCnt() {
+		this.viewCnt++;
 	}
 }
