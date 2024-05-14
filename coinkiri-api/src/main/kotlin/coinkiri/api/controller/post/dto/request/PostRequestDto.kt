@@ -1,36 +1,24 @@
 package coinkiri.api.controller.post.dto.request
 
-import coinkiri.core.domain.member.Member
-import coinkiri.core.domain.post.Community
 
-
-data class PostRequestDto (
+data class PostRequestDto ( // 슈퍼타입 dto
     val title: String,
     val content: String,
-    val member: Member, // MemberDto 를 넣어야함
+    val socialId: String, // id만 받고 member 객체로 변환하는 로직 추가 필요
 )
 
-data class CommunityRequestDto (
+data class CommunityRequestDto ( // 서브타입 dto
     val postRequestDto: PostRequestDto,
     val category: String
-) {
-    fun toEntity(): Community {
-        return Community(
-            postRequestDto.title,
-            postRequestDto.content,
-            postRequestDto.member,
-            category
-        )
-    }
-}
+)
 
-data class MissionRequestDto (
+data class MissionRequestDto ( // 서브타입 dto
     val postRequestDto: PostRequestDto,
     val coinId: Long,
     val endTime: String
 )
 
-data class AnalysisRequestDto (
+data class AnalysisRequestDto ( // 서브타입 dto
     val postRequestDto: PostRequestDto,
     val coinId: Long,
     val opinion: String,

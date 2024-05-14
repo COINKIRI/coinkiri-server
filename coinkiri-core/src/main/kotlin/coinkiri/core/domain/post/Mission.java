@@ -11,7 +11,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-@DiscriminatorValue("M")
 public class Mission extends Post {
 
 	// 미션 종료시간

@@ -2,6 +2,8 @@ package coinkiri.api.controller.post
 
 import coinkiri.api.controller.post.dto.request.CommunityRequestDto
 import coinkiri.api.service.post.CommunityService
+import coinkiri.common.response.ApiResponse
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,7 +17,8 @@ class CommunityController (
 
     // 커뮤니티 글 저장 API
     @PostMapping("/community/save")
-    fun saveCommunityPost(@RequestBody request: CommunityRequestDto) {
+    fun saveCommunityPost(@RequestBody request: CommunityRequestDto): ResponseEntity<ApiResponse<Any>> {
         communityService.saveCommunityPost(request)
+        return ResponseEntity.ok(ApiResponse.success())
     }
 }
