@@ -22,6 +22,7 @@ public class Comment extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "comment_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -38,5 +39,12 @@ public class Comment extends BaseEntity {
 
 	@Column(name = "content", nullable = false)
 	private String content;
+
+	public Comment(Post post, Member member, Comment parentComment, String content) {
+		this.post = post;
+		this.member = member;
+		this.parentComment = parentComment;
+		this.content = content;
+	}
 
 }

@@ -45,6 +45,8 @@ public abstract class Post extends BaseEntity {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
+	// comment를 oneToMany
+
 	public Post(String title, String content, Member member) {
 		this.title = title;
 		this.content = content;
