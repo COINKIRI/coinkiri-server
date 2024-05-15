@@ -53,6 +53,7 @@ class MemberController (
     }
 
     // 마이페이지 (회원 정보 조회) API
+    // memberid 로 조회하도록 수정 예정
     @Operation(summary = "마이페이지 조회")
     @GetMapping("/{socialId}")
     fun findMemberInfo(@PathVariable socialId: String): ResponseEntity<ApiResponse<Any>> {
