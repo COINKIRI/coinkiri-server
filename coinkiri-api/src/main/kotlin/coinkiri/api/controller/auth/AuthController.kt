@@ -1,6 +1,6 @@
 package coinkiri.api.controller.auth
 
-import coinkiri.api.controller.auth.dto.SignupDto
+import coinkiri.api.controller.auth.dto.SignupRequestDto
 import coinkiri.api.service.auth.AuthServiceProvider
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -17,7 +17,9 @@ class AuthController (
 ){
     @Operation(summary = "소셜 회원가입")
     @PostMapping("/signup")
-    fun signup(@RequestBody request: SignupDto) {
+    fun signup(@RequestBody request: SignupRequestDto): Long {
         val authService = authServiceProvider.getAuthService(request.socialType)
+        val memberId = authService.signup(request)
+        return memberId
     }
 }

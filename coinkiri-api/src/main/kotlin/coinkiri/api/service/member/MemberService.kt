@@ -1,6 +1,6 @@
 package coinkiri.api.service.member
 
-import coinkiri.api.controller.member.dto.request.RegisterDto
+import coinkiri.api.controller.member.dto.request.RegisterRequestDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
 import coinkiri.core.domain.member.repository.MemberRepository
 import org.springframework.stereotype.Service
@@ -11,9 +11,20 @@ class MemberService (
     private val memberRepository: MemberRepository
 ){
 
+    // 회원 정보 저장 API - new
+    @Transactional
+    fun registerUser(request: RegisterRequestDto): Long {
+        if (memberRepository.existsBySocialId(request.socialId)) { // 소셜 아이디 중복 체크
+            throw IllegalArgumentException("이미 존재하는 소셜 아이디입니다.")
+        }
+        val member = memberRepository.save(request.toEntity())
+        return member.id!! // 회원 정보 저장 후 회원 ID 반환
+    }
+
+
     // 회원 정보 저장 API
     @Transactional
-    fun saveMember(request: RegisterDto) {
+    fun saveMember(request: RegisterRequestDto) {
         if (memberRepository.existsBySocialId(request.socialId)) { // 소셜 아이디 중복 체크
             throw IllegalArgumentException("이미 존재하는 소셜 아이디입니다.")
         }

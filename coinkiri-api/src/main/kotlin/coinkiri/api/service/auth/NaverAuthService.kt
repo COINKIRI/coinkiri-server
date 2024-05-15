@@ -1,6 +1,6 @@
 package coinkiri.api.service.auth
 
-import coinkiri.api.controller.auth.dto.SignupDto
+import coinkiri.api.controller.auth.dto.SignupRequestDto
 import org.springframework.stereotype.Service
 
 @Service
@@ -8,7 +8,7 @@ class NaverAuthService (
 
 ): AuthService {
 
-        override fun signup(request: SignupDto): Long {
-            return 0
-        }
+    override fun signup(request: SignupRequestDto): Long {
+        return 0
+    }
 }

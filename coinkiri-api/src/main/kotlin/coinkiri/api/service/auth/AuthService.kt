@@ -1,10 +1,10 @@
 package coinkiri.api.service.auth
 
-import coinkiri.api.controller.auth.dto.SignupDto
+import coinkiri.api.controller.auth.dto.SignupRequestDto
 
 interface AuthService {
 
-    fun signup(request: SignupDto): Long
+    fun signup(request: SignupRequestDto): Long
 
 
 
