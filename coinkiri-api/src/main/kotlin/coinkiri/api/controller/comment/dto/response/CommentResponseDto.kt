@@ -1,3 +1,9 @@
 package coinkiri.api.controller.comment.dto.response
 
-class CommentResponseDto
+import coinkiri.api.controller.member.dto.response.MemberInfoDto
+
+class CommentResponseDto (
+    val parentComment: CommentResponseDto?,
+    val member: MemberInfoDto,
+    val content: String,
+)
