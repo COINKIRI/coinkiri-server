@@ -3,7 +3,6 @@ package coinkiri.api.client.kakao
 import coinkiri.api.client.kakao.dto.KakaoProfileResponseDto
 import coinkiri.common.exception.CoinkiriException
 import coinkiri.common.exception.ExceptionCode
-import jakarta.xml.bind.ValidationException
 import org.springframework.http.HttpStatusCode
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
