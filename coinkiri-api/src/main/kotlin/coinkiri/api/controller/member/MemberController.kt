@@ -1,6 +1,6 @@
 package coinkiri.api.controller.member
 
-import coinkiri.api.controller.member.dto.request.RegisterDto
+import coinkiri.api.controller.member.dto.request.RegisterRequestDto
 import coinkiri.api.controller.member.dto.request.UpdateNicknameDto
 import coinkiri.api.service.member.MemberService
 import coinkiri.common.KotlinLogging.log
@@ -26,7 +26,7 @@ class MemberController (
     // 회원 정보 저장 API
     @Operation(summary = "회원 정보 저장")
     @PostMapping("/register")
-    fun register(@RequestBody request: RegisterDto): ResponseEntity<ApiResponse<Any>>{
+    fun register(@RequestBody request: RegisterRequestDto): ResponseEntity<ApiResponse<Any>>{
         memberService.saveMember(request)
         log.info { "회원 정보 저장 완료" }
         return ResponseEntity.ok(ApiResponse.success())
@@ -53,6 +53,7 @@ class MemberController (
     }
 
     // 마이페이지 (회원 정보 조회) API
+    // memberid 로 조회하도록 수정 예정
     @Operation(summary = "마이페이지 조회")
     @GetMapping("/{socialId}")
     fun findMemberInfo(@PathVariable socialId: String): ResponseEntity<ApiResponse<Any>> {
