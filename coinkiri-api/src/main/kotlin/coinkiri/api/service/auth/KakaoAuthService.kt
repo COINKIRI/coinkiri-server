@@ -1,7 +1,7 @@
 package coinkiri.api.service.auth
 
 import coinkiri.api.client.kakao.KakaoApiCaller
-import coinkiri.api.controller.auth.dto.SignupRequestDto
+import coinkiri.api.controller.auth.dto.request.SignupRequestDto
 import coinkiri.api.service.member.MemberService
 import coinkiri.core.domain.member.SocialType
 import org.springframework.stereotype.Service

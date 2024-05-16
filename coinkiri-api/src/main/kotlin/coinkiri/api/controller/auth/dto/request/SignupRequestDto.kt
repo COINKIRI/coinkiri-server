@@ -1,4 +1,4 @@
-package coinkiri.api.controller.auth.dto
+package coinkiri.api.controller.auth.dto.request
 
 import coinkiri.api.controller.member.dto.request.RegisterRequestDto
 

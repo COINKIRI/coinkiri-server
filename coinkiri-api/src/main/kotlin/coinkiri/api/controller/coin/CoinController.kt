@@ -1,7 +1,6 @@
 package coinkiri.api.controller.coin
 
 import coinkiri.api.service.coin.CoinService
-import coinkiri.common.KotlinLogging
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
 import coinkiri.core.domain.coin.Coin
