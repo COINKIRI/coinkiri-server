@@ -37,4 +37,9 @@ public class Coin {
     @Column(name = "symbol_image", columnDefinition = "blob")
     private byte[] symbolImage;
 
+    public Coin(String market, String koreanName, String englishName) {
+        this.market = market;
+        this.koreanName = koreanName;
+        this.englishName = englishName;
+    }
 }

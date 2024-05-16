@@ -36,7 +36,7 @@ class WebSecurityConfig {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 비활성화
             }
             .authorizeHttpRequests() {
-                it.requestMatchers("/", "/api/v1/auth/**",
+                it.requestMatchers("/", "/api/v1/auth/**", "/api/v1/batch/**",
                     "/api/v1/coin/**", "/api/v1/member/**",
                     "/api/v1/post/**", "/api/v1/comment/**",
                     "/swagger-ui/**", "/v3/**" // swagger 경로 허용
