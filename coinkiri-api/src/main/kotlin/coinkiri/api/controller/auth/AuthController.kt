@@ -1,7 +1,10 @@
 package coinkiri.api.controller.auth
 
+import coinkiri.api.config.interceptor.Auth
+import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.auth.dto.request.SignupRequestDto
 import coinkiri.api.service.auth.AuthServiceProvider
+import coinkiri.api.service.auth.CommonAuthService
 import coinkiri.api.service.auth.jwt.TokenService
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
@@ -19,7 +22,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/auth")
 class AuthController (
     private val authServiceProvider: AuthServiceProvider,
-    private val tokenService: TokenService
+    private val tokenService: TokenService,
+    private val commonAuthService: CommonAuthService
 ){
     @Operation(summary = "소셜 회원가입")
     @PostMapping("/signup")
@@ -30,4 +34,14 @@ class AuthController (
         log.info { "소셜 회원가입 완료. memberId: $memberId, jwtToken: $jwtToken" }
         return ResponseEntity.ok(ApiResponse.success(jwtToken))
     }
+
+    @Operation(summary = "로그아웃")
+    @PostMapping("/v1/auth/logout")
+    @Auth
+    fun logout(@MemberID memberId: Long): ResponseEntity<ApiResponse<Any>> {
+        commonAuthService.logout(memberId)
+        return ResponseEntity.ok(ApiResponse.success())
+    }
+
+
 }

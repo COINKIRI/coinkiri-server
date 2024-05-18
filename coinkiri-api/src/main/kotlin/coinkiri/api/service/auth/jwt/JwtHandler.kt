@@ -1,8 +1,11 @@
 package coinkiri.api.service.auth.jwt
 
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
+import coinkiri.common.KotlinLogging.log
+import coinkiri.common.exception.CoinkiriException
+import coinkiri.common.exception.ExceptionCode
+import io.jsonwebtoken.*
 import io.jsonwebtoken.io.Decoders
+import io.jsonwebtoken.io.DecodingException
 import io.jsonwebtoken.security.Keys
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Value
@@ -52,4 +55,46 @@ class JwtHandler (
 
         return TokenDto(accessToken, refreshToken)
     }
+
+    fun expireRefreshToken(memberId: Long) {
+        // Refresh Token 만료
+    }
+
+    fun validateToken(token: String?): Boolean {
+        try {
+            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token)
+            return true
+        } catch (e: SecurityException) {
+            log.warn(e) { "Invalid JWT Token" }
+        } catch (e: MalformedJwtException) {
+            log.warn(e) { "Invalid JWT Token" }
+        } catch (e: DecodingException) {
+            log.warn(e) { "Invalid JWT Token" }
+        } catch (e: ExpiredJwtException) {
+            log.warn(e) { "Expired JWT Token" }
+        } catch (e: UnsupportedJwtException) {
+            log.warn(e) { "Unsupported JWT Token" }
+        } catch (e: IllegalArgumentException) {
+            log.warn(e) { "JWT claims string is empty." }
+        } catch (e: Exception) {
+            log.error(e) { "Unhandled JWT exception" }
+        }
+        return false
+    }
+
+    fun getMemberIdFromJwt(accessToken: String): Long {
+        val memberId = parseClaims(accessToken)[JwtKey.MEMBER_ID] as Int?
+        return memberId?.toLong() ?: throw CoinkiriException(
+            ExceptionCode.UNAUTHORIZED_EXCEPTION2
+        )
+    }
+
+    private fun parseClaims(accessToken: String): Claims {
+        return try {
+            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(accessToken).body
+        } catch (e: ExpiredJwtException) {
+            e.claims
+        }
+    }
+
 }
