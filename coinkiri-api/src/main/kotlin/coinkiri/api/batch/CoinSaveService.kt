@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.client.RestTemplate
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileInputStream
 import java.util.*
 
 @Service
@@ -49,14 +51,13 @@ class CoinSaveService (
     @Transactional
     fun saveCoinImage() {
 
-        val folder = File("src/main/resources/symbol_images_png")
+        val folder = File("coinkiri-api/src/main/resources/symbol_images_png")
         val files = folder.listFiles()
 
         val coins = coinRepository.findAll()
 
         files?.forEach { file ->
             val fileName = file.name
-            log.info { "fileName: $fileName" }
             val formattedFileName = fileName.substring(0, fileName.indexOf(".")).uppercase()
 
             val coin = coins.find { it.market == formattedFileName }
@@ -71,9 +72,15 @@ class CoinSaveService (
         }
     }
 
-    private fun pngToByteConverter(file: File): ByteArray {
-        val bytes = file.readBytes()
-        return Base64.getEncoder().encode(bytes)
+    fun pngToByteConverter(file: File): ByteArray {
+        val fis = FileInputStream(file)
+        val bos = ByteArrayOutputStream()
+        val buf = ByteArray(1024)
+        var read: Int
+        while (fis.read(buf).also { read = it } != -1) {
+            bos.write(buf, 0, read)
+        }
+        return bos.toByteArray()
     }
 
 
