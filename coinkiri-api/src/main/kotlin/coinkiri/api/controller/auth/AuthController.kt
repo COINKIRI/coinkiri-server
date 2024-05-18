@@ -36,7 +36,7 @@ class AuthController (
     }
 
     @Operation(summary = "로그아웃")
-    @PostMapping("/v1/auth/logout")
+    @PostMapping("/logout")
     @Auth
     fun logout(@MemberID memberId: Long): ResponseEntity<ApiResponse<Any>> {
         commonAuthService.logout(memberId)
