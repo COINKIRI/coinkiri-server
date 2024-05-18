@@ -2,7 +2,9 @@ package coinkiri.api.controller.auth
 
 import coinkiri.api.config.interceptor.Auth
 import coinkiri.api.config.resolver.MemberID
+import coinkiri.api.controller.auth.dto.request.LoginRequestDto
 import coinkiri.api.controller.auth.dto.request.SignupRequestDto
+import coinkiri.api.controller.auth.dto.response.TokenResponseDto
 import coinkiri.api.service.auth.AuthServiceProvider
 import coinkiri.api.service.auth.CommonAuthService
 import coinkiri.api.service.auth.jwt.TokenService
@@ -11,6 +13,7 @@ import coinkiri.common.response.ApiResponse
 import coinkiri.core.domain.member.SocialType
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -27,7 +30,7 @@ class AuthController (
 ){
     @Operation(summary = "소셜 회원가입")
     @PostMapping("/signup")
-    fun signup(@RequestBody request: SignupRequestDto): ResponseEntity<ApiResponse<Any>> {
+    fun signup(@RequestBody request: SignupRequestDto): ResponseEntity<ApiResponse<TokenResponseDto>> {
         val authService = authServiceProvider.getAuthService(SocialType.valueOf(request.socialType))
         val memberId = authService.signup(request)
         val jwtToken = tokenService.createTokenInfo(memberId)
@@ -35,11 +38,22 @@ class AuthController (
         return ResponseEntity.ok(ApiResponse.success(jwtToken))
     }
 
+    // 안씀
+    @Operation(summary = "소셜 로그인")
+    @PostMapping("/login")
+    fun login(@RequestBody request: LoginRequestDto): ResponseEntity<ApiResponse<TokenResponseDto>> {
+        val authService = authServiceProvider.getAuthService(SocialType.valueOf(request.socialType))
+        val memberId = authService.login(request)
+        val jwtToken = tokenService.createTokenInfo(memberId)
+        log.info { "소셜 로그인 완료. memberId: $memberId, tokenInfo: $jwtToken" }
+        return ResponseEntity.ok(ApiResponse.success(jwtToken))
+    }
+
     @Operation(summary = "로그아웃")
     @PostMapping("/logout")
     @Auth
     fun logout(@MemberID memberId: Long?): ResponseEntity<ApiResponse<Any>> {
-        if (memberId != null) {
+        if (memberId != null) { /* TODO : memberId가 왜 NULL 인가 */
             commonAuthService.logout(memberId)
         }
         log.info { "로그아웃 완료. memberId: $memberId" }
