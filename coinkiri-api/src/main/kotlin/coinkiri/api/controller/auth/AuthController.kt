@@ -40,6 +40,7 @@ class AuthController (
     @Auth
     fun logout(@MemberID memberId: Long): ResponseEntity<ApiResponse<Any>> {
         commonAuthService.logout(memberId)
+        log.info { "로그아웃 완료. memberId: $memberId" }
         return ResponseEntity.ok(ApiResponse.success())
     }
 
