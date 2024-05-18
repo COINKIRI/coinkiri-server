@@ -17,4 +17,10 @@ class CoinSaveController (
     fun saveCoinList() {
         coinSaveService.saveCoinList()
     }
+
+    @Operation(summary = "코인 이미지 저장")
+    @PostMapping("/save-image")
+    fun saveCoinImage() {
+        coinSaveService.saveCoinImage()
+    }
 }

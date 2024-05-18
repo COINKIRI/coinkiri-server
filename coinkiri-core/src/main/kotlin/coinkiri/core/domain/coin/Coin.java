@@ -42,4 +42,8 @@ public class Coin {
         this.koreanName = koreanName;
         this.englishName = englishName;
     }
+
+    public void updateSymbolImage(byte[] symbolImage) {
+        this.symbolImage = symbolImage;
+    }
 }
