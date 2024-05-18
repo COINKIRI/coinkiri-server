@@ -14,7 +14,7 @@ import org.springframework.web.method.support.ModelAndViewContainer
 
 @Component
 class MemberIdResolver : HandlerMethodArgumentResolver {
-
+    
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.hasParameterAnnotation(MemberID::class.java) && Long::class.java == parameter.parameterType
     }

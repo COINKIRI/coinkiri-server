@@ -1,6 +1,7 @@
 package coinkiri.api.config.interceptor
 
 import coinkiri.api.service.auth.jwt.JwtKey
+import coinkiri.common.KotlinLogging.log
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Component
@@ -16,7 +17,9 @@ class AuthInterceptor (
             return true
         }
         handler.getMethodAnnotation(Auth::class.java) ?: return true
-        val memberId = loginCheckHandler.getMemberId(request)
+        log.info { "AuthInterceptor preHandle 실행" }
+        val memberId: Long = loginCheckHandler.getMemberId(request)
+
         request.setAttribute(JwtKey.MEMBER_ID, memberId)
         return true
     }
