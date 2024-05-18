@@ -2,6 +2,7 @@ package coinkiri.api.service.member
 
 import coinkiri.api.controller.member.dto.request.RegisterRequestDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
+import coinkiri.core.domain.member.SocialType
 import coinkiri.core.domain.member.repository.MemberRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,13 +15,17 @@ class MemberService (
     // 회원 정보 저장 API - new
     @Transactional
     fun registerUser(request: RegisterRequestDto): Long {
-        if (memberRepository.existsBySocialId(request.socialId)) { // 소셜 아이디 중복 체크
-            throw IllegalArgumentException("이미 존재하는 소셜 아이디입니다.")
-        }
-        val member = memberRepository.save(request.toEntity())
-        return member.id!! // 회원 정보 저장 후 회원 ID 반환
+        // 소셜 아이디로 회원 조회 후 있으면 ID 반환, 없으면 회원 저장 후 ID 반환
+        return memberRepository.findBySocialId(request.socialId)?.id ?: memberRepository.save(request.toEntity()).id!!
     }
 
+
+    // 회원 로그인 API
+    @Transactional
+    fun login(socialId: String, socialType: SocialType): Long {
+        val member = memberRepository.findBySocialIdAndSocialType(socialId, socialType) ?: throw IllegalArgumentException("존재하지 않는 유저입니다.")
+        return member.id!! // 회원 ID 반환
+    }
 
     // 회원 정보 저장 API
     @Transactional
@@ -30,6 +35,7 @@ class MemberService (
         }
         memberRepository.save(request.toEntity()) // 회원 정보 저장
     }
+
 
     // 회원 확인 API
     @Transactional(readOnly = true)

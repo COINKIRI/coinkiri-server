@@ -1,6 +1,7 @@
 package coinkiri.api.service.auth
 
 import coinkiri.api.client.kakao.KakaoApiCaller
+import coinkiri.api.controller.auth.dto.request.LoginRequestDto
 import coinkiri.api.controller.auth.dto.request.SignupRequestDto
 import coinkiri.api.service.member.MemberService
 import coinkiri.core.domain.member.SocialType
@@ -21,5 +22,11 @@ class KakaoAuthService (
     override fun signup(request: SignupRequestDto): Long {
         val response = kakaoApiCaller.getProfileInfo(request.token)
         return memberService.registerUser(request.toRegisterRequestDto(response.id))
+    }
+
+    @Transactional
+    override fun login(request: LoginRequestDto): Long {
+        val response = kakaoApiCaller.getProfileInfo(request.token)
+        return memberService.login(response.id, socialType)
     }
 }
