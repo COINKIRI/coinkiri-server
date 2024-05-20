@@ -1,5 +1,9 @@
 package coinkiri.core.domain.post;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import coinkiri.core.domain.comment.Comment;
 import coinkiri.core.domain.common.BaseEntity;
 import coinkiri.core.domain.member.Member;
 import jakarta.persistence.Column;
@@ -13,6 +17,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -46,6 +51,8 @@ public abstract class Post extends BaseEntity {
 	private Member member;
 
 	// comment를 oneToMany
+	@OneToMany(mappedBy = "post")
+	private List<Comment> comments = new ArrayList<>();
 
 	public Post(String title, String content, Member member) {
 		this.title = title;

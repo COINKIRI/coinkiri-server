@@ -1,11 +1,10 @@
 package coinkiri.api.service.comment
 
 import coinkiri.api.controller.comment.dto.request.CommentRequestDto
-import coinkiri.api.controller.comment.dto.response.CommentResponseDto
 import coinkiri.core.domain.comment.Comment
 import coinkiri.core.domain.comment.repository.CommentRepository
 import coinkiri.core.domain.member.repository.MemberRepository
-import coinkiri.core.domain.post.repository.CommunityRepository
+import coinkiri.core.domain.post.repository.community.CommunityRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

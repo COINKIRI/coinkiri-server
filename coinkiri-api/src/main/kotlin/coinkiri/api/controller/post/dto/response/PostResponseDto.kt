@@ -18,3 +18,8 @@ data class CommunityResponseDto (
     val postResponseDto: PostResponseDto,
     val category: String
 )
+
+data class CommunityDetailResponseDto (
+    val communityResponseDto: CommunityResponseDto,
+    val comments: List<CommentResponseDto>
+)
