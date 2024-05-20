@@ -1,7 +1,10 @@
 package coinkiri.api.controller.member
 
+import coinkiri.api.config.interceptor.Auth
+import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.member.dto.request.RegisterRequestDto
 import coinkiri.api.controller.member.dto.request.UpdateNicknameDto
+import coinkiri.api.controller.member.dto.response.MemberInfoDto
 import coinkiri.api.service.member.MemberService
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
@@ -23,42 +26,15 @@ class MemberController (
     private val memberService: MemberService
 ){
 
-    // 회원 정보 저장 API
-    @Operation(summary = "회원 정보 저장")
-    @PostMapping("/register")
-    fun register(@RequestBody request: RegisterRequestDto): ResponseEntity<ApiResponse<Any>>{
-        memberService.saveMember(request)
-        log.info { "회원 정보 저장 완료" }
-        return ResponseEntity.ok(ApiResponse.success())
-    }
-
-    // 회원 확인 API
-    @Operation(summary = "회원 확인")
-    @GetMapping("/check/{socialId}")
-    fun checkMember(@PathVariable socialId: String): ResponseEntity<ApiResponse<Any>> {
-        val isMember = memberService.checkMember(socialId)
-        return ResponseEntity.ok(ApiResponse.success(isMember))
-    }
-
-
-    // 닉네임 수정 API PathVariable
-    @Operation(summary = "닉네임 수정")
-    @PutMapping("/{socialId}/nickname")
-    fun updateNickname(
-        @PathVariable socialId: String,
-        @RequestBody request: UpdateNicknameDto
-    ): ResponseEntity<ApiResponse<Any>> {
-        memberService.updateNickname(socialId, request.newNickname)
-        return ResponseEntity.ok(ApiResponse.success())
-    }
-
     // 마이페이지 (회원 정보 조회) API
-    // memberid 로 조회하도록 수정 예정
+    @Auth
     @Operation(summary = "마이페이지 조회")
-    @GetMapping("/{socialId}")
-    fun findMemberInfo(@PathVariable socialId: String): ResponseEntity<ApiResponse<Any>> {
-        val memberInfo = memberService.findMemberInfo(socialId)
+    @GetMapping("/info")
+    fun findMemberInfo(@MemberID memberId: Long): ResponseEntity<ApiResponse<MemberInfoDto>> {
+        val memberInfo = memberService.findMemberInfo(memberId)
         return ResponseEntity.ok(ApiResponse.success(memberInfo))
     }
+
+
 
 }

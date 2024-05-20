@@ -16,6 +16,7 @@ class LoginCheckHandler (
         val bearerToken: String? = request.getHeader("Authorization")
         if (!bearerToken.isNullOrBlank() && bearerToken.startsWith("Bearer ")) {
             val accessToken = bearerToken.substring("Bearer ".length)
+            log.info { "LoginCheckHandler accessToken : $accessToken" }
             if (jwtHandler.validateToken(accessToken)) {
                 return jwtHandler.getMemberIdFromJwt(accessToken)
             }

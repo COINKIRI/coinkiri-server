@@ -17,8 +17,8 @@ class AuthInterceptor (
             return true
         }
         handler.getMethodAnnotation(Auth::class.java) ?: return true
-        log.info { "AuthInterceptor preHandle 실행" }
         val memberId: Long = loginCheckHandler.getMemberId(request)
+        log.info { "AuthInterceptor memberId: $memberId" }
 
         request.setAttribute(JwtKey.MEMBER_ID, memberId)
         return true

@@ -1,4 +1,4 @@
-package coinkiri.api.config
+package coinkiri.api.config.web
 
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler

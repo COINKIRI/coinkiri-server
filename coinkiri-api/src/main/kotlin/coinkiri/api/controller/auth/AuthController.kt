@@ -52,10 +52,8 @@ class AuthController (
     @Operation(summary = "로그아웃")
     @PostMapping("/logout")
     @Auth
-    fun logout(@MemberID memberId: Long?): ResponseEntity<ApiResponse<Any>> {
-        if (memberId != null) { /* TODO : memberId가 왜 NULL 인가 */
-            commonAuthService.logout(memberId)
-        }
+    fun logout(@MemberID memberId: Long): ResponseEntity<ApiResponse<Any>> {
+        commonAuthService.logout(memberId)
         log.info { "로그아웃 완료. memberId: $memberId" }
         return ResponseEntity.ok(ApiResponse.success())
     }

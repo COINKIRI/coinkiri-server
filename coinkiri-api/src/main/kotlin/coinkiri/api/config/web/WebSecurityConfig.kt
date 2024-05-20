@@ -1,4 +1,4 @@
-package coinkiri.api.config
+package coinkiri.api.config.web
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -47,6 +48,8 @@ class WebSecurityConfig {
             .exceptionHandling() {
                 it.authenticationEntryPoint(FailedAuthenticationEntryPoint()) // 인증 실패 시 처리
             }
+//                .addFilterBefore(JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter::class.java) // JWT 필터 추가
+
 
         return httpSecurity.build();
     }
