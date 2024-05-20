@@ -28,6 +28,7 @@ class AuthController (
     private val tokenService: TokenService,
     private val commonAuthService: CommonAuthService
 ){
+
     @Operation(summary = "소셜 회원등록/인증")
     @PostMapping("/signup")
     fun signup(@RequestBody request: SignupRequestDto): ResponseEntity<ApiResponse<TokenResponseDto>> {
@@ -46,6 +47,5 @@ class AuthController (
         log.info { "로그아웃 완료. memberId: $memberId" }
         return ResponseEntity.ok(ApiResponse.success())
     }
-
 
 }

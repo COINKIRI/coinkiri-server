@@ -1,4 +1,4 @@
-package coinkiri.api.controller.post
+package coinkiri.api.controller.post.community
 
 import coinkiri.api.controller.post.dto.request.CommunityRequestDto
 import coinkiri.api.service.post.CommunityService
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*
 
 @Tag(name = "Community")
 @RestController
-@RequestMapping("/api/v1/post")
+@RequestMapping("/api/v1/post/community")
 class CommunityController (
     private val communityService: CommunityService
 ){
 
     // 커뮤니티 글 작성 API
     @Operation(summary = "커뮤니티 글 작성")
-    @PostMapping("/community/save")
+    @PostMapping("/save")
     fun saveCommunityPost(@RequestBody request: CommunityRequestDto): ResponseEntity<ApiResponse<Any>> {
         communityService.saveCommunityPost(request)
         return ResponseEntity.ok(ApiResponse.success())
@@ -26,7 +26,7 @@ class CommunityController (
 
     // 커뮤니티 글 조회 API
     @Operation(summary = "커뮤니티 글 조회")
-    @PostMapping("/community/{postId}")
+    @PostMapping("/{postId}")
     fun findCommunityPost(@PathVariable postId: Long): ResponseEntity<ApiResponse<Any>> {
         val post = communityService.findCommunityPost(postId)
         log.info { "커뮤니티 글 조회 완료. postId: $postId" }

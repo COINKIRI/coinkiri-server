@@ -17,11 +17,11 @@ public class Community extends Post{
 
 	// 카테고리
 	@Column(name = "category", nullable = false)
-	private String category;
+	private CategoryType category;
 
 	@Builder
 	public Community(String title, String content, Member member, String category) {
 		super(title, content, member);
-		this.category = category;
+		this.category = CategoryType.valueOf(category);
 	}
 }
