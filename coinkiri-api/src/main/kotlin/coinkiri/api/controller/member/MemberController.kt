@@ -2,8 +2,6 @@ package coinkiri.api.controller.member
 
 import coinkiri.api.config.interceptor.Auth
 import coinkiri.api.config.resolver.MemberID
-import coinkiri.api.controller.member.dto.request.RegisterRequestDto
-import coinkiri.api.controller.member.dto.request.UpdateNicknameDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
 import coinkiri.api.service.member.MemberService
 import coinkiri.common.KotlinLogging.log
@@ -12,10 +10,6 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -33,6 +27,16 @@ class MemberController (
     fun findMemberInfo(@MemberID memberId: Long): ResponseEntity<ApiResponse<MemberInfoDto>> {
         val memberInfo = memberService.findMemberInfo(memberId)
         return ResponseEntity.ok(ApiResponse.success(memberInfo))
+    }
+
+    // 회원 탈퇴 API
+    @Auth
+    @Operation(summary = "회원 탈퇴")
+    @GetMapping("/withdraw")
+    fun withdraw(@MemberID memberId: Long): ResponseEntity<ApiResponse<Any>> {
+        memberService.withdraw(memberId)
+        log.info { "회원 탈퇴 완료. memberId: $memberId" }
+        return ResponseEntity.ok(ApiResponse.success())
     }
 
 

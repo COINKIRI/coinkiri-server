@@ -28,24 +28,13 @@ class AuthController (
     private val tokenService: TokenService,
     private val commonAuthService: CommonAuthService
 ){
-    @Operation(summary = "소셜 회원가입")
+    @Operation(summary = "소셜 회원등록/인증")
     @PostMapping("/signup")
     fun signup(@RequestBody request: SignupRequestDto): ResponseEntity<ApiResponse<TokenResponseDto>> {
         val authService = authServiceProvider.getAuthService(SocialType.valueOf(request.socialType))
         val memberId = authService.signup(request)
         val jwtToken = tokenService.createTokenInfo(memberId)
         log.info { "소셜 회원가입 완료. memberId: $memberId, jwtToken: $jwtToken" }
-        return ResponseEntity.ok(ApiResponse.success(jwtToken))
-    }
-
-    // 안씀
-    @Operation(summary = "소셜 로그인")
-    @PostMapping("/login")
-    fun login(@RequestBody request: LoginRequestDto): ResponseEntity<ApiResponse<TokenResponseDto>> {
-        val authService = authServiceProvider.getAuthService(SocialType.valueOf(request.socialType))
-        val memberId = authService.login(request)
-        val jwtToken = tokenService.createTokenInfo(memberId)
-        log.info { "소셜 로그인 완료. memberId: $memberId, tokenInfo: $jwtToken" }
         return ResponseEntity.ok(ApiResponse.success(jwtToken))
     }
 
