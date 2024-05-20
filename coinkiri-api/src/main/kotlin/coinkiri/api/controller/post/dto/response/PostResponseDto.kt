@@ -1,5 +1,6 @@
 package coinkiri.api.controller.post.dto.response
 
+import coinkiri.api.controller.comment.dto.response.CommentResponseDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
 import java.time.LocalDateTime
 
