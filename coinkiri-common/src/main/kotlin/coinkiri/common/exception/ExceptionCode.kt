@@ -12,5 +12,5 @@ enum class ExceptionCode(// 상태 코드 - HttpStatusCode Value
 
     INTERNAL_SERVER_EXCEPTION(HttpStatusCode.valueOf(500), "인증이 필요한 컨트롤러 입니다. @Auth 어노테이션을 붙여주세요."),
 
-    INTERNAL_SERVER_EXCEPTION2(HttpStatusCode.valueOf(500), "MEMBER_ID 를 가져오지 못했습니다."),
+    ALREADY_EXIST_EXCEPTION(HttpStatusCode.valueOf(409), "이미 존재하는 데이터 입니다."),
 }

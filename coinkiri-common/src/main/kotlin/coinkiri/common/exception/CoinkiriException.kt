@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatusCode
 
 
 class CoinkiriException : RuntimeException {
-    private val statusCode: HttpStatusCode
+    val statusCode: HttpStatusCode
     override var message: String
 
     constructor(exceptionCode: ExceptionCode) : super(exceptionCode.message) {
