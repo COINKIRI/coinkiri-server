@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum CategoryType {
 	FREE("자유"),
 	CHAT("잡담"),
-	INFO("정보");
+	INFO("정보"),
+	QUESTION("질문");
 
 	private final String value;
 

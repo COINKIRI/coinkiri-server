@@ -25,7 +25,7 @@ class MemberController (
 
     // 마이페이지 (회원 정보 조회) API
     @Auth
-    @Operation(summary = "마이페이지 조회")
+    @Operation(summary = "[인증] 마이페이지 조회")
     @GetMapping("/info")
     fun findMemberInfo(@MemberID memberId: Long): ResponseEntity<ApiResponse<MemberInfoDto>> {
         val memberInfo = memberService.findMemberInfo(memberId)
@@ -34,7 +34,7 @@ class MemberController (
 
     // 회원 탈퇴 API
     @Auth
-    @Operation(summary = "회원 탈퇴")
+    @Operation(summary = "[인증] 회원 탈퇴")
     @GetMapping("/withdraw")
     fun withdraw(@MemberID memberId: Long): ResponseEntity<ApiResponse<Any>> {
         memberService.withdraw(memberId)
@@ -44,7 +44,7 @@ class MemberController (
 
     // 닉네임 수정 API
     @Auth
-    @Operation(summary = "닉네임 수정")
+    @Operation(summary = "[인증] 닉네임 수정")
     @PutMapping("/nickname")
     fun updateNickname(
         @MemberID memberId: Long,

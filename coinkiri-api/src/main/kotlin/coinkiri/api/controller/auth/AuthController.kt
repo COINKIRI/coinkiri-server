@@ -29,7 +29,7 @@ class AuthController (
     private val commonAuthService: CommonAuthService
 ){
 
-    @Operation(summary = "소셜 회원등록/인증")
+    @Operation(summary = "[인증] 소셜 회원가입/로그인")
     @PostMapping("/signup")
     fun signup(@RequestBody request: SignupRequestDto): ResponseEntity<ApiResponse<TokenResponseDto>> {
         val authService = authServiceProvider.getAuthService(SocialType.valueOf(request.socialType))
@@ -39,7 +39,7 @@ class AuthController (
         return ResponseEntity.ok(ApiResponse.success(jwtToken))
     }
 
-    @Operation(summary = "로그아웃")
+    @Operation(summary = "[인증] 로그아웃")
     @PostMapping("/logout")
     @Auth
     fun logout(@MemberID memberId: Long): ResponseEntity<ApiResponse<Any>> {
