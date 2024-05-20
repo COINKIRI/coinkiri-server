@@ -1,5 +1,7 @@
 package coinkiri.api.controller.post.community
 
+import coinkiri.api.config.interceptor.Auth
+import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.post.dto.request.CommunityRequestDto
 import coinkiri.api.service.post.CommunityService
 import coinkiri.common.KotlinLogging.log
@@ -17,20 +19,36 @@ class CommunityController (
 ){
 
     // 커뮤니티 글 작성 API
-    @Operation(summary = "커뮤니티 글 작성")
+    @Auth
+    @Operation(summary = "[인증] 커뮤니티 글 작성")
     @PostMapping("/save")
-    fun saveCommunityPost(@RequestBody request: CommunityRequestDto): ResponseEntity<ApiResponse<Any>> {
-        communityService.saveCommunityPost(request)
+    fun saveCommunityPost(
+        @MemberID memberId: Long,
+        @RequestBody request: CommunityRequestDto
+    ): ResponseEntity<ApiResponse<Any>> {
+        communityService.saveCommunityPost(memberId, request)
+        log.info { "커뮤니티 글 작성 완료. memberId: $memberId" }
         return ResponseEntity.ok(ApiResponse.success())
     }
 
-    // 커뮤니티 글 조회 API
-    @Operation(summary = "커뮤니티 글 조회")
+    // 커뮤니티 글 상세 조회 API
+    @Operation(summary = "커뮤니티 글 상세 조회")
     @PostMapping("/{postId}")
     fun findCommunityPost(@PathVariable postId: Long): ResponseEntity<ApiResponse<Any>> {
         val post = communityService.findCommunityPost(postId)
         log.info { "커뮤니티 글 조회 완료. postId: $postId" }
         return ResponseEntity.ok(ApiResponse.success(post))
     }
+
+    // 커뮤니티 전체 조회 API
+    @Operation(summary = "커뮤니티 전체 조회")
+    @GetMapping("/all")
+    fun findAllCommunityPost(): ResponseEntity<ApiResponse<Any>> {
+        val posts = communityService.findAllCommunityPost()
+        log.info { "커뮤니티 전체 조회 완료." }
+        return ResponseEntity.ok(ApiResponse.success(posts))
+    }
+
+
 
 }

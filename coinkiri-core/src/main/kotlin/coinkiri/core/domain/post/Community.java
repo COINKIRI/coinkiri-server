@@ -4,6 +4,8 @@ import coinkiri.core.domain.member.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +19,7 @@ public class Community extends Post{
 
 	// 카테고리
 	@Column(name = "category", nullable = false)
+	@Enumerated(EnumType.STRING)
 	private CategoryType category;
 
 	@Builder
