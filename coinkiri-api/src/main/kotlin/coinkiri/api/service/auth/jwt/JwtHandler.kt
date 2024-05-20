@@ -9,6 +9,7 @@ import io.jsonwebtoken.io.DecodingException
 import io.jsonwebtoken.security.Keys
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpStatusCode
 import org.springframework.stereotype.Component
 import java.security.Key
 import java.util.*
@@ -82,10 +83,11 @@ class JwtHandler (
         return false
     }
 
+    // getMemberIdFromJwt: JWT에서 memberId를 추출하는 메서드
     fun getMemberIdFromJwt(accessToken: String): Long {
         val memberId = parseClaims(accessToken)[JwtKey.MEMBER_ID] as Int?
         return memberId?.toLong() ?: throw CoinkiriException(
-            ExceptionCode.UNAUTHORIZED_EXCEPTION2
+            HttpStatusCode.valueOf(401), "주어진 액세스 토큰 $accessToken 으로 유저 정보를 찾을 수 없습니다."
         )
     }
 

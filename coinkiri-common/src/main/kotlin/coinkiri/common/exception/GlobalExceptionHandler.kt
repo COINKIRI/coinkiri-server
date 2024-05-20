@@ -16,6 +16,7 @@ import org.yaml.snakeyaml.constructor.DuplicateKeyException
 @RestControllerAdvice
 class GlobalExceptionHandler {
 
+    // 커스텀 예외 처리
     @ExceptionHandler(CoinkiriException::class)
     fun handleCoinkiriException(exception: CoinkiriException): ResponseEntity<ApiResponse<Any>> {
         return ResponseEntity
@@ -23,6 +24,7 @@ class GlobalExceptionHandler {
             .body(ApiResponse.error(exception.exceptionCode)) // BaseException 발생 시 응답
     }
 
+    // 중복키 예외 처리
     @ExceptionHandler(DuplicateKeyException::class)
     fun handleDuplicateKeyException(exception: DuplicateKeyException): ResponseEntity<ApiResponse<String>> {
         return ResponseEntity
@@ -34,6 +36,7 @@ class GlobalExceptionHandler {
             ) // 중복키 예외 발생 시 응답
     }
 
+    // 유효성 검사 실패 예외 처리
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun exceptionHandler(exception: MethodArgumentNotValidException): ResponseEntity<ApiResponse<String>> {
         // MethodArgumentNotValidException의 경우는 메세지를 바인딩 결과에서 가져와야 함
@@ -53,5 +56,4 @@ class GlobalExceptionHandler {
                 )
             ) // MethodArgumentNotValidException 발생 시 응답
     }
-
 }

@@ -19,7 +19,8 @@ class KakaoApiCallerImpl (
             .retrieve()
             .onStatus(HttpStatusCode::is4xxClientError) {
                 throw CoinkiriException( // custom exception 던짐
-                    ExceptionCode.VALIDATION_INVALID_TOKEN_EXCEPTION
+                    HttpStatusCode.valueOf(401),
+                    "잘못된 카카오 액세스 토큰 $accessToken 입니다."
                 )
             }
             .onStatus(HttpStatusCode::is5xxServerError) {

@@ -48,6 +48,14 @@ class MemberService (
         memberRepository.delete(member)
     }
 
+    // 닉네임 수정 서비스
+    @Transactional
+    fun updateNickname(memberId: Long, newNickname: String) {
+        val member = memberRepository.findById(memberId).get() // 회원 조회
+        if(memberRepository.existsByNickname(newNickname)) throw IllegalArgumentException("이미 사용중인 닉네임입니다.")
+        member.updateNickname(newNickname) // 닉네임 수정
+    }
+
 
 
 
