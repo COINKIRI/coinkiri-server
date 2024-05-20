@@ -20,8 +20,8 @@ class GlobalExceptionHandler {
     @ExceptionHandler(CoinkiriException::class)
     fun handleCoinkiriException(exception: CoinkiriException): ResponseEntity<ApiResponse<Any>> {
         return ResponseEntity
-            .status(exception.exceptionCode.statusCode) // BaseException의 status에 따라 상태코드 설정
-            .body(ApiResponse.error(exception.exceptionCode)) // BaseException 발생 시 응답
+            .status(exception.statusCode) // 상태 코드
+            .body(ApiResponse.error(exception.statusCode, exception.message)) // 발생 시 응답
     }
 
     // 중복키 예외 처리

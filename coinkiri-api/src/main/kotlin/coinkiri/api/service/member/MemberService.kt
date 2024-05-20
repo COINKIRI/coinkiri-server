@@ -2,6 +2,8 @@ package coinkiri.api.service.member
 
 import coinkiri.api.controller.member.dto.request.MemberRequestDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
+import coinkiri.common.exception.CoinkiriException
+import coinkiri.common.exception.ExceptionCode
 import coinkiri.core.domain.member.SocialType
 import coinkiri.core.domain.member.repository.MemberRepository
 import org.springframework.stereotype.Service
@@ -52,7 +54,7 @@ class MemberService (
     @Transactional
     fun updateNickname(memberId: Long, newNickname: String) {
         val member = memberRepository.findById(memberId).get() // 회원 조회
-        if(memberRepository.existsByNickname(newNickname)) throw IllegalArgumentException("이미 사용중인 닉네임입니다.")
+        if(memberRepository.existsByNickname(newNickname)) throw CoinkiriException(ExceptionCode.ALREADY_EXIST_EXCEPTION)
         member.updateNickname(newNickname) // 닉네임 수정
     }
 
