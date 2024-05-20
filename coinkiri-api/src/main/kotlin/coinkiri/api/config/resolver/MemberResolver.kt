@@ -5,6 +5,7 @@ import coinkiri.api.service.auth.jwt.JwtKey
 import coinkiri.common.exception.CoinkiriException
 import coinkiri.common.exception.ExceptionCode
 import org.springframework.core.MethodParameter
+import org.springframework.http.HttpStatusCode
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
@@ -30,7 +31,8 @@ class MemberIdResolver : HandlerMethodArgumentResolver {
 
         return webRequest.getAttribute(JwtKey.MEMBER_ID, 0)
             ?: throw CoinkiriException(
-                ExceptionCode.INTERNAL_SERVER_EXCEPTION2,
+                HttpStatusCode.valueOf(500),
+                "MEMBER_ID 를 가져오지 못했습니다. ($parameter.javaClass - $parameter.method)"
             )
     }
 }
