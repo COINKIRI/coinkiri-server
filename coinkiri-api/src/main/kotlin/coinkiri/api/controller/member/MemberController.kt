@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -26,7 +27,7 @@ class MemberController (
     // 마이페이지 (회원 정보 조회) API
     @Auth
     @Operation(summary = "마이페이지 조회")
-    @GetMapping("/info")
+    @PostMapping("/info")
     fun findMemberInfo(@MemberID memberId: Long): ResponseEntity<ApiResponse<MemberInfoDto>> {
         val memberInfo = memberService.findMemberInfo(memberId)
         return ResponseEntity.ok(ApiResponse.success(memberInfo))
