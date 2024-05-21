@@ -1,5 +1,10 @@
 package coinkiri.core.domain.member;
 
+import java.io.IOException;
+import java.nio.file.Files;
+
+import org.springframework.util.ResourceUtils;
+
 import coinkiri.core.domain.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -63,6 +68,11 @@ public class Member extends BaseEntity {
 		this.socialId = socialId;
 		this.socialType = SocialType.valueOf(socailType);
 		this.nickname = generateNickname();
+		this.pic = getDefaultProfileImage();
+		this.level = 1;
+		this.exp = 0;
+		this.mileage = 0;
+		this.statusMessage = "자기소개가 없습니다";
 	}
 
 	// 랜덤 닉네임 생성 (social id 통해 만들도록 수정 예정)
@@ -80,5 +90,13 @@ public class Member extends BaseEntity {
 		this.statusMessage = statusMessage;
 	}
 
+	// 기본 프로필 사진 초기화
+	private byte[] getDefaultProfileImage() {
+		try {
+			return Files.readAllBytes(ResourceUtils.getFile("classpath:profileImage/defaultProfile.png").toPath());
+		} catch (IOException e) {
+			throw new RuntimeException("Default profile image could not be loaded", e);
+		}
+	}
 
 }

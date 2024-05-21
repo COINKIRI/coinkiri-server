@@ -2,8 +2,10 @@ package coinkiri.api.service.member
 
 import coinkiri.api.controller.member.dto.request.MemberRequestDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
+import coinkiri.api.controller.member.dto.response.MyPageResponseDto
 import coinkiri.common.exception.CoinkiriException
 import coinkiri.common.exception.ExceptionCode
+import coinkiri.core.domain.follow.repository.FollowRepository
 import coinkiri.core.domain.member.SocialType
 import coinkiri.core.domain.member.repository.MemberRepository
 import org.springframework.stereotype.Service
@@ -11,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MemberService (
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val followRepository: FollowRepository
 ){
 
     // 회원 정보 저장 서비스
@@ -23,17 +26,19 @@ class MemberService (
 
     // 마이페이지 (회원 정보 조회) 서비스
     @Transactional(readOnly = true)
-    fun findMemberInfo(memberId: Long): MemberInfoDto {
+    fun findMemberInfo(memberId: Long): MyPageResponseDto {
         val member = memberRepository.findById(memberId).get() // 회원 조회
 
-        return MemberInfoDto( // toDto를 쓸 수 없는 이유: core모듈은 api모듈을 모르기 때문(의존성이 없기 때문)
-            id = member.id!!,
+        return MyPageResponseDto( // toDto를 쓸 수 없는 이유: core모듈은 api모듈을 모르기 때문(의존성이 없기 때문)
+            id = member.id,
             nickname = member.nickname,
             exp = member.exp,
             level = member.level,
             mileage = member.mileage,
             pic = member.pic ?: byteArrayOf(), // pic이 null이면 빈 배열로 초기화(기본 프로필 사진 추가 예정)
-            statusMessage = member.statusMessage
+            statusMessage = member.statusMessage,
+            followingCount = followRepository.countByFollowerId(memberId),
+            followerCount = followRepository.countByFollowingId(memberId)
         )
     }
 

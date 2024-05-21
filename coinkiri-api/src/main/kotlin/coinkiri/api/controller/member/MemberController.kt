@@ -5,6 +5,7 @@ import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.member.dto.request.UpdateNicknameRequestDto
 import coinkiri.api.controller.member.dto.request.UpdateStautsMessageRequestDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
+import coinkiri.api.controller.member.dto.response.MyPageResponseDto
 import coinkiri.api.service.member.MemberService
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
@@ -29,7 +30,7 @@ class MemberController (
     @Auth
     @Operation(summary = "[인증] 마이페이지 조회")
     @GetMapping("/info")
-    fun findMemberInfo(@MemberID memberId: Long): ResponseEntity<ApiResponse<MemberInfoDto>> {
+    fun findMemberInfo(@MemberID memberId: Long): ResponseEntity<ApiResponse<MyPageResponseDto>> {
         val memberInfo = memberService.findMemberInfo(memberId)
         return ResponseEntity.ok(ApiResponse.success(memberInfo))
     }
