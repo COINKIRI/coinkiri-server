@@ -11,6 +11,8 @@ class FollowService (
     private val followRepository: FollowRepository,
     private val memberRepository: MemberRepository
 ){
+
+    // 팔로우 저장
     @Transactional
     fun saveFollow(memberId: Long, followId: Long) {
         val member = memberRepository.findById(memberId).get()
@@ -21,5 +23,14 @@ class FollowService (
                 member, followMember
             )
         )
+    }
+
+    // 팔로우 취소
+    @Transactional
+    fun deleteFollow(memberId: Long, followId: Long) {
+        val member = memberRepository.findById(memberId).get()
+        val followMember = memberRepository.findById(followId).get()
+
+        followRepository.deleteByFollowerAndFollowing(member, followMember)
     }
 }
