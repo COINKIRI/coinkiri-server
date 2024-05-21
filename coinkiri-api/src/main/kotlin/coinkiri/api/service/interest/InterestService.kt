@@ -1,5 +1,6 @@
 package coinkiri.api.service.interest
 
+import coinkiri.common.KotlinLogging.log
 import coinkiri.core.domain.coin.repository.CoinRepository
 import coinkiri.core.domain.interest.Interest
 import coinkiri.core.domain.interest.repository.InterestRepository
@@ -27,6 +28,13 @@ class InterestService (
     // 관심 종목 조회
     @Transactional(readOnly = true)
     fun findInterestList(memberId: Long) {
-        interestRepository.findByMemberId(memberId)
+
+        val interestCoinList = interestRepository.findByMemberId(memberId).map {
+            log.info { "관심 종목 조회: ${it.coin.market}" }
+            it.coin.market
+        }
+
+        
+
     }
 }

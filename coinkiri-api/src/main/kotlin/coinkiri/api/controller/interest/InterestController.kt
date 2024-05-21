@@ -33,6 +33,7 @@ class InterestController (
 
     @Operation(summary = "[인증] 관심 종목 조회")
     @GetMapping("/")
+    @Auth
     fun findInterestList(
         @MemberID memberId: Long
     ): ResponseEntity<ApiResponse<Any>> {
