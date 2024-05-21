@@ -41,7 +41,6 @@ class CoinController (
         val startTime = System.currentTimeMillis()
         val coinDetail = coinService.findCoinDetail(coinId)
         val takenTime = System.currentTimeMillis() - startTime
-
         log.info { "코인 상세 조회 완료. 실행시간: $takenTime ms" }
         return ResponseEntity.ok(ApiResponse.success(coinDetail))
     }
