@@ -8,4 +8,5 @@ data class MemberInfoDto(
     val level: Int,
     val mileage: Int,
     val pic: ByteArray,
+    val statusMessage: String,
 )

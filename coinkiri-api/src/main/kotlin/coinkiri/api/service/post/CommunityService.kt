@@ -56,7 +56,8 @@ class CommunityService (
                         it.member.exp,
                         it.member.level,
                         it.member.mileage,
-                        it.member.pic ?: byteArrayOf()
+                        it.member.pic ?: byteArrayOf(),
+                        it.member.statusMessage
                     )
                 ),
                 it.category.toString()

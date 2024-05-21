@@ -32,7 +32,8 @@ class MemberService (
             exp = member.exp,
             level = member.level,
             mileage = member.mileage,
-            pic = member.pic ?: byteArrayOf() // pic이 null이면 빈 배열로 초기화(기본 프로필 사진 추가 예정)
+            pic = member.pic ?: byteArrayOf(), // pic이 null이면 빈 배열로 초기화(기본 프로필 사진 추가 예정)
+            statusMessage = member.statusMessage
         )
     }
 

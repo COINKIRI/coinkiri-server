@@ -54,7 +54,11 @@ public class Member extends BaseEntity {
 	// 마일리지
 	@Column(name = "mileage", nullable = false, columnDefinition = "int default 0")
 	private int mileage;
-	
+
+	// 자기소개
+	@Column(name = "status_message", nullable = false, columnDefinition = "varchar(255) default '자기소개가 없습니다'")
+	private String statusMessage;
+
 	public Member(String socialId, String socailType) {
 		this.socialId = socialId;
 		this.socialType = SocialType.valueOf(socailType);
