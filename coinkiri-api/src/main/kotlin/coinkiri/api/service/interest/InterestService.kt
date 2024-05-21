@@ -29,9 +29,12 @@ class InterestService (
     }
 
     // 관심 종목 조회
+    /**
+     * member, coin, interest 3개 fetch join
+     */
     @Transactional(readOnly = true)
     fun findInterestList(memberId: Long): CoinPricesDto {
-        val interestCoinList = interestRepository.findByMemberId(memberId).map {
+        val interestCoinList = interestRepository.findWithMemberAndCoinByMemberId(memberId).map {
             it.coin.market
         }
         val coinPrices = upbitApiCaller.getCoinPrices200(interestCoinList)

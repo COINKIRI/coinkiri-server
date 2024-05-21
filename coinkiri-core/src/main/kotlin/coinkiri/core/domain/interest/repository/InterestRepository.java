@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import coinkiri.core.domain.interest.Interest;
 
-public interface InterestRepository extends JpaRepository<Interest, Long> {
+public interface InterestRepository extends JpaRepository<Interest, Long>, InterestRepositoryDsl {
 
 	List<Interest> findByMemberId(Long memberId);
 }
