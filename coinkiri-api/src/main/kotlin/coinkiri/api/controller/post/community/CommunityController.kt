@@ -31,20 +31,11 @@ class CommunityController (
         return ResponseEntity.ok(ApiResponse.success())
     }
 
-    // 커뮤니티 글 상세 조회 API
-    @Operation(summary = "커뮤니티 글 상세 조회")
-    @PostMapping("/{postId}")
-    fun findCommunityPost(@PathVariable postId: Long): ResponseEntity<ApiResponse<Any>> {
-        val post = communityService.findCommunityPost(postId)
-        log.info { "커뮤니티 글 조회 완료. postId: $postId" }
-        return ResponseEntity.ok(ApiResponse.success(post))
-    }
-
     // 커뮤니티 전체 조회 API
     @Operation(summary = "커뮤니티 전체 조회")
     @GetMapping("/all")
     fun findAllCommunityPost(): ResponseEntity<ApiResponse<Any>> {
-        val posts = communityService.findAllCommunityPost()
+        val posts = communityService.findAllCommunityWithMember()
         log.info { "커뮤니티 전체 조회 완료." }
         return ResponseEntity.ok(ApiResponse.success(posts))
     }
