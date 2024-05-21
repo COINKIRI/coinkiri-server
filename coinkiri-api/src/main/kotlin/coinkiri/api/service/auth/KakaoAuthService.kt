@@ -27,6 +27,6 @@ class KakaoAuthService (
     @Transactional
     override fun login(request: LoginRequestDto): Long {
         val response = kakaoApiCaller.getProfileInfo(request.token)
-        return memberService.login(response.id, socialType)
+        return 0
     }
 }

@@ -21,14 +21,6 @@ class MemberService (
         return memberRepository.findBySocialId(request.socialId)?.id ?: memberRepository.save(request.toEntity()).id!!
     }
 
-    // 회원 로그인 서비스 - 사용 안함
-    @Transactional
-    fun login(socialId: String, socialType: SocialType): Long {
-        val member = memberRepository.findBySocialIdAndSocialType(socialId, socialType) ?: throw IllegalArgumentException("존재하지 않는 유저입니다.")
-        return member.id!! // 회원 ID 반환
-    }
-
-
     // 마이페이지 (회원 정보 조회) 서비스
     @Transactional(readOnly = true)
     fun findMemberInfo(memberId: Long): MemberInfoDto {
