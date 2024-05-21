@@ -17,8 +17,8 @@ class CommentService (
 
     // 댓글 작성
     @Transactional
-    fun saveComment(request: CommentRequestDto) {
-        val member = memberRepository.findById(request.memberId).get()
+    fun saveComment(memberId: Long, request: CommentRequestDto) {
+        val member = memberRepository.findById(memberId).get()
         val community = communityRepository.findById(request.postId).get()
 
         commentRepository.save(
