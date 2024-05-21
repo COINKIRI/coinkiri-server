@@ -1,6 +1,8 @@
 package coinkiri.api.service.comment
 
 import coinkiri.api.controller.comment.dto.request.CommentRequestDto
+import coinkiri.api.controller.comment.dto.response.CommentResponseDto
+import coinkiri.api.controller.member.dto.response.MemberInfoDto
 import coinkiri.core.domain.comment.Comment
 import coinkiri.core.domain.comment.repository.CommentRepository
 import coinkiri.core.domain.member.repository.MemberRepository
@@ -31,9 +33,27 @@ class CommentService (
     }
 
     // 댓글 조회
+    /**
+     * join하지 않을 시 댓글 개수*2 번의 쿼리 추가 발생
+     */
     @Transactional(readOnly = true)
-    fun findComment(postId: Long): List<Comment> {
-        return commentRepository.findByPostId(postId)
+    fun findComment(postId: Long): List<CommentResponseDto> {
+        return commentRepository.findWithMemberByPostId(postId).map { // byPostId -> post는 자동으로 join
+            CommentResponseDto(
+                it.id,
+                it.content,
+                it.createdAt,
+                it.modifiedAt,
+                MemberInfoDto(
+                    it.member.id,
+                    it.member.nickname,
+                    it.member.exp,
+                    it.member.level,
+                    it.member.mileage,
+                    it.member.pic ?: byteArrayOf()
+                )
+            )
+        }
     }
 
 

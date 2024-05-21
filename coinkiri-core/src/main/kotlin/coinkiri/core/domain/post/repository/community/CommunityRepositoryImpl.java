@@ -10,9 +10,10 @@ import coinkiri.core.domain.post.Community;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CommunityRepositoryImpl {
+public class CommunityRepositoryImpl implements CommunityRepositoryDsl {
 	private final JPAQueryFactory queryFactory;
 
+	@Override
 	public List<Community> findAllWithMember() {
 		return queryFactory.selectFrom(community)
 			.leftJoin(community.member)
