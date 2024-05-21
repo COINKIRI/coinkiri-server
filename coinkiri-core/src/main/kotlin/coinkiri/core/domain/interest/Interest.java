@@ -32,4 +32,9 @@ public class Interest {
 	@JoinColumn(name = "coin_id")
 	private Coin coin;
 
+	public Interest(Member member, Coin coin) {
+		this.member = member;
+		this.coin = coin;
+	}
+
 }

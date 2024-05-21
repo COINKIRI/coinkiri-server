@@ -1,5 +1,6 @@
 package coinkiri.api.controller.coin
 
+import coinkiri.api.controller.coin.dto.response.CoinResponseDto
 import coinkiri.api.service.coin.CoinService
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
@@ -24,7 +25,7 @@ class CoinController (
 
     @Operation(summary = "코인 리스트 조회")
     @GetMapping("/all")
-    fun findCoinList() : ResponseEntity<ApiResponse<List<Coin>>> {
+    fun findCoinList() : ResponseEntity<ApiResponse<List<CoinResponseDto>>> {
         val startTime = System.currentTimeMillis()
         val coinList = coinService.findCoinList()
         val takenTime = System.currentTimeMillis() - startTime
