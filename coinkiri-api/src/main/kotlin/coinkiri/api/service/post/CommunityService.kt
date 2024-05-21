@@ -57,6 +57,7 @@ class CommunityService (
                 community.createdAt,
                 community.modifiedAt,
                 MemberInfoDto(
+                    member.id!!,
                     member.nickname,
                     member.exp,
                     member.level,
@@ -82,6 +83,7 @@ class CommunityService (
                     it.createdAt,
                     it.modifiedAt,
                     MemberInfoDto(
+                        member.id!!,
                         member.nickname,
                         member.exp,
                         member.level,
