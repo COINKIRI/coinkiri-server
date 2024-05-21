@@ -35,6 +35,7 @@ class MemberService (
         val member = memberRepository.findById(memberId).get() // 회원 조회
 
         return MemberInfoDto( // toDto를 쓸 수 없는 이유: core모듈은 api모듈을 모르기 때문(의존성이 없기 때문)
+            id = member.id!!,
             nickname = member.nickname,
             exp = member.exp,
             level = member.level,
