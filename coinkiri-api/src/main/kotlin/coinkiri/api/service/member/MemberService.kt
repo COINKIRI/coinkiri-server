@@ -32,7 +32,8 @@ class MemberService (
             exp = member.exp,
             level = member.level,
             mileage = member.mileage,
-            pic = member.pic ?: byteArrayOf() // pic이 null이면 빈 배열로 초기화(기본 프로필 사진 추가 예정)
+            pic = member.pic ?: byteArrayOf(), // pic이 null이면 빈 배열로 초기화(기본 프로필 사진 추가 예정)
+            statusMessage = member.statusMessage
         )
     }
 
@@ -49,6 +50,13 @@ class MemberService (
         val member = memberRepository.findById(memberId).get() // 회원 조회
         if(memberRepository.existsByNickname(newNickname)) throw CoinkiriException(ExceptionCode.ALREADY_EXIST_EXCEPTION)
         member.updateNickname(newNickname) // 닉네임 수정
+    }
+
+    // 상태 메시지 수정 서비스
+    @Transactional
+    fun updateStatusMessage(memberId: Long, newStatusMessage: String) {
+        val member = memberRepository.findById(memberId).get() // 회원 조회
+        member.updateStatusMessage(newStatusMessage) // 상태 메시지 수정
     }
 
 

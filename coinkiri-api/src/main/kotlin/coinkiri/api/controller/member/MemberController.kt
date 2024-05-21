@@ -3,6 +3,7 @@ package coinkiri.api.controller.member
 import coinkiri.api.config.interceptor.Auth
 import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.member.dto.request.UpdateNicknameRequestDto
+import coinkiri.api.controller.member.dto.request.UpdateStautsMessageRequestDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
 import coinkiri.api.service.member.MemberService
 import coinkiri.common.KotlinLogging.log
@@ -53,6 +54,19 @@ class MemberController (
     ): ResponseEntity<ApiResponse<Any>> {
         memberService.updateNickname(memberId, request.newNickname)
         log.info { "닉네임 수정 완료. memberId: $memberId" }
+        return ResponseEntity.ok(ApiResponse.success())
+    }
+
+    // 상태 메시지 수정 API
+    @Auth
+    @Operation(summary = "[인증] 상태 메시지 수정")
+    @PutMapping("/status")
+    fun updateStatusMessage(
+        @MemberID memberId: Long,
+        request: UpdateNicknameRequestDto
+    ): ResponseEntity<ApiResponse<Any>> {
+        memberService.updateStatusMessage(memberId, request.newNickname)
+        log.info { "상태 메시지 수정 완료. memberId: $memberId" }
         return ResponseEntity.ok(ApiResponse.success())
     }
 
