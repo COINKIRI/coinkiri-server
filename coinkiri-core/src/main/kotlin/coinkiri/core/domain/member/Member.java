@@ -75,5 +75,10 @@ public class Member extends BaseEntity {
 		this.nickname = nickname;
 	}
 
+	// 상태 메시지 업데이트
+	public void updateStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
+	}
+
 
 }

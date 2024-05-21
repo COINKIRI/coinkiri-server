@@ -52,6 +52,13 @@ class MemberService (
         member.updateNickname(newNickname) // 닉네임 수정
     }
 
+    // 상태 메시지 수정 서비스
+    @Transactional
+    fun updateStatusMessage(memberId: Long, newStatusMessage: String) {
+        val member = memberRepository.findById(memberId).get() // 회원 조회
+        member.updateStatusMessage(newStatusMessage) // 상태 메시지 수정
+    }
+
 
 
 
