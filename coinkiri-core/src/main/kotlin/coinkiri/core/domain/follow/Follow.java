@@ -31,4 +31,9 @@ public class Follow {
 	@ManyToOne
 	@JoinColumn(name = "following_id", nullable = false)
 	private Member following;
+
+	public Follow(Member follower, Member following) {
+		this.follower = follower;
+		this.following = following;
+	}
 }
