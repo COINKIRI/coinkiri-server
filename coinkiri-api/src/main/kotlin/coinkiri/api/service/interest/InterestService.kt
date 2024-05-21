@@ -23,4 +23,10 @@ class InterestService (
             Interest(member, coin)
         )
     }
+
+    // 관심 종목 조회
+    @Transactional(readOnly = true)
+    fun findInterestList(memberId: Long) {
+        interestRepository.findByMemberId(memberId)
+    }
 }

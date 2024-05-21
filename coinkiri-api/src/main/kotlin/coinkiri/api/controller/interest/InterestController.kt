@@ -7,6 +7,7 @@ import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -29,4 +30,14 @@ class InterestController (
         interestService.saveInterest(memberId, coinId)
         return ResponseEntity.ok(ApiResponse.success())
     }
+
+    @Operation(summary = "[인증] 관심 종목 조회")
+    @GetMapping("/")
+    fun findInterestList(
+        @MemberID memberId: Long
+    ): ResponseEntity<ApiResponse<Any>> {
+        interestService.findInterestList(memberId)
+        return ResponseEntity.ok(ApiResponse.success())
+    }
+
 }
