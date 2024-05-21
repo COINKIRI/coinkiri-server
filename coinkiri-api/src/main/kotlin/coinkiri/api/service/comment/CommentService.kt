@@ -30,5 +30,11 @@ class CommentService (
         )
     }
 
+    // 댓글 조회
+    @Transactional(readOnly = true)
+    fun findComment(postId: Long): List<Comment> {
+        return commentRepository.findByPostId(postId)
+    }
+
 
 }
