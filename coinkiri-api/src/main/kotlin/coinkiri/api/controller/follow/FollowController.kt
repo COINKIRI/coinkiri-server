@@ -8,11 +8,7 @@ import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "Follow")
 @RestController
@@ -21,7 +17,6 @@ class FollowController (
     private val followService: FollowService
 ){
 
-    // 팔로우
     @Operation(summary = "팔로우 하기")
     @PostMapping("/{followId}")
     @Auth
@@ -34,7 +29,6 @@ class FollowController (
         return ResponseEntity.ok(ApiResponse.success())
     }
 
-    // 팔로우 취소
     @Operation(summary = "팔로우 취소")
     @DeleteMapping("/{followId}")
     @Auth
@@ -45,6 +39,28 @@ class FollowController (
         followService.deleteFollow(memberId, followId)
         log.info { "팔로우 취소 성공 - memberId: $memberId, followId: $followId" }
         return ResponseEntity.ok(ApiResponse.success())
+    }
+
+    @Operation(summary = "팔로우 목록 조회")
+    @GetMapping("/following")
+    @Auth
+    fun findFollowingList(
+        @MemberID memberId: Long
+    ) : ResponseEntity<ApiResponse<Any>> {
+        val followingList = followService.findFollowingList(memberId)
+        log.info { "팔로잉 목록 조회 성공 - memberId: $memberId" }
+        return ResponseEntity.ok(ApiResponse.success(followingList))
+    }
+
+    @Operation(summary = "팔로워 목록 조회")
+    @GetMapping("/follower")
+    @Auth
+    fun findFollowerList(
+        @MemberID memberId: Long
+    ) : ResponseEntity<ApiResponse<Any>> {
+        val followerList = followService.findFollowerList(memberId)
+        log.info { "팔로워 목록 조회 성공 - memberId: $memberId" }
+        return ResponseEntity.ok(ApiResponse.success(followerList))
     }
 
 
