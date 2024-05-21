@@ -29,7 +29,7 @@ class AuthController (
     private val commonAuthService: CommonAuthService
 ){
 
-    @Operation(summary = "[인증] 소셜 회원가입/로그인")
+    @Operation(summary = "소셜 회원가입/로그인")
     @PostMapping("/signup")
     fun signup(@RequestBody request: SignupRequestDto): ResponseEntity<ApiResponse<TokenResponseDto>> {
         val authService = authServiceProvider.getAuthService(SocialType.valueOf(request.socialType))
