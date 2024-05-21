@@ -1,19 +1,16 @@
 package coinkiri.api.controller.coin.dto.response
 
 
-
-data class CoinPriceDto(
-    val market: String,
-//    val candleDateTimeUtc: String,
+data class PriceDto( // 1일 가격
     val candleDateTimeKst: String,
-//    val openingPrice: Double,
-//    val highPrice: Double,
-//    val lowPrice: Double,
-    val tradePrice: Double,
-//    val timestamp: Long,
-//    val candleAccTradePrice: Double,
-//    val candleAccTradeVolume: Double,
-//    val prevClosingPrice: Double,
-//    val changePrice: Double,
-//    val changeRate: Double
+    val tradePrice: Double
+)
+
+data class CoinPriceDto( // 200일 가격
+    val market: String,
+    val coinPrices: List<PriceDto>
+)
+
+data class CoinPricesDto( // 여러 코인의 200일 가격
+    val coinPrices: List<CoinPriceDto>
 )

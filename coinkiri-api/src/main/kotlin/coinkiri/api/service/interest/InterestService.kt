@@ -1,5 +1,7 @@
 package coinkiri.api.service.interest
 
+import coinkiri.api.controller.UpbitApiCaller
+import coinkiri.api.controller.coin.dto.response.CoinPricesDto
 import coinkiri.common.KotlinLogging.log
 import coinkiri.core.domain.coin.repository.CoinRepository
 import coinkiri.core.domain.interest.Interest
@@ -12,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional
 class InterestService (
     private val interestRepository: InterestRepository,
     private val memberRepository: MemberRepository,
-    private val coinRepository: CoinRepository
+    private val coinRepository: CoinRepository,
+    private val upbitApiCaller: UpbitApiCaller
 ){
 
     // 관심 종목 등록
@@ -27,14 +30,11 @@ class InterestService (
 
     // 관심 종목 조회
     @Transactional(readOnly = true)
-    fun findInterestList(memberId: Long) {
-
+    fun findInterestList(memberId: Long): CoinPricesDto {
         val interestCoinList = interestRepository.findByMemberId(memberId).map {
-            log.info { "관심 종목 조회: ${it.coin.market}" }
             it.coin.market
         }
-
-        
-
+        val coinPrices = upbitApiCaller.getCoinPrices200(interestCoinList)
+        return coinPrices
     }
 }

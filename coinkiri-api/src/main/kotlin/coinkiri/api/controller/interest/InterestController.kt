@@ -3,6 +3,7 @@ package coinkiri.api.controller.interest
 import coinkiri.api.config.interceptor.Auth
 import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.service.interest.InterestService
+import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -28,6 +29,7 @@ class InterestController (
         @MemberID memberId: Long
     ): ResponseEntity<ApiResponse<Any>> {
         interestService.saveInterest(memberId, coinId)
+        log.info { "관심 종목 등록 완료. memberId: $memberId, coinId: $coinId" }
         return ResponseEntity.ok(ApiResponse.success())
     }
 
@@ -37,8 +39,9 @@ class InterestController (
     fun findInterestList(
         @MemberID memberId: Long
     ): ResponseEntity<ApiResponse<Any>> {
-        interestService.findInterestList(memberId)
-        return ResponseEntity.ok(ApiResponse.success())
+        val coinPrices = interestService.findInterestList(memberId)
+        log.info { "관심 종목 조회 완료. memberId: $memberId" }
+        return ResponseEntity.ok(ApiResponse.success(coinPrices))
     }
 
 }
