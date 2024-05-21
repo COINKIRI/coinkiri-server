@@ -15,15 +15,16 @@ class FollowService (
 
     // 팔로우 저장
     @Transactional
-    fun saveFollow(memberId: Long, followId: Long) {
+    fun updateFollow(memberId: Long, followId: Long) {
         val member = memberRepository.findById(memberId).get()
         val followMember = memberRepository.findById(followId).get()
 
-        followRepository.save(
-            Follow(
-                member, followMember
-            )
-        )
+        // 있으면 삭제, 없으면 저장
+        if(followRepository.existsByFollowerAndFollowing(member, followMember)) {
+            followRepository.deleteByFollowerAndFollowing(member, followMember)
+        } else {
+            followRepository.save(Follow(member, followMember))
+        }
     }
 
     // 팔로우 취소

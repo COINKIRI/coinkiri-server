@@ -17,27 +17,15 @@ class FollowController (
     private val followService: FollowService
 ){
 
-    @Operation(summary = "팔로우 하기")
+    @Operation(summary = "팔로우 추가/삭제")
     @PostMapping("/{followId}")
     @Auth
     fun saveFollow(
         @MemberID memberId: Long,
         @PathVariable followId: Long
     ) : ResponseEntity<ApiResponse<Any>> {
-        followService.saveFollow(memberId, followId)
-        log.info { "팔로우 성공 - memberId: $memberId, followId: $followId" }
-        return ResponseEntity.ok(ApiResponse.success())
-    }
-
-    @Operation(summary = "팔로우 취소")
-    @DeleteMapping("/{followId}")
-    @Auth
-    fun deleteFollow(
-        @MemberID memberId: Long,
-        @PathVariable followId: Long
-    ) : ResponseEntity<ApiResponse<Any>> {
-        followService.deleteFollow(memberId, followId)
-        log.info { "팔로우 취소 성공 - memberId: $memberId, followId: $followId" }
+        followService.updateFollow(memberId, followId)
+        log.info { "팔로우 추가, 삭제 성공 - memberId: $memberId, followId: $followId" }
         return ResponseEntity.ok(ApiResponse.success())
     }
 
