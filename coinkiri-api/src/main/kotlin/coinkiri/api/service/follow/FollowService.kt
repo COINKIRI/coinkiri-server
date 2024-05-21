@@ -38,8 +38,7 @@ class FollowService (
     // 팔로잉 목록 조회
     @Transactional(readOnly = true)
     fun findFollowingList(memberId: Long): List<MemberInfoDto> {
-        val member = memberRepository.findById(memberId).get()
-        val followingList = followRepository.findByFollower(member)
+        val followingList = followRepository.findWithFollowerAndFollowingByFollowerId(memberId)
 
         return followingList.map {
             MemberInfoDto(
@@ -57,8 +56,7 @@ class FollowService (
     // 팔로워 목록 조회
     @Transactional(readOnly = true)
     fun findFollowerList(memberId: Long): List<MemberInfoDto> {
-        val member = memberRepository.findById(memberId).get()
-        val followerList = followRepository.findByFollowing(member)
+        val followerList = followRepository.findWithFollowerAndFollowingByFollowingId(memberId)
 
         return followerList.map {
             MemberInfoDto(
