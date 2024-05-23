@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Community extends Post{
+public class Community extends Post {
 
 	// 카테고리
 	@Column(name = "category", nullable = false)

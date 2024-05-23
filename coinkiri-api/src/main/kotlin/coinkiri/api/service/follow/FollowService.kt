@@ -27,15 +27,6 @@ class FollowService (
         }
     }
 
-    // 팔로우 취소
-    @Transactional
-    fun deleteFollow(memberId: Long, followId: Long) {
-        val member = memberRepository.findById(memberId).get()
-        val followMember = memberRepository.findById(followId).get()
-
-        followRepository.deleteByFollowerAndFollowing(member, followMember)
-    }
-
     // 팔로잉 목록 조회
     @Transactional(readOnly = true)
     fun findFollowingList(memberId: Long): List<MemberInfoDto> {
