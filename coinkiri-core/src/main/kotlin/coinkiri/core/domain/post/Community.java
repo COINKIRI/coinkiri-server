@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 public class Community extends Post {
 
 	// 카테고리
-	@Column(name = "category")
+	@Column(name = "category", nullable = true)
 	@Enumerated(EnumType.STRING)
 	private CategoryType category;
 
 	@Builder
 	public Community(String title, String content, Member member
-		// , String category
+		, String category
 	) {
 		super(title, content, member);
-		// this.category = CategoryType.valueOf(category);
+		this.category = CategoryType.valueOf(category);
 	}
 }

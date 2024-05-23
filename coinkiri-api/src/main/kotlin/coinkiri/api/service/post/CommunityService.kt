@@ -30,7 +30,7 @@ class CommunityService (
                 .title(request.title)
                 .content(request.content)
                 .member(member)
-//                .category(request.category)
+                .category("FREE")
                 .build()
         )
     }
