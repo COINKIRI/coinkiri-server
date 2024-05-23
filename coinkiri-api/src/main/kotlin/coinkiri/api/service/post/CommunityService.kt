@@ -3,6 +3,7 @@ package coinkiri.api.service.post
 import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
 import coinkiri.api.controller.post.dto.request.CommunityRequestDto
+import coinkiri.api.controller.post.dto.request.PostRequestDto
 import coinkiri.api.controller.post.dto.response.CommunityResponseDto
 import coinkiri.api.controller.post.dto.response.PostResponseDto
 import coinkiri.common.KotlinLogging.log
@@ -21,15 +22,15 @@ class CommunityService (
 
     // 커뮤니티 글 작성
     @Transactional
-    fun saveCommunityPost(memberId: Long, request: CommunityRequestDto) {
+    fun saveCommunityPost(memberId: Long, request: PostRequestDto) {
         val member = memberRepository.findById(memberId).get()
 
         communityRepository.save(
             Community.builder()
-                .title(request.postRequestDto.title)
-                .content(request.postRequestDto.content)
+                .title(request.title)
+                .content(request.content)
                 .member(member)
-                .category(request.category)
+//                .category(request.category)
                 .build()
         )
     }

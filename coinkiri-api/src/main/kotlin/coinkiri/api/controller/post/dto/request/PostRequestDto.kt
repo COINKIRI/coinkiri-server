@@ -8,7 +8,7 @@ data class PostRequestDto ( // 슈퍼타입 dto
 
 data class CommunityRequestDto ( // 서브타입 dto
     val postRequestDto: PostRequestDto,
-    val category: String
+//    val category: String
 )
 
 data class MissionRequestDto (

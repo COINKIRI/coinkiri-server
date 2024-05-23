@@ -3,6 +3,7 @@ package coinkiri.api.controller.post.community
 import coinkiri.api.config.interceptor.Auth
 import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.post.dto.request.CommunityRequestDto
+import coinkiri.api.controller.post.dto.request.PostRequestDto
 import coinkiri.api.service.post.CommunityService
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
@@ -24,7 +25,7 @@ class CommunityController (
     @PostMapping("/save")
     fun saveCommunityPost(
         @MemberID memberId: Long,
-        @RequestBody request: CommunityRequestDto
+        @RequestBody request: PostRequestDto
     ): ResponseEntity<ApiResponse<Any>> {
         communityService.saveCommunityPost(memberId, request)
         log.info { "커뮤니티 글 작성 완료. memberId: $memberId" }
