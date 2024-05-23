@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -40,7 +41,7 @@ public abstract class Post extends BaseEntity {
 	@Column(name = "title", nullable = false)
 	private String title;
 
-	@Column(name = "content", nullable = false)
+	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
 	private String content;
 
 	@Column(name = "view_cnt", nullable = false, columnDefinition = "int default 0")
