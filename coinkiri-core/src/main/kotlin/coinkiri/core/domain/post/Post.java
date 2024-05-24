@@ -41,7 +41,7 @@ public abstract class Post extends BaseEntity {
 	@Column(name = "title", nullable = false)
 	private String title;
 
-	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
+	@Column(name = "content", nullable = false, columnDefinition = "text")
 	private String content;
 
 	@Column(name = "view_cnt", nullable = false, columnDefinition = "int default 0")
