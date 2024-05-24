@@ -1,4 +1,4 @@
-package coinkiri.api.controller.news
+package coinkiri.api.controller.news.dto
 
 import java.time.LocalDateTime
 
@@ -8,5 +8,5 @@ data class NewsResponseDto (
     val title: String,
     val link: String,
     val description: String,
-    val pubDate: LocalDateTime,
+    val pubDate: String,
 )

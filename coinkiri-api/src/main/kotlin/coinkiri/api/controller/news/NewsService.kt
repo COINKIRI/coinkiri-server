@@ -1,5 +1,6 @@
 package coinkiri.api.controller.news
 
+import coinkiri.api.controller.news.dto.NewsResponseDto
 import coinkiri.core.domain.news.NewsRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

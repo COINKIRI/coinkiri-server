@@ -33,7 +33,7 @@ public class News {
 	private String description;
 
 	@Column(name = "pub_date", nullable = false)
-	private LocalDateTime pubDate;
+	private String pubDate;
 
 
 }

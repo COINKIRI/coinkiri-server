@@ -1,5 +1,6 @@
 package coinkiri.api.controller.news
 
+import coinkiri.api.controller.news.dto.NewsResponseDto
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -20,7 +21,8 @@ class NewsController (
     @Operation(summary = "뉴스 테스트")
     @GetMapping("/test")
     fun test() {
-        newsApiCaller.getNews()
+        val news = newsApiCaller.getNews()
+        log.info { "뉴스를 가져오는 데 성공했습니다 : $news" }
     }
 
     @Operation(summary = "뉴스 목록 조회")
