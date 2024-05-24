@@ -1,7 +1,5 @@
 package coinkiri.core.domain.news;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +32,13 @@ public class News {
 
 	@Column(name = "pub_date", nullable = false)
 	private String pubDate;
+
+	public News(String title, String link, String description, String pubDate) {
+		this.title = title;
+		this.link = link;
+		this.description = description;
+		this.pubDate = pubDate;
+	}
 
 
 }

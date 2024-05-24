@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/news")
 class NewsController (
     private val newsService: NewsService,
-    private val newsApiCaller: NewsApiCaller
 ){
 
-    @Operation(summary = "뉴스 테스트")
+    @Operation(summary = "[관리자] 뉴스 업데이트")
     @GetMapping("/test")
-    fun test() {
-        val news = newsApiCaller.getNews()
-        log.info { "뉴스를 가져오는 데 성공했습니다 : $news" }
+    fun saveNews(): ResponseEntity<ApiResponse<Any>> {
+        newsService.saveNews()
+        log.info { "뉴스를 업데이트하는 데 성공했습니다" }
+        return ResponseEntity.ok(ApiResponse.success())
     }
 
     @Operation(summary = "뉴스 목록 조회")

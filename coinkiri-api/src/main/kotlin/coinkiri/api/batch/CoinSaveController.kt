@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController
 class CoinSaveController (
     private val coinSaveService: CoinSaveService
 ){
-    @Operation(summary = "코인 리스트 저장")
+    @Operation(summary = "[관리자] 코인 리스트 저장")
     @PostMapping("/save-coin")
     fun saveCoinList() {
         coinSaveService.saveCoinList()
     }
 
-    @Operation(summary = "코인 이미지 저장")
+    @Operation(summary = "[관리자] 코인 이미지 저장")
     @PostMapping("/save-image")
     fun saveCoinImage() {
         coinSaveService.saveCoinImage()
