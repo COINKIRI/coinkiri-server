@@ -28,7 +28,7 @@ class CommunityController (
         @RequestBody request: PostRequestDto
     ): ResponseEntity<ApiResponse<Any>> {
         communityService.saveCommunityPost(memberId, request)
-        log.info { "커뮤니티 글 작성 완료. memberId: $memberId" }
+        log.info { "커뮤니티 글 작성 완료" }
         return ResponseEntity.ok(ApiResponse.success())
     }
 
@@ -40,7 +40,5 @@ class CommunityController (
         log.info { "커뮤니티 전체 조회 완료." }
         return ResponseEntity.ok(ApiResponse.success(posts))
     }
-
-
 
 }

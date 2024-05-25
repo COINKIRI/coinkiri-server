@@ -4,6 +4,12 @@ package coinkiri.api.controller.post.dto.request
 data class PostRequestDto ( // 슈퍼타입 dto
     val title: String,
     val content: String,
+    val images: List<ImageDto>
+)
+
+data class ImageDto ( // 이미지 데이터
+    val position: Int,
+    val base64: String
 )
 
 data class CommunityRequestDto ( // 서브타입 dto

@@ -1,5 +1,8 @@
 package coinkiri.core.domain.post;
 
+import java.util.List;
+
+import coinkiri.core.domain.image.Image;
 import coinkiri.core.domain.member.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -13,8 +16,8 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Community extends Post {
 
 	// 카테고리
@@ -23,10 +26,9 @@ public class Community extends Post {
 	private CategoryType category;
 
 	@Builder
-	public Community(String title, String content, Member member
-		, String category
-	) {
+	public Community(String title, String content, Member member, String category) {
 		super(title, content, member);
 		this.category = CategoryType.valueOf(category);
 	}
 }
+

@@ -5,7 +5,9 @@ import java.util.List;
 
 import coinkiri.core.domain.comment.Comment;
 import coinkiri.core.domain.common.BaseEntity;
+import coinkiri.core.domain.image.Image;
 import coinkiri.core.domain.member.Member;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
@@ -51,9 +53,11 @@ public abstract class Post extends BaseEntity {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-	// comment를 oneToMany
 	@OneToMany(mappedBy = "post")
 	private List<Comment> comments = new ArrayList<>();
+
+	@OneToMany(mappedBy = "image", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Image> images = new ArrayList<>();
 
 	public Post(String title, String content, Member member) {
 		this.title = title;
@@ -64,5 +68,10 @@ public abstract class Post extends BaseEntity {
 	// 조회수 증가
 	public void increaseViewCnt() {
 		this.viewCnt++;
+	}
+
+	// 이미지 추가
+	public void addImage(Image images) {
+		this.images.add(images);
 	}
 }
