@@ -59,15 +59,19 @@ public abstract class Post extends BaseEntity {
 	@OneToMany(mappedBy = "image", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images = new ArrayList<>();
 
-	public Post(String title, String content, Member member, List<Image> images) {
+	public Post(String title, String content, Member member) {
 		this.title = title;
 		this.content = content;
 		this.member = member;
-		this.images = images;
 	}
 
 	// 조회수 증가
 	public void increaseViewCnt() {
 		this.viewCnt++;
+	}
+
+	// 이미지 추가
+	public void addImage(Image images) {
+		this.images.add(images);
 	}
 }

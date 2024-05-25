@@ -26,8 +26,8 @@ public class Community extends Post {
 	private CategoryType category;
 
 	@Builder
-	public Community(String title, String content, Member member, List<Image> images, String category) {
-		super(title, content, member, images);
+	public Community(String title, String content, Member member, String category) {
+		super(title, content, member);
 		this.category = CategoryType.valueOf(category);
 	}
 }

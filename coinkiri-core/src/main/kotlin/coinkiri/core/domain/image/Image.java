@@ -34,9 +34,10 @@ public class Image extends BaseEntity {
 	@JoinColumn(name = "post_id")
 	private Post post;
 
-	public Image(int position, byte[] image) {
+	public Image(int position, byte[] image, Post post) {
 		this.position = position;
 		this.image = image;
+		this.post = post;
 	}
 
 }

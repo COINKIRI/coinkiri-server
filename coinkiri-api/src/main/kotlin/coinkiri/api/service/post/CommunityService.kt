@@ -28,26 +28,26 @@ class CommunityService (
         // 작성자
         val member = memberRepository.findById(memberId).get()
 
-        // 게시글 이미지들
-        val images = request.images.map {
-            Image(
-                it.position,
-                it.base64.toByteArray()
-            )
-        }
-
-        // 게시글
+        // 커뮤니티 글 생성
         val community = Community(
             request.title,
             request.content,
             member,
-            images,
             "FREE"
         )
 
+        // 이미지 추가 + 커뮤니티와 연관관계 설정
+        request.images.forEach {
+            val image = Image(
+                it.position,
+                it.base64.toByteArray(),
+                community
+            )
+            community.addImage(image)
+        }
+
         // 저장
         communityRepository.save(community)
-
     }
 
     /**
