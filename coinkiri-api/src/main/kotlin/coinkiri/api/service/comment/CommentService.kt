@@ -32,9 +32,9 @@ class CommentService (
         )
     }
 
-    // 댓글 조회
+    // 댓글 조회 : 글 상세 조회
     /**
-     * join하지 않을 시 댓글 개수*2 번의 쿼리 추가 발생
+     * join하지 않을 시 댓글 개수 * 2 번의 쿼리 추가 발생
      */
     @Transactional(readOnly = true)
     fun findComment(postId: Long): List<CommentResponseDto> {

@@ -27,8 +27,16 @@ public class Image extends BaseEntity {
 	@Column(name = "image", nullable = false, columnDefinition = "blob")
 	private byte[] image;
 
+	@Column(name = "position", nullable = false)
+	private int position;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id")
 	private Post post;
+
+	public Image(int position, byte[] image) {
+		this.position = position;
+		this.image = image;
+	}
 
 }

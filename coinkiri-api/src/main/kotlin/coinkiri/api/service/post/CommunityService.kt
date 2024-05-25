@@ -7,6 +7,7 @@ import coinkiri.api.controller.post.dto.request.PostRequestDto
 import coinkiri.api.controller.post.dto.response.CommunityResponseDto
 import coinkiri.api.controller.post.dto.response.PostResponseDto
 import coinkiri.common.KotlinLogging.log
+import coinkiri.core.domain.image.Image
 import coinkiri.core.domain.member.repository.MemberRepository
 import coinkiri.core.domain.post.Community
 import coinkiri.core.domain.post.Post
@@ -23,16 +24,30 @@ class CommunityService (
     // 커뮤니티 글 작성
     @Transactional
     fun saveCommunityPost(memberId: Long, request: PostRequestDto) {
+
+        // 작성자
         val member = memberRepository.findById(memberId).get()
 
-        communityRepository.save(
-            Community.builder()
-                .title(request.title)
-                .content(request.content)
-                .member(member)
-                .category("FREE")
-                .build()
+        // 게시글 이미지들
+        val images = request.images.map {
+            Image(
+                it.position,
+                it.base64.toByteArray()
+            )
+        }
+
+        // 게시글
+        val community = Community(
+            request.title,
+            request.content,
+            member,
+            images,
+            "FREE"
         )
+
+        // 저장
+        communityRepository.save(community)
+
     }
 
     /**
