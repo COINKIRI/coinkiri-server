@@ -1,5 +1,7 @@
 package coinkiri.core.domain.image;
 
+import org.hibernate.annotations.BatchSize;
+
 import coinkiri.core.domain.common.BaseEntity;
 import coinkiri.core.domain.post.Post;
 import jakarta.persistence.Column;
@@ -12,11 +14,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "images")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Image extends BaseEntity {
 
 	@Id

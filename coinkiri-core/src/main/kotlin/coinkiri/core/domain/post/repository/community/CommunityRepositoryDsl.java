@@ -7,4 +7,6 @@ import coinkiri.core.domain.post.Community;
 public interface CommunityRepositoryDsl {
 
 	List<Community> findAllWithMember();
+
+	List<Community> findAllWithMemberAndImageAndComment();
 }

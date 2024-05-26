@@ -1,8 +1,10 @@
 package coinkiri.api.service.post
 
 import coinkiri.api.config.resolver.MemberID
+import coinkiri.api.controller.comment.dto.response.CommentResponseDto
 import coinkiri.api.controller.member.dto.response.MemberInfoDto
 import coinkiri.api.controller.post.dto.request.CommunityRequestDto
+import coinkiri.api.controller.post.dto.request.ImageDto
 import coinkiri.api.controller.post.dto.request.PostRequestDto
 import coinkiri.api.controller.post.dto.response.CommunityResponseDto
 import coinkiri.api.controller.post.dto.response.PostResponseDto
@@ -12,6 +14,7 @@ import coinkiri.core.domain.member.repository.MemberRepository
 import coinkiri.core.domain.post.Community
 import coinkiri.core.domain.post.Post
 import coinkiri.core.domain.post.repository.community.CommunityRepository
+import org.apache.tomcat.util.codec.binary.Base64
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -21,7 +24,7 @@ class CommunityService (
     private val memberRepository: MemberRepository,
 ){
 
-    // 커뮤니티 글 작성
+    // 커뮤니티 글 작성 - 작성자 + 커뮤니티 글 + 이미지 저장
     @Transactional
     fun saveCommunityPost(memberId: Long, request: PostRequestDto) {
 
@@ -51,18 +54,22 @@ class CommunityService (
     }
 
     /**
-     * join하지 않을 시 글 개수x2번의 쿼리 추가 발생
-     * -> querydsl로 해결 -> community, member join
+     * 추가 쿼리 발생
+     * -> querydsl로 해결 -> post+community+image(커뮤니티 글+이미지) + member(작성자) + comment(댓글) 한번에 조회
      */
-    // 커뮤니티 전체 조회 (상세 조회는 댓글 api 요청으로 구현)
+    // 커뮤니티 전체 조회 + 상세 조회
     @Transactional(readOnly = true)
-    fun findAllCommunityWithMember(): List<CommunityResponseDto> {
-        return communityRepository.findAllWithMember().map {
+    fun findAllCommunity(): List<CommunityResponseDto> {
+        return communityRepository.findAllWithMemberAndImageAndComment().map {
             CommunityResponseDto(
                 PostResponseDto(
                     it.id,
                     it.title,
                     it.content,
+                    it.images.map { image -> ImageDto(
+                        image.position,
+                        Base64.encodeBase64String(image.image)
+                    ) },
                     it.viewCnt,
                     it.createdAt,
                     it.modifiedAt,
@@ -72,9 +79,24 @@ class CommunityService (
                         it.member.exp,
                         it.member.level,
                         it.member.mileage,
-                        it.member.pic ?: byteArrayOf(),
+                        it.member.pic,
                         it.member.statusMessage
-                    )
+                    ),
+                    it.comments.map { comment -> CommentResponseDto(
+                        comment.id,
+                        comment.content,
+                        comment.createdAt,
+                        comment.modifiedAt,
+                        MemberInfoDto(
+                            comment.member.id,
+                            comment.member.nickname,
+                            comment.member.exp,
+                            comment.member.level,
+                            comment.member.mileage,
+                            comment.member.pic,
+                            comment.member.statusMessage
+                            )
+                    )}
                 ),
                 it.category.toString()
             )

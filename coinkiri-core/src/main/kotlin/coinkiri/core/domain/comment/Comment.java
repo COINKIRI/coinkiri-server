@@ -1,5 +1,7 @@
 package coinkiri.core.domain.comment;
 
+import org.hibernate.annotations.BatchSize;
+
 import coinkiri.core.domain.common.BaseEntity;
 import coinkiri.core.domain.member.Member;
 import coinkiri.core.domain.post.Post;
