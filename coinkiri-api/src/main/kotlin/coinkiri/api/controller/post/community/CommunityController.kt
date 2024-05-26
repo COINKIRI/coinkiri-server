@@ -36,7 +36,7 @@ class CommunityController (
     @Operation(summary = "커뮤니티 전체 조회")
     @GetMapping("/all")
     fun findAllCommunityPost(): ResponseEntity<ApiResponse<Any>> {
-        val posts = communityService.findAllCommunityWithMember()
+        val posts = communityService.findAllCommunity()
         log.info { "커뮤니티 전체 조회 완료." }
         return ResponseEntity.ok(ApiResponse.success(posts))
     }

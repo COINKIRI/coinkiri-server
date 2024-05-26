@@ -20,4 +20,13 @@ public class CommunityRepositoryImpl implements CommunityRepositoryDsl {
 			.fetchJoin()
 			.fetch();
 	}
+
+	// post+community+image(커뮤니티 글+이미지) + member(작성자) + comment(댓글) 한번에 조회
+	@Override
+	public List<Community> findAllWithMemberAndImageAndComment() {
+		return queryFactory.selectFrom(community)
+			.leftJoin(community.member).fetchJoin()
+			.leftJoin(community.images).fetchJoin()
+			.fetch();
+	}
 }
