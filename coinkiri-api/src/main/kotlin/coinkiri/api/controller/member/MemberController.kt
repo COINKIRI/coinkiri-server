@@ -3,21 +3,14 @@ package coinkiri.api.controller.member
 import coinkiri.api.config.interceptor.Auth
 import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.member.dto.request.UpdateNicknameRequestDto
-import coinkiri.api.controller.member.dto.request.UpdateStautsMessageRequestDto
-import coinkiri.api.controller.member.dto.response.MemberInfoDto
-import coinkiri.api.controller.member.dto.response.MyPageResponseDto
+import coinkiri.api.controller.member.dto.response.MemberDetailResponseDto
 import coinkiri.api.service.member.MemberService
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "Member")
 @RestController
@@ -30,7 +23,7 @@ class MemberController (
     @Auth
     @Operation(summary = "[인증] 마이페이지 조회")
     @GetMapping("/info")
-    fun findMemberInfo(@MemberID memberId: Long): ResponseEntity<ApiResponse<MyPageResponseDto>> {
+    fun findMemberInfo(@MemberID memberId: Long): ResponseEntity<ApiResponse<MemberDetailResponseDto>> {
         val memberInfo = memberService.findMemberInfo(memberId)
         return ResponseEntity.ok(ApiResponse.success(memberInfo))
     }

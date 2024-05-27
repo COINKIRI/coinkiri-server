@@ -1,7 +1,7 @@
 package coinkiri.api.controller.member.dto.response
 
 
-data class MyPageResponseDto(
+data class MemberDetailResponseDto(
     val id: Long,
     val nickname: String,
     val exp: Int,
