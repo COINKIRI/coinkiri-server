@@ -32,7 +32,7 @@ class CommunityController (
         return ResponseEntity.ok(ApiResponse.success())
     }
 
-    // 커뮤니티 전체 조회 API
+    // 커뮤니티 전체 조회 API - refactored
     @Operation(summary = "커뮤니티 전체 조회")
     @GetMapping("/all")
     fun findAllCommunityPost(): ResponseEntity<ApiResponse<Any>> {
