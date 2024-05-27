@@ -38,7 +38,7 @@ class MemberService (
             followingCount = followRepository.countByFollowerId(memberId),
             followerCount = followRepository.countByFollowingId(memberId)
         )
-    }ㄴ
+    }
 
     // 회원 탈퇴 서비스
     @Transactional
