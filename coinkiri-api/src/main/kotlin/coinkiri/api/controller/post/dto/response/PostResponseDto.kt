@@ -8,13 +8,11 @@ import java.time.LocalDateTime
 data class PostResponseDto (
     val id: Long,
     val title: String,
-    val content: String,
-    val images: List<ImageDto>,
     val viewCnt: Int,
-    val createdAt: LocalDateTime,
-    val modifiedAt: LocalDateTime,
-    val member: MemberInfoDto,
-    val comments: List<CommentResponseDto>
+    val memberNickname: String,
+    val memberLevel: Int,
+    val commentCount: Int,
+    val likeCount: Int
 )
 
 data class CommunityResponseDto (
@@ -26,3 +24,4 @@ data class CommunityDetailResponseDto (
     val communityResponseDto: CommunityResponseDto,
     val comments: List<CommentResponseDto>
 )
+

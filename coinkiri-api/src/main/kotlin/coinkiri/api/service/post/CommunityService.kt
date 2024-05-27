@@ -53,50 +53,19 @@ class CommunityService (
         communityRepository.save(community)
     }
 
-    /**
-     * 추가 쿼리 발생
-     * -> querydsl로 해결 -> post+community+image(커뮤니티 글+이미지) + member(작성자) + comment(댓글) 한번에 조회
-     */
-    // 커뮤니티 전체 조회 + 상세 조회
+    // 커뮤니티 전체 조회 - refactored
     @Transactional(readOnly = true)
     fun findAllCommunity(): List<CommunityResponseDto> {
-        return communityRepository.findAllWithMemberAndImageAndComment().map {
+        return communityRepository.findAllWithMemberAndCommentAndLike().map {
             CommunityResponseDto(
                 PostResponseDto(
                     it.id,
                     it.title,
-                    it.content,
-                    it.images.map { image -> ImageDto(
-                        image.position,
-                        Base64.encodeBase64String(image.image)
-                    ) },
                     it.viewCnt,
-                    it.createdAt,
-                    it.modifiedAt,
-                    MemberInfoDto(
-                        it.member.id,
-                        it.member.nickname,
-                        it.member.exp,
-                        it.member.level,
-                        it.member.mileage,
-                        it.member.pic,
-                        it.member.statusMessage
-                    ),
-                    it.comments.map { comment -> CommentResponseDto(
-                        comment.id,
-                        comment.content,
-                        comment.createdAt,
-                        comment.modifiedAt,
-                        MemberInfoDto(
-                            comment.member.id,
-                            comment.member.nickname,
-                            comment.member.exp,
-                            comment.member.level,
-                            comment.member.mileage,
-                            comment.member.pic,
-                            comment.member.statusMessage
-                            )
-                    )}
+                    it.member.nickname, // member many-to-one
+                    it.member.level,
+                    it.comments.size, // comment one-to-many
+                    it.likes.size // like one-to-many
                 ),
                 it.category.toString()
             )

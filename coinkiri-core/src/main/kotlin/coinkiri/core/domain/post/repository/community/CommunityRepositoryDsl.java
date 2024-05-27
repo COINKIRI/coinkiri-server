@@ -8,5 +8,5 @@ public interface CommunityRepositoryDsl {
 
 	List<Community> findAllWithMember();
 
-	List<Community> findAllWithMemberAndImageAndComment();
+	List<Community> findAllWithMemberAndCommentAndLike();
 }

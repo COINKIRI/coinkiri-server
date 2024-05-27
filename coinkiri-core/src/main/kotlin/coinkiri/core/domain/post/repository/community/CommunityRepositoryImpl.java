@@ -21,12 +21,13 @@ public class CommunityRepositoryImpl implements CommunityRepositoryDsl {
 			.fetch();
 	}
 
-	// post+community+image(커뮤니티 글+이미지) + member(작성자) + comment(댓글) 한번에 조회
+	// post, community, member, comment, like
 	@Override
-	public List<Community> findAllWithMemberAndImageAndComment() {
+	public List<Community> findAllWithMemberAndCommentAndLike() {
 		return queryFactory.selectFrom(community)
 			.leftJoin(community.member).fetchJoin()
-			.leftJoin(community.images).fetchJoin()
+			.leftJoin(community.comments).fetchJoin()
+			// .leftJoin(community.likes).fetchJoin() -> default_batch_fetch_size 설정으로 인해 fetchJoin() 사용하지 않음
 			.fetch();
 	}
 }

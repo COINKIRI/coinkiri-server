@@ -6,6 +6,7 @@ import java.util.List;
 import coinkiri.core.domain.comment.Comment;
 import coinkiri.core.domain.common.BaseEntity;
 import coinkiri.core.domain.image.Image;
+import coinkiri.core.domain.like.Like;
 import coinkiri.core.domain.member.Member;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -58,6 +59,9 @@ public abstract class Post extends BaseEntity {
 
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images = new ArrayList<>();
+
+	@OneToMany(mappedBy = "post")
+	private List<Like> likes = new ArrayList<>();
 
 	public Post(String title, String content, Member member) {
 		this.title = title;
