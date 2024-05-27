@@ -13,7 +13,7 @@ class FollowService (
     private val memberRepository: MemberRepository
 ){
 
-    // 팔로우 저장
+    // 팔로우 저장, 삭제
     @Transactional
     fun updateFollow(memberId: Long, followId: Long) {
         val member = memberRepository.findById(memberId).get()
