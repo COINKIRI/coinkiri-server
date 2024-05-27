@@ -35,14 +35,4 @@ class CommentController(
         return ResponseEntity.ok(ApiResponse.success())
     }
 
-    // 댓글 조회 API
-    @Operation(summary = "댓글 조회")
-    @GetMapping("/{postId}")
-    fun findComment(@PathVariable postId: Long): ResponseEntity<ApiResponse<Any>>{
-        val comments = commentService.findComment(postId)
-        log.info { "댓글 조회 완료." }
-        return ResponseEntity.ok(ApiResponse.success(comments))
-    }
-
-
 }

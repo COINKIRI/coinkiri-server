@@ -1,6 +1,6 @@
 package coinkiri.api.service.follow
 
-import coinkiri.api.controller.member.dto.response.MemberInfoDto
+import coinkiri.api.controller.member.dto.response.MemberResponseDto
 import coinkiri.core.domain.follow.Follow
 import coinkiri.core.domain.follow.repository.FollowRepository
 import coinkiri.core.domain.member.repository.MemberRepository
@@ -29,36 +29,30 @@ class FollowService (
 
     // 팔로잉 목록 조회
     @Transactional(readOnly = true)
-    fun findFollowingList(memberId: Long): List<MemberInfoDto> {
+    fun findFollowingList(memberId: Long): List<MemberResponseDto> {
         val followingList = followRepository.findWithFollowerAndFollowingByFollowerId(memberId)
 
         return followingList.map {
-            MemberInfoDto(
+            MemberResponseDto(
                 it.following.id,
                 it.following.nickname,
-                it.following.exp,
                 it.following.level,
-                it.following.mileage,
                 it.following.pic ?: ByteArray(0),
-                it.following.statusMessage
             )
         }
     }
 
     // 팔로워 목록 조회
     @Transactional(readOnly = true)
-    fun findFollowerList(memberId: Long): List<MemberInfoDto> {
+    fun findFollowerList(memberId: Long): List<MemberResponseDto> {
         val followerList = followRepository.findWithFollowerAndFollowingByFollowingId(memberId)
 
         return followerList.map {
-            MemberInfoDto(
-                it.follower.id,
-                it.follower.nickname,
-                it.follower.exp,
-                it.follower.level,
-                it.follower.mileage,
-                it.follower.pic ?: ByteArray(0),
-                it.follower.statusMessage
+            MemberResponseDto(
+                it.following.id,
+                it.following.nickname,
+                it.following.level,
+                it.following.pic ?: ByteArray(0),
             )
         }
     }

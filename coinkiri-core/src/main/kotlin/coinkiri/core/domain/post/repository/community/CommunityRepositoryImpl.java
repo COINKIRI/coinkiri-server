@@ -30,4 +30,15 @@ public class CommunityRepositoryImpl implements CommunityRepositoryDsl {
 			// .leftJoin(community.likes).fetchJoin() -> default_batch_fetch_size 설정으로 인해 fetchJoin() 사용하지 않음
 			.fetch();
 	}
+
+	// 단일 조회 post, community, member, comment, like
+	@Override
+	public Community findOneWithMemberAndCommentAndLike(Long id) {
+		return queryFactory.selectFrom(community)
+			.leftJoin(community.member).fetchJoin()
+			.leftJoin(community.comments).fetchJoin()
+			// .leftJoin(community.likes).fetchJoin() -> default_batch_fetch_size 설정으로 인해 fetchJoin() 사용하지 않음
+			.where(community.id.eq(id))
+			.fetchOne();
+	}
 }

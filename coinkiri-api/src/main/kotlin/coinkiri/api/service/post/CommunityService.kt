@@ -1,18 +1,16 @@
 package coinkiri.api.service.post
 
-import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.comment.dto.response.CommentResponseDto
-import coinkiri.api.controller.member.dto.response.MemberInfoDto
-import coinkiri.api.controller.post.dto.request.CommunityRequestDto
+import coinkiri.api.controller.member.dto.response.MemberResponseDto
 import coinkiri.api.controller.post.dto.request.ImageDto
 import coinkiri.api.controller.post.dto.request.PostRequestDto
+import coinkiri.api.controller.post.dto.response.CommunityDetailResponseDto
 import coinkiri.api.controller.post.dto.response.CommunityResponseDto
+import coinkiri.api.controller.post.dto.response.PostDetailResponseDto
 import coinkiri.api.controller.post.dto.response.PostResponseDto
-import coinkiri.common.KotlinLogging.log
 import coinkiri.core.domain.image.Image
 import coinkiri.core.domain.member.repository.MemberRepository
 import coinkiri.core.domain.post.Community
-import coinkiri.core.domain.post.Post
 import coinkiri.core.domain.post.repository.community.CommunityRepository
 import org.apache.tomcat.util.codec.binary.Base64
 import org.springframework.stereotype.Service
@@ -71,5 +69,43 @@ class CommunityService (
             )
         }
     }
+
+    // 커뮤니티 글 상세 조회
+    @Transactional(readOnly = true)
+    fun findCommunityDetail(postId: Long): CommunityDetailResponseDto {
+        val community = communityRepository.findOneWithMemberAndCommentAndLike(postId)
+        return CommunityDetailResponseDto(
+            PostDetailResponseDto(
+                community.title,
+                community.content,
+                community.viewCnt,
+                community.member.nickname,
+                community.member.level,
+                community.member.pic,
+                community.likes.size,
+                community.images.map {
+                    ImageDto(
+                        it.position,
+                        Base64.encodeBase64String(it.image)
+                    )
+                },
+                community.comments.map {
+                    CommentResponseDto(
+                        it.content,
+                        it.createdAt.toString(),
+                        it.modifiedAt.toString(),
+                        MemberResponseDto(
+                            it.member.id,
+                            it.member.nickname,
+                            it.member.level,
+                            it.member.pic
+                        )
+                    )
+                }
+            ),
+            community.category.toString()
+        )
+    }
+
 
 }
