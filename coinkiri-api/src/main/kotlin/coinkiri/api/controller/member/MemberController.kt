@@ -28,6 +28,14 @@ class MemberController (
         return ResponseEntity.ok(ApiResponse.success(memberInfo))
     }
 
+    // 다른 회원 정보 조회 API
+    @Operation(summary = "다른 회원 정보 조회")
+    @GetMapping("/{memberId}")
+    fun findOtherMemberInfo(@PathVariable memberId: Long): ResponseEntity<ApiResponse<MemberDetailResponseDto>> {
+        val memberInfo = memberService.findMemberInfo(memberId)
+        return ResponseEntity.ok(ApiResponse.success(memberInfo))
+    }
+
     // 회원 탈퇴 API
     @Auth
     @Operation(summary = "[인증] 회원 탈퇴")

@@ -22,7 +22,7 @@ class MemberService (
         return memberRepository.findBySocialId(request.socialId)?.id ?: memberRepository.save(request.toEntity()).id!!
     }
 
-    // 마이페이지 (회원 정보 조회) 서비스
+    // 회원 정보 조회(마이페이지, 다른 유저) 서비스
     @Transactional(readOnly = true)
     fun findMemberInfo(memberId: Long): MemberDetailResponseDto {
         val member = memberRepository.findById(memberId).get() // 회원 조회
@@ -38,7 +38,7 @@ class MemberService (
             followingCount = followRepository.countByFollowerId(memberId),
             followerCount = followRepository.countByFollowingId(memberId)
         )
-    }
+    }ㄴ
 
     // 회원 탈퇴 서비스
     @Transactional
