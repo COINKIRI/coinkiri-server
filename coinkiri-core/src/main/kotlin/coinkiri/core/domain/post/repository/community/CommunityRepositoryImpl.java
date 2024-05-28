@@ -28,6 +28,7 @@ public class CommunityRepositoryImpl implements CommunityRepositoryDsl {
 			.leftJoin(community.member).fetchJoin()
 			.leftJoin(community.comments).fetchJoin()
 			// .leftJoin(community.likes).fetchJoin() -> default_batch_fetch_size 설정으로 인해 fetchJoin() 사용하지 않음
+			.orderBy(community.createdAt.desc()) // createdAt 기준으로 정렬
 			.fetch();
 	}
 
