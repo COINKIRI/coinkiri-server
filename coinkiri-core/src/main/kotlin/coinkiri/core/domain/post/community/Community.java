@@ -1,11 +1,8 @@
-package coinkiri.core.domain.post;
+package coinkiri.core.domain.post.community;
 
-import java.util.List;
-
-import coinkiri.core.domain.image.Image;
 import coinkiri.core.domain.member.Member;
+import coinkiri.core.domain.post.Post;
 import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Community extends Post {
 
 	// 카테고리
-	@Column(name = "category", nullable = true)
+	@Column(name = "category")
 	@Enumerated(EnumType.STRING)
 	private CategoryType category;
 

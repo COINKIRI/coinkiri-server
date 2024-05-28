@@ -1,4 +1,4 @@
-package coinkiri.core.domain.post.repository.community;
+package coinkiri.core.domain.post.community.repository;
 
 import static coinkiri.core.domain.post.QCommunity.*;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import coinkiri.core.domain.post.Community;
+import coinkiri.core.domain.post.community.Community;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

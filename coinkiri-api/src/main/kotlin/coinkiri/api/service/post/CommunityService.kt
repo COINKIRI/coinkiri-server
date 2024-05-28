@@ -10,8 +10,8 @@ import coinkiri.api.controller.post.dto.response.PostDetailResponseDto
 import coinkiri.api.controller.post.dto.response.PostResponseDto
 import coinkiri.core.domain.image.Image
 import coinkiri.core.domain.member.repository.MemberRepository
-import coinkiri.core.domain.post.Community
-import coinkiri.core.domain.post.repository.community.CommunityRepository
+import coinkiri.core.domain.post.community.Community
+import coinkiri.core.domain.post.community.repository.CommunityRepository
 import org.apache.tomcat.util.codec.binary.Base64
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

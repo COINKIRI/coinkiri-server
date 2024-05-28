@@ -1,8 +1,8 @@
-package coinkiri.core.domain.post.repository.community;
+package coinkiri.core.domain.post.community.repository;
 
 import java.util.List;
 
-import coinkiri.core.domain.post.Community;
+import coinkiri.core.domain.post.community.Community;
 
 public interface CommunityRepositoryDsl {
 
