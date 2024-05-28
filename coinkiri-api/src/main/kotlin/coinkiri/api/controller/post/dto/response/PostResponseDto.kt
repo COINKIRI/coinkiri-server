@@ -14,6 +14,20 @@ data class PostResponseDto (
     val likeCount: Int
 )
 
+
+data class CommunityResponseDto (
+    val postResponseDto: PostResponseDto,
+    val category: String
+)
+
+
+
+
+data class CommunityDetailResponseDto (
+    val postDetailResponseDto: PostDetailResponseDto,
+    val category: String
+)
+
 data class PostDetailResponseDto (
     val title: String,
     val content: String,
@@ -27,14 +41,6 @@ data class PostDetailResponseDto (
     val comments: List<CommentResponseDto>
 )
 
-data class CommunityResponseDto (
-    val postResponseDto: PostResponseDto,
-    val category: String
-)
 
-data class CommunityDetailResponseDto (
-    val postDetailResponseDto: PostDetailResponseDto,
-    val category: String
-)
 
 
