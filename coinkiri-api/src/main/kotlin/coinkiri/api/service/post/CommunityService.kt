@@ -60,6 +60,7 @@ class CommunityService (
                     it.id,
                     it.title,
                     it.viewCnt,
+                    it.createdAt.toString(),
                     it.member.nickname, // member many-to-one
                     it.member.level,
                     it.comments.size, // comment one-to-many
@@ -79,6 +80,7 @@ class CommunityService (
                 community.title,
                 community.content,
                 community.viewCnt,
+                community.createdAt.toString(),
                 community.member.nickname,
                 community.member.level,
                 community.member.pic,

@@ -19,7 +19,7 @@ class MemberController (
     private val memberService: MemberService
 ){
 
-    // 마이페이지 (회원 정보 조회) API
+    // 마이페이지 (회원 정보 조회) API - 토큰으로 조회
     @Auth
     @Operation(summary = "[인증] 마이페이지 조회")
     @GetMapping("/info")
@@ -28,7 +28,7 @@ class MemberController (
         return ResponseEntity.ok(ApiResponse.success(memberInfo))
     }
 
-    // 다른 회원 정보 조회 API
+    // 다른 회원 정보 조회 API - memberId로 조회
     @Operation(summary = "다른 회원 정보 조회")
     @GetMapping("/{memberId}")
     fun findOtherMemberInfo(@PathVariable memberId: Long): ResponseEntity<ApiResponse<MemberDetailResponseDto>> {
