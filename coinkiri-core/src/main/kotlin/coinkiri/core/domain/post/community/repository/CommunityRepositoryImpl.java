@@ -22,7 +22,7 @@ public class CommunityRepositoryImpl implements CommunityRepositoryDsl {
 			.fetch();
 	}
 
-	// post, community, member, comment, like
+	// 전체조회 post, community, member, comment, like
 	@Override
 	public List<Community> findAllWithMemberAndCommentAndLike() {
 		return queryFactory.selectFrom(community)

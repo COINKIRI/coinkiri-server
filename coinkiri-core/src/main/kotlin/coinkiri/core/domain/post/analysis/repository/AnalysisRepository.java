@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import coinkiri.core.domain.post.analysis.Analysis;
 
 
-public interface AnalysisRepository extends JpaRepository<Analysis, Long> {
+public interface AnalysisRepository extends JpaRepository<Analysis, Long>, AnalysisRepositoryDsl {
 }

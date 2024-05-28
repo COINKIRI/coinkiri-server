@@ -1,6 +1,9 @@
 package coinkiri.api.service.post
 
+import coinkiri.api.controller.coin.dto.response.CoinResponseDto
 import coinkiri.api.controller.post.dto.request.AnalysisRequestDto
+import coinkiri.api.controller.post.dto.response.AnalysisResponseDto
+import coinkiri.api.controller.post.dto.response.PostResponseDto
 import coinkiri.core.domain.coin.repository.CoinRepository
 import coinkiri.core.domain.image.Image
 import coinkiri.core.domain.member.repository.MemberRepository
@@ -50,6 +53,48 @@ class AnalysisService (
 
         // 저장
         analysisRepository.save(analysis)
-
     }
+
+    // 분석글 전체 조회
+    @Transactional(readOnly = true)
+    fun findAllAnalysis() : List<AnalysisResponseDto> {
+        return analysisRepository.findAllWithMemberAndCoinAndCommentAndLike().map {
+            AnalysisResponseDto(
+                PostResponseDto(
+                    it.id,
+                    it.title,
+                    it.viewCnt,
+                    it.createdAt.toString(),
+                    it.member.nickname,
+                    it.member.level,
+                    it.comments.size,
+                    it.likes.size
+                ),
+                CoinResponseDto(
+                    it.coin.coinId,
+                    it.coin.market,
+                    it.coin.koreanName,
+                    it.coin.englishName,
+                    it.coin.symbolImage
+                ),
+                it.opinion.name,
+                it.targetPeriod,
+                it.targetPrice
+            )
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

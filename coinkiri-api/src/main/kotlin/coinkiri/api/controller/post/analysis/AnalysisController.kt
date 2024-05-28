@@ -9,6 +9,7 @@ import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -35,6 +36,13 @@ class AnalysisController (
     }
 
     // 분석글 전체 조회 API
+    @Operation(summary = "분석글 전체 조회")
+    @GetMapping("/all")
+    fun findAllAnalysis(): ResponseEntity<ApiResponse<Any>> {
+        val analysis = analysisService.findAllAnalysis()
+        log.info { "분석글 전체 조회 완료." }
+        return ResponseEntity.ok(ApiResponse.success(analysis))
+    }
 
 
     // 분석글 상세 조회 API
