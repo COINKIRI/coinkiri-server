@@ -4,7 +4,7 @@ import coinkiri.api.controller.comment.dto.request.CommentRequestDto
 import coinkiri.core.domain.comment.Comment
 import coinkiri.core.domain.comment.repository.CommentRepository
 import coinkiri.core.domain.member.repository.MemberRepository
-import coinkiri.core.domain.post.repository.community.CommunityRepository
+import coinkiri.core.domain.post.community.repository.CommunityRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

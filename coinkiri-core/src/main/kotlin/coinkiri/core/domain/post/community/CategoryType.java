@@ -1,4 +1,4 @@
-package coinkiri.core.domain.post;
+package coinkiri.core.domain.post.community;
 
 import lombok.Getter;
 
