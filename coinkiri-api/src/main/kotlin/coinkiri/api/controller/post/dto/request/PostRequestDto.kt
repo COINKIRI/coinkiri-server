@@ -27,6 +27,6 @@ data class AnalysisRequestDto (
     val postRequestDto: PostRequestDto,
     val coinId: Long,
     val opinion: String,
-    val targetPeriod: String,
-    val targetPrice: String
+    val targetPeriod: Int,
+    val targetPrice: Double
 )

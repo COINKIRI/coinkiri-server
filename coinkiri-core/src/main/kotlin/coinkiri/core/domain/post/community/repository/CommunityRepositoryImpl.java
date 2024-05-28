@@ -1,6 +1,7 @@
 package coinkiri.core.domain.post.community.repository;
 
-import static coinkiri.core.domain.post.QCommunity.*;
+
+import static coinkiri.core.domain.post.community.QCommunity.*;
 
 import java.util.List;
 
