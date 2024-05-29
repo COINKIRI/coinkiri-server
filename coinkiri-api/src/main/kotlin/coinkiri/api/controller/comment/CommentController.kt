@@ -10,11 +10,7 @@ import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "Comment")
 @RestController
@@ -29,7 +25,7 @@ class CommentController(
     @Auth
     fun saveComment(
         @MemberID memberId: Long,
-        request: CommentRequestDto
+        @RequestBody request: CommentRequestDto
     ): ResponseEntity<ApiResponse<Any>>{
         commentService.saveComment(memberId, request)
         log.info { "댓글 작성 완료. memberId: $memberId" }
