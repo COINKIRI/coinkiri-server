@@ -6,5 +6,6 @@ import coinkiri.core.domain.post.analysis.Analysis;
 
 public interface AnalysisRepositoryDsl {
 
+	Analysis findOneWithMemberAndCoinAndCommentAndLike(Long id);
 	List<Analysis> findAllWithMemberAndCoinAndCommentAndLike();
 }

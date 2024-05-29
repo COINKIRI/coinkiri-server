@@ -23,6 +23,16 @@ public class AnalysisRepositoryImpl implements AnalysisRepositoryDsl{
 			// .leftJoin(analysis.likes).fetchJoin() -> default_batch_fetch_size 설정으로 인해 fetchJoin() 사용하지 않음
 			.orderBy(analysis.createdAt.desc()) // createdAt 기준으로 정렬
 			.fetch();
+	}
 
+	// 단건조회 findOneWithMemberAndCoinAndCommentAndLike
+	public Analysis findOneWithMemberAndCoinAndCommentAndLike(Long id) {
+		return queryFactory.selectFrom(analysis)
+			.leftJoin(analysis.member).fetchJoin() // manytoone
+			.leftJoin(analysis.coin).fetchJoin() // manytoone
+			.leftJoin(analysis.comments).fetchJoin() // onetomany
+			// .leftJoin(analysis.likes).fetchJoin() -> default_batch_fetch_size 설정으로 인해 fetchJoin() 사용하지 않음
+			.where(analysis.id.eq(id))
+			.fetchOne();
 	}
 }

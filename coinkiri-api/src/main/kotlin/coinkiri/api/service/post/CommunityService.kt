@@ -77,6 +77,7 @@ class CommunityService (
         val community = communityRepository.findOneWithMemberAndCommentAndLike(postId)
         return CommunityDetailResponseDto(
             PostDetailResponseDto(
+                community.id,
                 community.title,
                 community.content,
                 community.viewCnt,

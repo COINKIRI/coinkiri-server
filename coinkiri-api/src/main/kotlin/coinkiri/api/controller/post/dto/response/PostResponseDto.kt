@@ -28,12 +28,21 @@ data class AnalysisResponseDto (
     val targetPrice: Double
 )
 
+data class AnalysisDetailResponseDto (
+    val postDetailResponseDto: PostDetailResponseDto,
+    val coin: CoinResponseDto,
+    val opinion: String,
+    val targetPeriod: Int,
+    val targetPrice: Double
+)
+
 data class CommunityDetailResponseDto (
     val postDetailResponseDto: PostDetailResponseDto,
     val category: String
 )
 
 data class PostDetailResponseDto (
+    val id: Long,
     val title: String,
     val content: String,
     val viewCnt: Int,
