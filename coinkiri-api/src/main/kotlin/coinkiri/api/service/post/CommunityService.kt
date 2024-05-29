@@ -91,20 +91,7 @@ class CommunityService (
                         Base64.encodeBase64String(it.image)
                     )
                 },
-                community.comments.map {
-                    CommentResponseDto(
-                        it.id,
-                        it.content,
-                        it.createdAt.toString(),
-                        it.modifiedAt.toString(),
-                        MemberResponseDto(
-                            it.member.id,
-                            it.member.nickname,
-                            it.member.level,
-                            it.member.pic
-                        )
-                    )
-                }
+                community.comments.size
             ),
             community.category.toString()
         )

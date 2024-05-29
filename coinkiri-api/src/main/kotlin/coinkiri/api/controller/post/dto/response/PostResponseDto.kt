@@ -43,7 +43,7 @@ data class PostDetailResponseDto (
     val memberPic: ByteArray,
     val likeCount: Int,
     val images: List<ImageDto>,
-    val comments: List<CommentResponseDto>
+    val commentCount: Int
 )
 
 
