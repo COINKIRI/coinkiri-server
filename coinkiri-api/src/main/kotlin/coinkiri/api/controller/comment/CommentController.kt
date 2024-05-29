@@ -3,6 +3,7 @@ package coinkiri.api.controller.comment
 import coinkiri.api.config.interceptor.Auth
 import coinkiri.api.config.resolver.MemberID
 import coinkiri.api.controller.comment.dto.request.CommentRequestDto
+import coinkiri.api.controller.comment.dto.response.CommentResponseDto
 import coinkiri.api.service.comment.CommentService
 import coinkiri.common.KotlinLogging.log
 import coinkiri.common.response.ApiResponse
@@ -33,6 +34,17 @@ class CommentController(
         commentService.saveComment(memberId, request)
         log.info { "댓글 작성 완료. memberId: $memberId" }
         return ResponseEntity.ok(ApiResponse.success())
+    }
+
+    // 댓글 조회 API
+    @Operation(summary = "댓글 조회")
+    @GetMapping("/{postId}")
+    fun getCommentList(
+        @PathVariable postId: Long
+    ): ResponseEntity<ApiResponse<List<CommentResponseDto>>>{
+        val commentList = commentService.findCommentList(postId)
+        log.info { "댓글 조회 완료. postId: $postId" }
+        return ResponseEntity.ok(ApiResponse.success(commentList))
     }
 
 }

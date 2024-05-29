@@ -93,6 +93,7 @@ class CommunityService (
                 },
                 community.comments.map {
                     CommentResponseDto(
+                        it.id,
                         it.content,
                         it.createdAt.toString(),
                         it.modifiedAt.toString(),

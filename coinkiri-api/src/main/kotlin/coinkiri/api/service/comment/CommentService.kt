@@ -1,6 +1,8 @@
 package coinkiri.api.service.comment
 
 import coinkiri.api.controller.comment.dto.request.CommentRequestDto
+import coinkiri.api.controller.comment.dto.response.CommentResponseDto
+import coinkiri.api.controller.member.dto.response.MemberResponseDto
 import coinkiri.core.domain.comment.Comment
 import coinkiri.core.domain.comment.repository.CommentRepository
 import coinkiri.core.domain.member.repository.MemberRepository
@@ -28,6 +30,25 @@ class CommentService (
                 request.content
             )
         )
+    }
+
+    // 댓글 조회
+    @Transactional(readOnly = true)
+    fun findCommentList(postId: Long): List<CommentResponseDto> {
+        return commentRepository.findAllByPostId(postId).map {
+            CommentResponseDto(
+                it.id,
+                it.content,
+                it.createdAt.toString(),
+                it.modifiedAt.toString(),
+                MemberResponseDto(
+                    it.member.id,
+                    it.member.nickname,
+                    it.member.level,
+                    it.member.pic
+                )
+            )
+        }
     }
 
 

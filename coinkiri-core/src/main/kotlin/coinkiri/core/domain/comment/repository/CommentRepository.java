@@ -8,4 +8,6 @@ import coinkiri.core.domain.comment.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Long>, CommentRepositoryDsl {
 
+	List<Comment> findAllByPostId(Long postId);
+
 }
