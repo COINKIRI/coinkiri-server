@@ -64,7 +64,7 @@ class InterestService (
         val interestCoinList = interestRepository.findWithMemberAndCoinByMemberId(memberId).map {
             it.coin.market
         }
-        val coinPrices = upbitApiCaller.getCoinPrices200(interestCoinList)
+        val coinPrices = upbitApiCaller.getCoinPrices24(interestCoinList)
         return coinPrices
     }
 }

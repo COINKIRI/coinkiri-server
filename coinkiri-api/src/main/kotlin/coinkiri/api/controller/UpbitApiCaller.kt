@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate
 class UpbitApiCaller (
     private val restTemplate: RestTemplate
 ){
+    // 200일치 코인 가격 조회 (단일)
     fun getCoinPrice200(market: String): CoinPriceDto {
         val url = "https://api.upbit.com/v1/candles/days?market=KRW-$market&count=200"
 
@@ -23,8 +24,28 @@ class UpbitApiCaller (
         return CoinPriceDto(market = "KRW-$market", coinPrices = priceDtos)
     }
 
+    // 200일치 코인 가격 조회 (다수)
     fun getCoinPrices200(marketList: List<String>) : CoinPricesDto {
         val coinPrices = marketList.map { getCoinPrice200(it) }
+        return CoinPricesDto(coinPrices)
+    }
+
+    // 24시간(1시간 단위) 코인 가격 조회
+    fun getCoinPrice24(market: String): CoinPriceDto {
+        val url = "https://api.upbit.com/v1/candles/minutes/60?market=KRW-$market&count=24"
+
+        // REST API 호출
+        val response = restTemplate.getForObject(url, Array<CoinPriceResponse>::class.java)
+            ?: throw RuntimeException("Upbit API 응답이 null입니다.")
+
+        // CoinPriceResponse를 PriceDto로 변환하고, CoinPriceDto로 변환
+        val priceDtos = response.map { PriceDto(it.candle_date_time_kst, it.trade_price) }
+        return CoinPriceDto(market = "KRW-$market", coinPrices = priceDtos)
+    }
+
+    // 24시간(1시간 단위) 코인 가격 조회 (다수)
+    fun getCoinPrices24(marketList: List<String>) : CoinPricesDto {
+        val coinPrices = marketList.map { getCoinPrice24(it) }
         return CoinPricesDto(coinPrices)
     }
 
