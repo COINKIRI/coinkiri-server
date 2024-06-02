@@ -29,7 +29,29 @@ class InterestController (
         @MemberID memberId: Long
     ): ResponseEntity<ApiResponse<Any>> {
         interestService.saveInterest(memberId, coinId)
-        log.info { "관심 종목 등록 완료. memberId: $memberId, coinId: $coinId" }
+        return ResponseEntity.ok(ApiResponse.success())
+    }
+
+    @Operation(summary = "[인증] 관심 등록 여부")
+    @GetMapping("/check/{coinId}")
+    @Auth
+    fun checkInterest(
+        @PathVariable coinId: Long,
+        @MemberID memberId: Long
+    ): ResponseEntity<ApiResponse<Any>> {
+        val isInterest = interestService.checkInterest(memberId, coinId)
+        log.info { "관심 등록 여부 조회 완료. memberId: $memberId, coinId: $coinId" }
+        return ResponseEntity.ok(ApiResponse.success(isInterest))
+    }
+
+    @Operation(summary = "[인증] 관심 종목 삭제")
+    @PostMapping("/delete/{coinId}")
+    @Auth
+    fun deleteInterest(
+        @PathVariable coinId: Long,
+        @MemberID memberId: Long
+    ): ResponseEntity<ApiResponse<Any>> {
+        interestService.deleteInterest(memberId, coinId)
         return ResponseEntity.ok(ApiResponse.success())
     }
 
@@ -43,5 +65,7 @@ class InterestController (
         log.info { "관심 종목 조회 완료. memberId: $memberId" }
         return ResponseEntity.ok(ApiResponse.success(coinPrices))
     }
+
+
 
 }

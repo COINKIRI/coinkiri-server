@@ -23,9 +23,36 @@ class InterestService (
     fun saveInterest(memberId: Long, coinId: Long) {
         val member = memberRepository.findById(memberId).get()
         val coin = coinRepository.findById(coinId).get()
-        interestRepository.save(
-            Interest(member, coin)
-        )
+        if (interestRepository.existsByMemberAndCoin(member, coin)) {
+            log.info { "이미 관심 종목으로 등록된 종목입니다. memberId: $memberId, coinId: $coinId" }
+            return
+        } else {
+            log.info { "관심 종목으로 등록합니다. memberId: $memberId, coinId: $coinId" }
+            interestRepository.save(Interest(member, coin))
+        }
+
+    }
+
+    // 관심 등록 여부
+    @Transactional(readOnly = true)
+    fun checkInterest(memberId: Long, coinId: Long): Boolean {
+        val member = memberRepository.findById(memberId).get()
+        val coin = coinRepository.findById(coinId).get()
+        return interestRepository.existsByMemberAndCoin(member, coin)
+    }
+
+    // 관심 종목 삭제
+    @Transactional
+    fun deleteInterest(memberId: Long, coinId: Long) {
+        val member = memberRepository.findById(memberId).get()
+        val coin = coinRepository.findById(coinId).get()
+        if (!interestRepository.existsByMemberAndCoin(member, coin)) {
+            log.info { "관심 종목으로 등록되어있지 않은 종목입니다. memberId: $memberId, coinId: $coinId" }
+            return
+        } else {
+            log.info { "관심 종목에서 삭제합니다. memberId: $memberId, coinId: $coinId" }
+            interestRepository.deleteByMemberAndCoin(member, coin)
+        }
     }
 
     // 관심 종목 조회
