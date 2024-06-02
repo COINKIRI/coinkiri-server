@@ -6,4 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * @ClassName    : CoinRepository
  */
-public interface CoinRepository extends JpaRepository<Coin, Long>, CoinRepositoryDsl {}
+public interface CoinRepository extends JpaRepository<Coin, Long>, CoinRepositoryDsl {
+
+	Coin findByMarket(String market);
+}

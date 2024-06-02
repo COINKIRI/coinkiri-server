@@ -2,16 +2,19 @@ package coinkiri.api.controller
 
 import coinkiri.api.controller.coin.dto.response.CoinPriceDto
 import coinkiri.api.controller.coin.dto.response.CoinPricesDto
+import coinkiri.api.controller.coin.dto.response.InterestCoinPriceDto
 import coinkiri.api.controller.coin.dto.response.PriceDto
 import coinkiri.common.KotlinLogging.log
+import coinkiri.core.domain.coin.repository.CoinRepository
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 
 @Component
 class UpbitApiCaller (
-    private val restTemplate: RestTemplate
+    private val restTemplate: RestTemplate,
+    private val coinRepository: CoinRepository
 ){
-    // 200일치 코인 가격 조회 (단일)
+    // 200일치 코인 가격 조회 (단일) - 시세 조회에서 사용
     fun getCoinPrice200(market: String): CoinPriceDto {
         val url = "https://api.upbit.com/v1/candles/days?market=KRW-$market&count=200"
 
@@ -21,17 +24,14 @@ class UpbitApiCaller (
 
         // CoinPriceResponse를 PriceDto로 변환하고, CoinPriceDto로 변환
         val priceDtos = response.map { PriceDto(it.candle_date_time_kst, it.trade_price) }
-        return CoinPriceDto(market = "KRW-$market", coinPrices = priceDtos)
+        return CoinPriceDto(
+            market = "KRW-$market",
+            coinPrices = priceDtos
+        )
     }
 
-    // 200일치 코인 가격 조회 (다수)
-    fun getCoinPrices200(marketList: List<String>) : CoinPricesDto {
-        val coinPrices = marketList.map { getCoinPrice200(it) }
-        return CoinPricesDto(coinPrices)
-    }
-
-    // 24시간(1시간 단위) 코인 가격 조회
-    fun getCoinPrice24(market: String): CoinPriceDto {
+    // 24시간(1시간 단위) 코인 가격 조회 - 관심 종목 조회에서 사용
+    fun getCoinPrice24(market: String): InterestCoinPriceDto {
         val url = "https://api.upbit.com/v1/candles/minutes/60?market=KRW-$market&count=24"
 
         // REST API 호출
@@ -40,7 +40,16 @@ class UpbitApiCaller (
 
         // CoinPriceResponse를 PriceDto로 변환하고, CoinPriceDto로 변환
         val priceDtos = response.map { PriceDto(it.candle_date_time_kst, it.trade_price) }
-        return CoinPriceDto(market = "KRW-$market", coinPrices = priceDtos)
+
+        val coin = coinRepository.findByMarket(market)
+
+        return InterestCoinPriceDto(
+            coinId = coin.coinId,
+            market = "KRW-$market",
+            koreanName = coin.koreanName,
+            symbolImage = coin.symbolImage,
+            coinPrices = priceDtos
+        )
     }
 
     // 24시간(1시간 단위) 코인 가격 조회 (다수)

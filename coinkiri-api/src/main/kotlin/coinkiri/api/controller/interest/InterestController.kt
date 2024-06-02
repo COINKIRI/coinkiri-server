@@ -55,7 +55,7 @@ class InterestController (
         return ResponseEntity.ok(ApiResponse.success())
     }
 
-    @Operation(summary = "[인증] 관심 종목 조회")
+    @Operation(summary = "[인증] 관심 종목 리스트 조회")
     @GetMapping("/")
     @Auth
     fun findInterestList(
