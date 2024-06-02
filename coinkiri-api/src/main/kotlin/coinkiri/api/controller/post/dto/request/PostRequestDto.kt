@@ -26,7 +26,9 @@ data class MissionRequestDto (
 data class AnalysisRequestDto (
     val postRequestDto: PostRequestDto,
     val coinId: Long,
+    val currentPrice: Double,
     val opinion: String,
     val targetPeriod: Int,
+    val expectedYield: Double,
     val targetPrice: Double
 )
