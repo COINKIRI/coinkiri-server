@@ -36,25 +36,25 @@ class AnalysisController (
         return ResponseEntity.ok(ApiResponse.success())
     }
 
-    // 분석글 전체 조회 API
-    @Operation(summary = "분석글 전체 조회")
-    @GetMapping("/all")
-    fun findAllAnalysis(): ResponseEntity<ApiResponse<Any>> {
-        val analysis = analysisService.findAllAnalysis()
-        log.info { "분석글 전체 조회 완료." }
-        return ResponseEntity.ok(ApiResponse.success(analysis))
-    }
-
-    // 분석글 상세 조회 API
-    @Operation(summary = "분석글 상세 조회")
-    @GetMapping("/{postId}")
-    fun findAnalysisDetail(
-        @PathVariable postId: Long
-    ): ResponseEntity<ApiResponse<Any>> {
-        val analysis = analysisService.findAnalysisDetail(postId)
-        log.info { "분석글 상세 조회 완료." }
-        return ResponseEntity.ok(ApiResponse.success(analysis))
-    }
+//    // 분석글 전체 조회 API
+//    @Operation(summary = "분석글 전체 조회")
+//    @GetMapping("/all")
+//    fun findAllAnalysis(): ResponseEntity<ApiResponse<Any>> {
+//        val analysis = analysisService.findAllAnalysis()
+//        log.info { "분석글 전체 조회 완료." }
+//        return ResponseEntity.ok(ApiResponse.success(analysis))
+//    }
+//
+//    // 분석글 상세 조회 API
+//    @Operation(summary = "분석글 상세 조회")
+//    @GetMapping("/{postId}")
+//    fun findAnalysisDetail(
+//        @PathVariable postId: Long
+//    ): ResponseEntity<ApiResponse<Any>> {
+//        val analysis = analysisService.findAnalysisDetail(postId)
+//        log.info { "분석글 상세 조회 완료." }
+//        return ResponseEntity.ok(ApiResponse.success(analysis))
+//    }
 
 
 }
