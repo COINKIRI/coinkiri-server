@@ -60,83 +60,71 @@ class AnalysisService (
         analysisRepository.save(analysis)
     }
 
-//    // 분석글 전체 조회
-//    @Transactional(readOnly = true)
-//    fun findAllAnalysis() : List<AnalysisResponseDto> {
-//        return analysisRepository.findAllWithMemberAndCoinAndCommentAndLike().map {
-//            AnalysisResponseDto(
-//                PostResponseDto(
-//                    it.id,
-//                    it.title,
-//                    it.viewCnt,
-//                    it.createdAt.toString(),
-//                    it.member.nickname,
-//                    it.member.level,
-//                    it.comments.size,
-//                    it.likes.size
-//                ),
-//                CoinResponseDto(
-//                    it.coin.coinId,
-//                    it.coin.market,
-//                    it.coin.koreanName,
-//                    it.coin.englishName,
-//                    it.coin.symbolImage
-//                ),
-//                it.opinion.name,
-//                it.targetPeriod,
-//                it.targetPrice
-//            )
-//        }
-//    }
-//
-//
-//    // 분석글 상세 조회
-//    @Transactional(readOnly = true)
-//    fun findAnalysisDetail(postId: Long): AnalysisDetailResponseDto {
-//        val analysis = analysisRepository.findOneWithMemberAndCoinAndCommentAndLike(postId)
-//        return AnalysisDetailResponseDto(
-//            PostDetailResponseDto(
-//                analysis.id,
-//                analysis.title,
-//                analysis.content,
-//                analysis.viewCnt,
-//                analysis.createdAt.toString(),
-//                analysis.member.nickname,
-//                analysis.member.level,
-//                analysis.member.pic,
-//                analysis.likes.size,
-//                analysis.images.map {
-//                    ImageDto(
-//                        it.position,
-//                        Base64.encodeBase64String(it.image)
-//                    )
-//                },
-//                analysis.comments.size
-//            ),
-//            CoinResponseDto(
-//                analysis.coin.coinId,
-//                analysis.coin.market,
-//                analysis.coin.koreanName,
-//                analysis.coin.englishName,
-//                analysis.coin.symbolImage
-//            ),
-//            analysis.opinion.name,
-//            analysis.targetPeriod,
-//            analysis.targetPrice
-//        )
-//    }
+    // 분석글 전체 조회
+    @Transactional(readOnly = true)
+    fun findAllAnalysis() : List<AnalysisResponseDto> {
+        return analysisRepository.findAllWithMemberAndCoinAndCommentAndLike().map {
+            AnalysisResponseDto(
+                PostResponseDto(
+                    it.id,
+                    it.title,
+                    it.viewCnt,
+                    it.createdAt.toString(),
+                    it.member.nickname,
+                    it.member.level,
+                    it.comments.size,
+                    it.likes.size
+                ),
+                CoinResponseDto(
+                    it.coin.coinId,
+                    it.coin.market,
+                    it.coin.koreanName,
+                    it.coin.englishName,
+                    it.coin.symbolImage
+                ),
+                it.coinPrevClosingPrice,
+                it.investmentOption.value,
+                it.targetPrice,
+                it.targetPeriod
+            )
+        }
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    // 분석글 상세 조회
+    @Transactional(readOnly = true)
+    fun findAnalysisDetail(postId: Long): AnalysisDetailResponseDto {
+        val analysis = analysisRepository.findOneWithMemberAndCoinAndCommentAndLike(postId)
+        return AnalysisDetailResponseDto(
+            PostDetailResponseDto(
+                analysis.id,
+                analysis.title,
+                analysis.content,
+                analysis.viewCnt,
+                analysis.createdAt.toString(),
+                analysis.member.nickname,
+                analysis.member.level,
+                analysis.member.pic,
+                analysis.likes.size,
+                analysis.images.map {
+                    ImageDto(
+                        it.position,
+                        Base64.encodeBase64String(it.image)
+                    )
+                },
+                analysis.comments.size
+            ),
+            CoinResponseDto(
+                analysis.coin.coinId,
+                analysis.coin.market,
+                analysis.coin.koreanName,
+                analysis.coin.englishName,
+                analysis.coin.symbolImage
+            ),
+            analysis.coinPrevClosingPrice,
+            analysis.investmentOption.value,
+            analysis.targetPrice,
+            analysis.targetPeriod
+        )
+    }
 }

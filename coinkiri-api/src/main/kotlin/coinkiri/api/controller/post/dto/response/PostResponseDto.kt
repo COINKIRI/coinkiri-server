@@ -23,17 +23,19 @@ data class CommunityResponseDto (
 data class AnalysisResponseDto (
     val postResponseDto: PostResponseDto,
     val coin: CoinResponseDto,
-    val opinion: String,
-    val targetPeriod: Int,
-    val targetPrice: Double
+    val coinPrevClosingPrice: String,
+    val investmentOption: String,
+    val targetPrice: String,
+    val targetPeriod: String
 )
 
 data class AnalysisDetailResponseDto (
     val postDetailResponseDto: PostDetailResponseDto,
     val coin: CoinResponseDto,
-    val opinion: String,
-    val targetPeriod: Int,
-    val targetPrice: Double
+    val coinPrevClosingPrice: String,
+    val investmentOption: String,
+    val targetPrice: String,
+    val targetPeriod: String,
 )
 
 data class CommunityDetailResponseDto (
