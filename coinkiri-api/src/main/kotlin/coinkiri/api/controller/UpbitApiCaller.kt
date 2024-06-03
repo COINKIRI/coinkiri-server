@@ -23,7 +23,7 @@ class UpbitApiCaller (
             ?: throw RuntimeException("Upbit API 응답이 null입니다.")
 
         // CoinPriceResponse를 PriceDto로 변환하고, CoinPriceDto로 변환
-        val priceDtos = response.map { PriceDto(it.candle_date_time_kst, it.trade_price) }
+        val priceDtos = response.map { PriceDto(it.candle_date_time_kst, it.trade_price.toLong()) }
         return CoinPriceDto(
             market = "KRW-$market",
             coinPrices = priceDtos
@@ -39,7 +39,7 @@ class UpbitApiCaller (
             ?: throw RuntimeException("Upbit API 응답이 null입니다.")
 
         // CoinPriceResponse를 PriceDto로 변환하고, CoinPriceDto로 변환
-        val priceDtos = response.map { PriceDto(it.candle_date_time_kst, it.trade_price) }
+        val priceDtos = response.map { PriceDto(it.candle_date_time_kst, it.trade_price.toLong()) }
 
         val coin = coinRepository.findByMarket(market)
 

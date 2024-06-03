@@ -3,7 +3,7 @@ package coinkiri.api.controller.coin.dto.response
 
 data class PriceDto( // 캔들 1개
     val candleDateTimeKst: String,
-    val tradePrice: Double
+    val tradePrice: Long
 )
 
 data class CoinPriceDto( // 캔들 여러개
