@@ -17,19 +17,43 @@ class FollowController (
     private val followService: FollowService
 ){
 
-    @Operation(summary = "팔로우 추가/삭제")
-    @PostMapping("/{followId}")
+    @Operation(summary = "[인증] 팔로우 추가")
+    @PostMapping("/{followMemberId}")
     @Auth
     fun saveFollow(
         @MemberID memberId: Long,
-        @PathVariable followId: Long
+        @PathVariable followMemberId: Long
     ) : ResponseEntity<ApiResponse<Any>> {
-        followService.updateFollow(memberId, followId)
-        log.info { "팔로우 추가, 삭제 성공 - memberId: $memberId, followId: $followId" }
+        followService.saveFollow(memberId, followMemberId)
+        log.info { "팔로우 추가 성공 - memberId: $memberId, followId: $followMemberId" }
         return ResponseEntity.ok(ApiResponse.success())
     }
 
-    @Operation(summary = "팔로우 목록 조회")
+    @Operation(summary = "[인증] 팔로우 삭제")
+    @DeleteMapping("/delete/{followMemberId}")
+    @Auth
+    fun deleteFollow(
+        @MemberID memberId: Long,
+        @PathVariable followMemberId: Long
+    ) : ResponseEntity<ApiResponse<Any>> {
+        followService.deleteFollow(memberId, followMemberId)
+        log.info { "팔로우 삭제 성공 - memberId: $memberId, followId: $followMemberId" }
+        return ResponseEntity.ok(ApiResponse.success())
+    }
+
+    @Operation(summary = "[인증] 팔로우 여부 확인")
+    @GetMapping("/check/{followMemberId}")
+    @Auth
+    fun checkFollow(
+        @MemberID memberId: Long,
+        @PathVariable followMemberId: Long
+    ) : ResponseEntity<ApiResponse<Any>> {
+        val isFollow = followService.checkFollow(memberId, followMemberId)
+        log.info { "팔로우 여부 확인 성공 - memberId: $memberId, followId: $followMemberId" }
+        return ResponseEntity.ok(ApiResponse.success(isFollow))
+    }
+
+    @Operation(summary = "[인증] 팔로우 목록 조회")
     @GetMapping("/following")
     @Auth
     fun findFollowingList(
@@ -40,7 +64,7 @@ class FollowController (
         return ResponseEntity.ok(ApiResponse.success(followingList))
     }
 
-    @Operation(summary = "팔로워 목록 조회")
+    @Operation(summary = "[인증] 팔로워 목록 조회")
     @GetMapping("/follower")
     @Auth
     fun findFollowerList(

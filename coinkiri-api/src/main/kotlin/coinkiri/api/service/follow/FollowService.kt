@@ -13,18 +13,39 @@ class FollowService (
     private val memberRepository: MemberRepository
 ){
 
-    // 팔로우 저장, 삭제
+    // 팔로우 저장
     @Transactional
-    fun updateFollow(memberId: Long, followId: Long) {
-        val member = memberRepository.findById(memberId).get()
-        val followMember = memberRepository.findById(followId).get()
+    fun saveFollow(memberId: Long, followMemberId: Long) {
+        val member = memberRepository.findById(memberId).orElseThrow { throw IllegalArgumentException("존재하지 않는 회원입니다.") }
+        val follow = memberRepository.findById(followMemberId).orElseThrow { throw IllegalArgumentException("존재하지 않는 회원입니다.") }
 
-        // 있으면 삭제, 없으면 저장
-        if(followRepository.existsByFollowerAndFollowing(member, followMember)) {
-            followRepository.deleteByFollowerAndFollowing(member, followMember)
+        if (followRepository.existsByFollowerAndFollowing(member, follow)) {
+            followRepository.save(Follow(member, follow))
         } else {
-            followRepository.save(Follow(member, followMember))
+            throw IllegalArgumentException("이미 팔로우한 회원입니다.")
         }
+    }
+
+    // 팔로우 삭제
+    @Transactional
+    fun deleteFollow(memberId: Long, followMemberId: Long) {
+        val member = memberRepository.findById(memberId).orElseThrow { throw IllegalArgumentException("존재하지 않는 회원입니다.") }
+        val follow = memberRepository.findById(followMemberId).orElseThrow { throw IllegalArgumentException("존재하지 않는 회원입니다.") }
+
+        if (followRepository.existsByFollowerAndFollowing(member, follow)) {
+            followRepository.deleteByFollowerAndFollowing(member, follow)
+        } else {
+            throw IllegalArgumentException("팔로우하지 않은 회원입니다.")
+        }
+    }
+
+    // 팔로우 여부 확인
+    @Transactional(readOnly = true)
+    fun checkFollow(memberId: Long, followMemberId: Long): Boolean {
+        val member = memberRepository.findById(memberId).orElseThrow { throw IllegalArgumentException("존재하지 않는 회원입니다.") }
+        val follow = memberRepository.findById(followMemberId).orElseThrow { throw IllegalArgumentException("존재하지 않는 회원입니다.") }
+
+        return followRepository.existsByFollowerAndFollowing(member, follow)
     }
 
     // 팔로잉 목록 조회
