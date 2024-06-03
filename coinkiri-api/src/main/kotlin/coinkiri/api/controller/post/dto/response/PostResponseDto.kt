@@ -23,6 +23,7 @@ data class CommunityResponseDto (
 data class AnalysisResponseDto (
     val postResponseDto: PostResponseDto,
     val coin: CoinResponseDto,
+    val memberPic: ByteArray,
     val coinPrevClosingPrice: String,
     val investmentOption: String,
     val targetPrice: String,

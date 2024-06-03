@@ -82,6 +82,7 @@ class AnalysisService (
                     it.coin.englishName,
                     it.coin.symbolImage
                 ),
+                it.member.pic,
                 it.coinPrevClosingPrice,
                 it.investmentOption.value,
                 it.targetPrice,
