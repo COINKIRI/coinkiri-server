@@ -8,6 +8,8 @@ import coinkiri.common.response.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -20,15 +22,37 @@ class LikeController (
     private val likeService: LikeService
 ){
 
-    @Operation(summary = "좋아요 추가, 삭제")
+    @Operation(summary = "[인증] 좋아요 추가")
     @PostMapping("/{postId}")
     @Auth
     fun updateLike(
         @MemberID memberId: Long,
         @PathVariable postId: Long
     ) : ResponseEntity<ApiResponse<Any>> {
-        likeService.updateLike(memberId, postId)
-        log.info { "좋아요 업데이트 성공 - memberId: $memberId, postId: $postId" }
+        likeService.saveLike(memberId, postId)
         return ResponseEntity.ok(ApiResponse.success())
+    }
+
+    @Operation(summary = "[인증] 좋아요 삭제")
+    @DeleteMapping("/delete/{postId}")
+    @Auth
+    fun deleteLike(
+        @MemberID memberId: Long,
+        @PathVariable postId: Long
+    ) : ResponseEntity<ApiResponse<Any>> {
+        likeService.deleteLike(memberId, postId)
+        return ResponseEntity.ok(ApiResponse.success())
+    }
+
+    @Operation(summary = "[인증] 좋아요 여부 확인")
+    @GetMapping("/check/{postId}")
+    @Auth
+    fun checkLike(
+        @MemberID memberId: Long,
+        @PathVariable postId: Long
+    ) : ResponseEntity<ApiResponse<Any>> {
+        val isLike = likeService.checkLike(memberId, postId)
+        log.info { "좋아요 여부 확인 성공 - memberId: $memberId, postId: $postId" }
+        return ResponseEntity.ok(ApiResponse.success(isLike))
     }
 }
