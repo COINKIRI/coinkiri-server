@@ -28,7 +28,7 @@ class NewsApiCaller (
         val uri: URI = UriComponentsBuilder
             .fromUriString("https://openapi.naver.com/v1/search/news.json")
             .queryParam("query", "암호화폐")
-            .queryParam("display", 20)
+            .queryParam("display", 50)
             .queryParam("start", 1)
             .queryParam("sort", "date")
             .encode(StandardCharsets.UTF_8)
@@ -51,12 +51,17 @@ class NewsApiCaller (
             NewsRequestDto(
                 title = it.title,
                 link = it.link,
-                description = it.description,
+                description = removeHtmlTags(it.description),
                 pubDate = it.pubDate
             )
         } ?: throw RuntimeException("News API 응답이 null입니다.")
 
     }
+
+    private fun removeHtmlTags(input: String): String {
+        return input.replace("<b>", "").replace("</b>", "")
+    }
+
 
     data class NewsResponse(
         val lastBuildDate: String,
