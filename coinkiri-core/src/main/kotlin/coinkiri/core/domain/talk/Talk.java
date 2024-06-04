@@ -1,6 +1,7 @@
 package coinkiri.core.domain.talk;
 
 import coinkiri.core.domain.coin.Coin;
+import coinkiri.core.domain.member.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -30,4 +31,8 @@ public class Talk {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "coin_id")
 	private Coin coin;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	private Member member;
 }
