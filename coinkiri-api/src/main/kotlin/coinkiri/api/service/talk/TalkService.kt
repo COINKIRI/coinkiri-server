@@ -1,6 +1,8 @@
 package coinkiri.api.service.talk
 
+import coinkiri.api.controller.member.dto.response.MemberResponseDto
 import coinkiri.api.controller.talk.TalkRequestDto
+import coinkiri.api.controller.talk.TalkResponseDto
 import coinkiri.core.domain.coin.repository.CoinRepository
 import coinkiri.core.domain.member.repository.MemberRepository
 import coinkiri.core.domain.talk.Talk
@@ -15,6 +17,7 @@ class TalkService (
     private val coinRepository: CoinRepository
 ){
 
+    // 톡 작성
     @Transactional
     fun saveTalk(memberId: Long, request: TalkRequestDto) {
 
@@ -31,6 +34,24 @@ class TalkService (
                 member
             )
         )
+    }
+
+    // 톡 전체 조회
+    @Transactional(readOnly = true)
+    fun findTalkList(): List<TalkResponseDto> {
+        return talkRepository.findAll().map {
+            TalkResponseDto(
+                it.title,
+                it.content,
+                it.createdAt.toString(),
+                MemberResponseDto(
+                    it.member.id,
+                    it.member.nickname,
+                    it.member.level,
+                    it.member.pic
+                )
+            )
+        }
     }
 
 

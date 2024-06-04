@@ -1,6 +1,7 @@
 package coinkiri.core.domain.talk;
 
 import coinkiri.core.domain.coin.Coin;
+import coinkiri.core.domain.common.BaseEntity;
 import coinkiri.core.domain.member.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "talks")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Talk {
+public class Talk extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
