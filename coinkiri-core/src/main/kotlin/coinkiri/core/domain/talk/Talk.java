@@ -35,4 +35,11 @@ public class Talk {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
+
+	public Talk(String title, String content, Coin coin, Member member) {
+		this.title = title;
+		this.content = content;
+		this.coin = coin;
+		this.member = member;
+	}
 }

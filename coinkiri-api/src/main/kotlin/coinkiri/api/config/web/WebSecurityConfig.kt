@@ -41,6 +41,7 @@ class WebSecurityConfig {
                     "/api/v1/coin/**", "/api/v1/member/**", "/api/v1/interest/**",
                     "/api/v1/post/**", "/api/v1/comment/**", "/api/v1/follow/**",
                     "/api/v1/news/**", "/api/v1/like/**", "/api/v1/analysis/**",
+                    "/api/v1/talk/**",
                     "/swagger-ui/**", "/v3/**" // swagger 경로 허용
                 )
                     .permitAll() // 허용할 경로
