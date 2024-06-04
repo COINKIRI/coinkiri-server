@@ -1,5 +1,9 @@
 package coinkiri.core.domain.coin;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import coinkiri.core.domain.talk.Talk;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,6 +40,11 @@ public class Coin {
     // 코인 심볼 이미지
     @Column(name = "symbol_image", columnDefinition = "blob")
     private byte[] symbolImage;
+
+    // 코인 커뮤니티
+    @OneToMany(mappedBy = "coin")
+    private List<Talk> talks = new ArrayList<>();
+
 
     public Coin(String market, String koreanName, String englishName) {
         this.market = market;
