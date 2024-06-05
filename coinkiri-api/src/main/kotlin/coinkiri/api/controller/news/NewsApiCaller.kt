@@ -49,7 +49,7 @@ class NewsApiCaller (
 
         return response.body?.items?.map {
             NewsRequestDto(
-                title = it.title,
+                title = removeHtmlTags(it.title),
                 link = it.link,
                 description = removeHtmlTags(it.description),
                 pubDate = it.pubDate
@@ -59,7 +59,7 @@ class NewsApiCaller (
     }
 
     private fun removeHtmlTags(input: String): String {
-        return input.replace("<b>", "").replace("</b>", "")
+        return input.replace("<b>", "").replace("</b>", "").replace("&quot;", "")
     }
 
 
