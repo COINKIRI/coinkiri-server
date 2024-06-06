@@ -67,6 +67,17 @@ class InterestController (
         return ResponseEntity.ok(ApiResponse.success(coinPrices))
     }
 
+    @Operation(summary = "[인증] 관심 종목 분석글 조회")
+    @GetMapping("/analysis")
+    @Auth
+    fun findInterestAnalysis(
+        @MemberID memberId: Long
+    ): ResponseEntity<ApiResponse<Any>> {
+        val analysis = interestService.findInterestAnalysis(memberId)
+        log.info { "관심 종목 분석글 조회 완료. memberId: $memberId" }
+        return ResponseEntity.ok(ApiResponse.success(analysis))
+    }
+
 
 
 }

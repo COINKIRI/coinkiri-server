@@ -35,4 +35,18 @@ public class AnalysisRepositoryImpl implements AnalysisRepositoryDsl{
 			.where(analysis.id.eq(id))
 			.fetchOne();
 	}
+
+	// 코인 리스트를 기반으로 분석글 조회
+	@Override
+	public List<Analysis> findAnalysisByCoinList(List<Long> coinList) {
+		return queryFactory.selectFrom(analysis)
+			.leftJoin(analysis.member).fetchJoin()
+			.leftJoin(analysis.coin).fetchJoin()
+			.leftJoin(analysis.comments).fetchJoin()
+			// .leftJoin(analysis.likes).fetchJoin() -> default_batch_fetch_size 설정으로 인해 fetchJoin() 사용하지 않음
+			.where(analysis.coin.coinId.in(coinList))
+			.orderBy(analysis.createdAt.desc()) // createdAt 기준으로 정렬
+			.fetch();
+	}
+
 }

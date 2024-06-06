@@ -8,4 +8,6 @@ public interface AnalysisRepositoryDsl {
 
 	Analysis findOneWithMemberAndCoinAndCommentAndLike(Long id);
 	List<Analysis> findAllWithMemberAndCoinAndCommentAndLike();
+
+	List<Analysis> findAnalysisByCoinList(List<Long> coinList);
 }
