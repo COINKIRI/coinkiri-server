@@ -6,7 +6,9 @@ import coinkiri.api.controller.member.dto.response.MemberResponseDto
 import coinkiri.core.domain.comment.Comment
 import coinkiri.core.domain.comment.repository.CommentRepository
 import coinkiri.core.domain.member.repository.MemberRepository
+import coinkiri.core.domain.post.Post
 import coinkiri.core.domain.post.community.repository.CommunityRepository
+import coinkiri.core.domain.post.repository.post.PostRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,18 +16,18 @@ import org.springframework.transaction.annotation.Transactional
 class CommentService (
     private val commentRepository: CommentRepository,
     private val memberRepository: MemberRepository,
-    private val communityRepository: CommunityRepository
+    private val postRepository: PostRepository<Post>
 ){
 
     // 댓글 작성
     @Transactional
     fun saveComment(memberId: Long, request: CommentRequestDto) {
         val member = memberRepository.findById(memberId).get()
-        val community = communityRepository.findById(request.postId).get()
+        val post = postRepository.findById(request.postId).get()
 
         commentRepository.save(
             Comment(
-                community,
+                post,
                 member,
                 request.content
             )
