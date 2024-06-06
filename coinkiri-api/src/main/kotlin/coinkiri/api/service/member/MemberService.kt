@@ -1,6 +1,7 @@
 package coinkiri.api.service.member
 
 import coinkiri.api.controller.member.dto.request.MemberRequestDto
+import coinkiri.api.controller.member.dto.request.UpdateMemberRequestDto
 import coinkiri.api.controller.member.dto.response.MemberDetailResponseDto
 import coinkiri.common.exception.CoinkiriException
 import coinkiri.common.exception.ExceptionCode
@@ -47,20 +48,17 @@ class MemberService (
         memberRepository.delete(member)
     }
 
-    // 닉네임 수정 서비스
+    // 회원 정보 수정 서비스
     @Transactional
-    fun updateNickname(memberId: Long, newNickname: String) {
+    fun updateMemberInfo(memberId: Long, request: UpdateMemberRequestDto) {
         val member = memberRepository.findById(memberId).get() // 회원 조회
-        if(memberRepository.existsByNickname(newNickname)) throw CoinkiriException(ExceptionCode.ALREADY_EXIST_EXCEPTION)
-        member.updateNickname(newNickname) // 닉네임 수정
+        member.updateInfo(
+            request.nickname,
+            request.statusMessage,
+            request.pic.toByteArray()
+        ) // 회원 정보 수정
     }
 
-    // 상태 메시지 수정 서비스
-    @Transactional
-    fun updateStatusMessage(memberId: Long, newStatusMessage: String) {
-        val member = memberRepository.findById(memberId).get() // 회원 조회
-        member.updateStatusMessage(newStatusMessage) // 상태 메시지 수정
-    }
 
 
 
