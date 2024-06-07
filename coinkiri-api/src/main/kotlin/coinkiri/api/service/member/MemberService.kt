@@ -2,6 +2,7 @@ package coinkiri.api.service.member
 
 import coinkiri.api.controller.member.dto.request.MemberRequestDto
 import coinkiri.api.controller.member.dto.request.UpdateMemberRequestDto
+import coinkiri.api.controller.member.dto.request.UpdatePicRequestDto
 import coinkiri.api.controller.member.dto.response.MemberDetailResponseDto
 import coinkiri.common.exception.CoinkiriException
 import coinkiri.common.exception.ExceptionCode
@@ -48,19 +49,24 @@ class MemberService (
         memberRepository.delete(member)
     }
 
-    // 회원 정보 수정 서비스
+    // 회원 정보(닉네임, 상태 메세지) 수정 서비스
     @Transactional
-    fun updateMemberInfo(memberId: Long, request: UpdateMemberRequestDto) {
+    fun updateMemberInfo(memberId: Long, request: UpdateMemberRequestDto) : MemberDetailResponseDto {
         val member = memberRepository.findById(memberId).get() // 회원 조회
         member.updateInfo(
             request.nickname,
-            request.statusMessage,
-            request.pic.toByteArray()
+            request.statusMessage
         ) // 회원 정보 수정
+        return findMemberInfo(memberId)
     }
 
-
-
+    // 회원 프로필 사진 수정 서비스
+    @Transactional
+    fun updateProfilePic(memberId: Long, pic: UpdatePicRequestDto) : MemberDetailResponseDto {
+        val member = memberRepository.findById(memberId).get() // 회원 조회
+        member.updateProfileImage(pic.pic.toByteArray()) // 프로필 사진 수정
+        return findMemberInfo(memberId)
+    }
 
 
 

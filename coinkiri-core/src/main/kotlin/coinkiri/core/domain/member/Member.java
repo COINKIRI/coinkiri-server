@@ -91,9 +91,13 @@ public class Member extends BaseEntity {
 	}
 
 	// 유저 정보 수정
-	public void updateInfo(String nickname, String statusMessage, byte[] pic) {
+	public void updateInfo(String nickname, String statusMessage) {
 		this.nickname = nickname;
 		this.statusMessage = statusMessage;
+	}
+
+	// 프로필 사진 업데이트
+	public void updateProfileImage(byte[] pic) {
 		this.pic = pic;
 	}
 
