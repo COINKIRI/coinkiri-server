@@ -28,7 +28,6 @@ class TalkService (
 
         talkRepository.save(
             Talk(
-                request.title,
                 request.content,
                 coin.get(),
                 member
@@ -41,7 +40,6 @@ class TalkService (
     fun findTalkList(): List<TalkResponseDto> {
         return talkRepository.findAll().map {
             TalkResponseDto(
-                it.title,
                 it.content,
                 it.createdAt.toString(),
                 MemberResponseDto(

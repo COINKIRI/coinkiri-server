@@ -25,8 +25,6 @@ public class Talk extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long talkId;
 
-	private String title;
-
 	private String content;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -37,8 +35,7 @@ public class Talk extends BaseEntity {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-	public Talk(String title, String content, Coin coin, Member member) {
-		this.title = title;
+	public Talk(String content, Coin coin, Member member) {
 		this.content = content;
 		this.coin = coin;
 		this.member = member;
