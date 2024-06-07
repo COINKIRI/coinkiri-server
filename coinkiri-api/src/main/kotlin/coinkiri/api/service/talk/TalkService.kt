@@ -37,8 +37,12 @@ class TalkService (
 
     // 톡 전체 조회
     @Transactional(readOnly = true)
-    fun findTalkList(): List<TalkResponseDto> {
-        return talkRepository.findAll().map {
+    fun findTalkList(coinId: Long): List<TalkResponseDto> {
+        val coin = coinRepository.findById(coinId)
+            .orElseThrow { throw IllegalArgumentException("존재하지 않는 코인입니다.") }
+        val talks = talkRepository.findByCoin(coin)
+
+        return talks.map {
             TalkResponseDto(
                 it.content,
                 it.createdAt.toString(),
