@@ -52,4 +52,16 @@ class CommunityController (
         return ResponseEntity.ok(ApiResponse.success(post))
     }
 
+    // 유저 작성 글 조회 API
+    @Operation(summary = "[인증] 유저 작성 글 조회")
+    @GetMapping("/member")
+    @Auth
+    fun findMemberPost(
+        @MemberID memberId: Long
+    ): ResponseEntity<ApiResponse<Any>> {
+        val posts = communityService.findMemberPost(memberId)
+        log.info { "유저 작성 글 조회 완료." }
+        return ResponseEntity.ok(ApiResponse.success(posts))
+    }
+
 }

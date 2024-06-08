@@ -56,5 +56,17 @@ class AnalysisController (
         return ResponseEntity.ok(ApiResponse.success(analysis))
     }
 
+    // 유저 작성 분석글 조회 API
+    @Operation(summary = "[인증] 유저 작성 분석글 조회")
+    @GetMapping("/member")
+    @Auth
+    fun findMemberAnalysis(
+        @MemberID memberId: Long
+    ): ResponseEntity<ApiResponse<Any>> {
+        val analysis = analysisService.findMemberAnalysis(memberId)
+        log.info { "유저 작성 분석글 조회 완료." }
+        return ResponseEntity.ok(ApiResponse.success(analysis))
+    }
+
 
 }

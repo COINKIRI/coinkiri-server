@@ -98,5 +98,25 @@ class CommunityService (
         )
     }
 
+    // 유저 작성 글 조회
+    @Transactional(readOnly = true)
+    fun findMemberPost(memberId: Long): List<PostResponseDto> {
+
+        val member = memberRepository.findById(memberId).get()
+
+        return communityRepository.findByMember(member).map {
+            PostResponseDto(
+                it.id,
+                it.title,
+                it.viewCnt,
+                it.createdAt.toString(),
+                it.member.nickname,
+                it.member.level,
+                it.comments.size,
+                it.likes.size
+            )
+        }
+    }
+
 
 }

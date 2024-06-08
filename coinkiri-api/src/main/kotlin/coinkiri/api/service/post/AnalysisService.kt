@@ -128,4 +128,38 @@ class AnalysisService (
             analysis.targetPeriod
         )
     }
+
+    // 유저 작성 분석글 전체 조회
+    @Transactional(readOnly = true)
+    fun findMemberAnalysis(memberId: Long): List<AnalysisResponseDto> {
+
+        val member = memberRepository.findById(memberId).get()
+
+        return analysisRepository.findByMember(member).map {
+            AnalysisResponseDto(
+                PostResponseDto(
+                    it.id,
+                    it.title,
+                    it.viewCnt,
+                    it.createdAt.toString(),
+                    it.member.nickname,
+                    it.member.level,
+                    it.comments.size,
+                    it.likes.size
+                ),
+                CoinResponseDto(
+                    it.coin.coinId,
+                    it.coin.market,
+                    it.coin.koreanName,
+                    it.coin.englishName,
+                    it.coin.symbolImage
+                ),
+                it.member.pic,
+                it.coinPrevClosingPrice,
+                it.investmentOption.value,
+                it.targetPrice,
+                it.targetPeriod
+            )
+        }
+    }
 }
