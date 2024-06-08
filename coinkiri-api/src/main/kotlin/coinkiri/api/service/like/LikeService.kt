@@ -1,10 +1,16 @@
 package coinkiri.api.service.like
 
+import coinkiri.api.controller.post.dto.response.AnalysisResponseDto
+import coinkiri.api.controller.post.dto.response.CommunityResponseDto
+import coinkiri.api.controller.post.dto.response.PostResponseDto
 import coinkiri.common.KotlinLogging.log
 import coinkiri.core.domain.like.Like
 import coinkiri.core.domain.like.LikeRepository
 import coinkiri.core.domain.member.repository.MemberRepository
 import coinkiri.core.domain.post.Post
+import coinkiri.core.domain.post.analysis.Analysis
+import coinkiri.core.domain.post.community.Community
+import coinkiri.core.domain.post.community.repository.CommunityRepository
 import coinkiri.core.domain.post.repository.post.PostRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,8 +19,9 @@ import org.springframework.transaction.annotation.Transactional
 class LikeService (
     private val likeRepository: LikeRepository,
     private val memberRepository: MemberRepository,
-    private val postRepository: PostRepository<Post>
-){
+    private val postRepository: PostRepository<Post>,
+    private val communityRepository: CommunityRepository
+) {
     // 좋아요 추가 로직
     @Transactional
     fun saveLike(memberId: Long, postId: Long) {
@@ -51,5 +58,28 @@ class LikeService (
         val post = postRepository.findPostById(postId)
 
         return likeRepository.existsByMemberAndPost(member, post)
+    }
+
+
+    // 좋아요한 커뮤니티 글 조회 로직
+    @Transactional(readOnly = true)
+    fun findLikeCommunity(memberId: Long): List<CommunityResponseDto> {
+        val member = memberRepository.findById(memberId).get()
+        val likeList = likeRepository.findByMember(member)
+        return communityRepository.findAllById(likeList.map { it.post.id }).map {
+            CommunityResponseDto(
+                PostResponseDto(
+                    it.id,
+                    it.title,
+                    it.viewCnt,
+                    it.createdAt.toString(),
+                    it.member.nickname,
+                    it.member.level,
+                    it.comments.size,
+                    it.likes.size
+                ),
+                it.category.toString()
+            )
+        }
     }
 }

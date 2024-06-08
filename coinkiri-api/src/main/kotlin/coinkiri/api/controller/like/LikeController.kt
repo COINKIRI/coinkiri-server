@@ -55,4 +55,15 @@ class LikeController (
         log.info { "좋아요 여부 확인 성공 - memberId: $memberId, postId: $postId" }
         return ResponseEntity.ok(ApiResponse.success(isLike))
     }
+
+    @Operation(summary = "[인증] 좋아요한 커뮤니티 글 조회")
+    @GetMapping("/community")
+    @Auth
+    fun getLikeCommunity(
+        @MemberID memberId: Long
+    ) : ResponseEntity<ApiResponse<Any>> {
+        val likeCommunity = likeService.findLikeCommunity(memberId)
+        log.info { "좋아요한 커뮤니티 글 조회 성공 - memberId: $memberId" }
+        return ResponseEntity.ok(ApiResponse.success(likeCommunity))
+    }
 }
