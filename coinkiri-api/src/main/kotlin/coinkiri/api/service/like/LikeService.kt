@@ -1,5 +1,6 @@
 package coinkiri.api.service.like
 
+import coinkiri.api.controller.coin.dto.response.CoinResponseDto
 import coinkiri.api.controller.post.dto.response.AnalysisResponseDto
 import coinkiri.api.controller.post.dto.response.CommunityResponseDto
 import coinkiri.api.controller.post.dto.response.PostResponseDto
@@ -9,6 +10,7 @@ import coinkiri.core.domain.like.LikeRepository
 import coinkiri.core.domain.member.repository.MemberRepository
 import coinkiri.core.domain.post.Post
 import coinkiri.core.domain.post.analysis.Analysis
+import coinkiri.core.domain.post.analysis.repository.AnalysisRepository
 import coinkiri.core.domain.post.community.Community
 import coinkiri.core.domain.post.community.repository.CommunityRepository
 import coinkiri.core.domain.post.repository.post.PostRepository
@@ -20,7 +22,8 @@ class LikeService (
     private val likeRepository: LikeRepository,
     private val memberRepository: MemberRepository,
     private val postRepository: PostRepository<Post>,
-    private val communityRepository: CommunityRepository
+    private val communityRepository: CommunityRepository,
+    private val analysisRepository: AnalysisRepository
 ) {
     // 좋아요 추가 로직
     @Transactional
@@ -79,6 +82,39 @@ class LikeService (
                     it.likes.size
                 ),
                 it.category.toString()
+            )
+        }
+    }
+
+    // 좋아요한 분석 글 조회 로직
+    @Transactional(readOnly = true)
+    fun findLikeAnalysis(memberId: Long): List<AnalysisResponseDto> {
+        val member = memberRepository.findById(memberId).get()
+        val likeList = likeRepository.findByMember(member)
+        return analysisRepository.findAllById(likeList.map { it.post.id }).map {
+            AnalysisResponseDto(
+                PostResponseDto(
+                    it.id,
+                    it.title,
+                    it.viewCnt,
+                    it.createdAt.toString(),
+                    it.member.nickname,
+                    it.member.level,
+                    it.comments.size,
+                    it.likes.size
+                ),
+                CoinResponseDto(
+                    it.coin.coinId,
+                    it.coin.market,
+                    it.coin.koreanName,
+                    it.coin.englishName,
+                    it.coin.symbolImage
+                ),
+                it.member.pic,
+                it.coinPrevClosingPrice,
+                it.investmentOption.value,
+                it.targetPrice,
+                it.targetPeriod
             )
         }
     }
