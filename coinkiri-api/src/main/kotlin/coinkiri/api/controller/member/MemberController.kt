@@ -66,7 +66,7 @@ class MemberController (
     // 회원 탈퇴 API
     @Auth
     @Operation(summary = "[인증] 회원 탈퇴")
-    @GetMapping("/withdraw")
+    @DeleteMapping("/withdraw")
     fun withdraw(@MemberID memberId: Long): ResponseEntity<ApiResponse<Any>> {
         memberService.withdraw(memberId)
         log.info { "회원 탈퇴 완료. memberId: $memberId" }
