@@ -59,7 +59,7 @@ class CommunityController (
     fun findMemberPost(
         @MemberID memberId: Long
     ): ResponseEntity<ApiResponse<Any>> {
-        val posts = communityService.findMemberPost(memberId)
+        val posts = communityService.findMemberCommunity(memberId)
         log.info { "유저 작성 글 조회 완료." }
         return ResponseEntity.ok(ApiResponse.success(posts))
     }
